@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatGPT-3 Prompts and Samples</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	
+		body {
+		    /* display: flex; */
+		    font: 18px/20px sans-serif;
+		    align-items: center;
+		   
+		    margin-top: 460px;
+ 		  	margin-bottom: 200px;
+ 		    background-color: #f0ffff;
+ 		    margin-left: 10%;
+ 		    margin-right: auto;
+		}
+		
+		/* Style the columns */
+		.column {
+			float: left;
+			width: 50%;
+			padding: 15px;
+			box-sizing: border-box;
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+			content: "";
+			display: table;
+			clear: both;
+			  margin-left: 10%;
+ 		    margin-right: 10%;
+		}
+		
+		.topmyBox {
+			border: 10px;
+		/*	overflow-wrap: break-word; */
+			font: 18px/20px sans-serif;
+			width: auto;
+		}
+
+		.myBox {
+			border: 10px;
+			padding: 20px;
+		/*	overflow-wrap: break-word; */
+			font: 18px/20px sans-serif;
+			overflow: scroll;
+			width: auto;
+			height: 300px;
+	
+		}
+		
+		.centered-top-text {
+ 			 width: 100%;
+ 		     margin-right: 20%;
+ 			 font: 28px/30px sans-serif;
+ 			 text-align: center;
+ 			 position: absolute;
+ 			 top: 100px;
+ 			 transform: translateY(-50%);
+		}
+		
+	/*	.intro-text {
+			float: left;
+			width: auto;
+  			margin-right: 20%;
+  			position: absolute;
+   		
+   			
+  			overflow-wrap: break-word;
+  			font: 20px/22px sans-serif;
+  			text-align: left;
+			}  */
+			
+			.intro-text {
+				top: 175px;
+				position: absolute;
+				 width: 100%;
+  
+			}
+			
+			
+			.highlight-blue:hover {
+		    color: blue;
+  			cursor: pointer;
+			}
+
+			.highlight-blue-prompt {
+		    color: blue;
+			}
+		
+			.set-green{
+			font-weight:bold; 
+			color: #4F7942;
+			}
+
+		
+		/* bar styles */
+		.myBox::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		}
+
+		.myBox::-webkit-scrollbar-track {
+		border: 1px solid yellowgreen;
+		border-radius: 10px;
+		}
+
+		.myBox::-webkit-scrollbar-thumb {
+	    background: yellowgreen;
+		border-radius: 10px;
+		}
+
+		.myBox::-webkit-scrollbar-thumb:hover {
+		background: #88ba1c;
+		
+
+}
+
+		/* Responsive layout - makes the columns stack on top of each other */
+		@media (max-width: 600px) {
+			.column {
+				width: 100%;
+				font: 32px/34px sans-serif;
+			}
+		}
+		
+		@media (max-width: 600px) {
+				.topmyBox {
+			border: 10px;
+			overflow-wrap: break-word; 
+			font: 24px sans-serif;
+			width: auto;
+					}
+			}
+
+@media (max-width: 600px) {
+		.myBox {
+			border: 10px;
+			padding: 20px;
+			overflow-wrap: break-word; 
+			font: 24px sans-serif;
+			overflow: scroll;
+			width: auto;
+			height: 300px;
+			}
+
+		}
+
+		@media screen and (max-width: 600px) {
+			.intro-text {
+				top: 150px;
+				 max-width: 2000px;
+				font: 20px sans-serif;
+			}
+		}
+		
+	</style>
+</head>
+<body>
+
+<div class="centered-top-text">
+<h3>ChatGPT-3 Prompts and Samples</h3>
+</div>
+
+<div class="intro-text">
+<p style="text-indent: 25px;">We've seen the range of responses from Chat-GPT3 on general questions, and we'll dabble with some topics to ask which show the responses on this page. Any suggestions on what to ask or try with this service appreciated.
+<p>
+<p>To try Chat-GPT3 for questions, coding or AI prompts, can go for free to : <a href="https://chat.openai.com/"  target=”_blank>ChatGPT</a>
+</p> 
+<img src="../screens/WomanLaptop3.png" height="auto" width="auto" style=" 
+        max-height: 100px; display:block; margin:auto;">
+</div>
+<br><br><br><br>
+	<div class="row">
+	
+<!--1st Column open div -->	
+		<div class="column">
+	<div class ="topmyBox">
+		<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Write Python code which shows Ta-Nehisi Coates books in alphabetical order. </span><br><br>
+	
+ChatGPT Response :
+    	<div class="myBox" style="border:2px solid #88ba1c;">
+To do this, we can create a list of Ta-Nehisi Coates books and then sort them in alphabetical order using the sorted() function in Python. Here is an example: <br><br>
+books = ["The Water Dancer", "Between the World and Me", "We Were Eight Years in Power", "The Beautiful Struggle", "The Black Panther: A Nation Under Our Feet"]
+<br><br>books.sort()
+for book in books:
+    print(book)
+</div>  
+    <span class="set-green">Text to command</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	 <span class="highlight-blue-prompt ">Typed Prompt: </span><br>
+    <span class="highlight-blue">What are some Black-owned travel blog sites?</span>
+	<br>
+	 ChatGPT Response (Scrollable):
+<div class="myBox" style="border:2px solid #88ba1c;">
+Here are some Black-owned travel blog sites that you might be interested in:<br><br>
+
+Travel Noire (https://travelnoire.com/)<br><br>
+
+The Blog Abroad (https://theblogabroad.com/)<br><br>
+
+Oneika the Traveller (https://www.oneikathetraveller.com/)<br><br>
+
+The Catch Me If You Can (https://www.thecatchmeifyoucan.com/)<br><br>
+
+Hey! Dip Your Toes In (https://www.heydipyourtoesin.com/)<br><br>
+
+The Sophisticated Life (https://thesophisticatedlife.com/)<br><br>
+
+Black Girls Travel Too (https://www.blackgirlstraveltoo.com/)<br><br>
+
+The Thought Card (https://thoughtcard.com/)<br><br>
+
+The Barefoot Nomad (https://www.thebarefootnomad.com/)<br><br>
+
+The Queen's Chronicles (https://queenschronicles.com/)<br><br>
+
+Note that this is not an exhaustive list, and there are many more black-owned travel blog sites out there.
+
+</div>
+ <span class="set-green">Asking for Q&A</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">In the voice of Cornel West, what would he describe as the contributions of the hip hop group The Roots to world culture? </span><br><br>
+	ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Well, my dear sister/brother, when we talk about the hip hop group The Roots and their contributions to world culture, we must first acknowledge the sheer brilliance and artistry of their music. The Roots are not just a band, they are a movement. Their unique sound blends jazz, soul, and hip hop in a way that is both intellectually stimulating and deeply soulful.<br><br>
+
+But it's not just their music that sets them apart. The Roots have always been unapologetically political, using their platform to speak truth to power and to shed light on the struggles of marginalized communities. Their lyrics are filled with social commentary and pointed critiques of the status quo. They are a voice for the voiceless, a megaphone for the oppressed.<br><br>
+
+Beyond their musical and political contributions, The Roots have also been instrumental in elevating the role of live instrumentation in hip hop. They have paved the way for other bands to blend live instrumentation with electronic beats, creating a sound that is both organic and futuristic.<br><br>
+
+And let us not forget their contributions to late-night television with their role as the house band for The Tonight Show Starring Jimmy Fallon. The Roots have used this platform to showcase up-and-coming artists, highlight social issues, and bring their unique blend of musical genius to a wider audience.<br><br>
+
+All in all, The Roots are an inspiration and a true cultural force. They have not only enriched the world of music but have also used their platform to push for social change and to uplift communities that have been historically marginalized. We owe them a debt of gratitude for their contributions to world culture.<br><br>
+</div>
+ <span class="set-green">Provide views in a person's style of response</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Can you provide some notes for why Serena William is the GOAT? </span><br><br>
+	ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Certainly! Here are some key points that support the argument that Serena Williams is the GOAT (Greatest of All Time) in women's tennis:<br><br>
+
+Grand Slam titles: Serena has won 23 Grand Slam singles titles, more than any other player in the Open Era, and only one less than the all-time record held by Margaret Court. She has also won 14 Grand Slam doubles titles and 2 Grand Slam mixed doubles titles.<br><br>
+
+Dominance over multiple eras: Serena has been a top player for over two decades, winning her first Grand Slam title in 1999 and her most recent in 2017. She has adapted to changes in the sport and continued to compete at the highest level throughout her career.<br><br>
+
+Consistency: Serena has won at least one Grand Slam title in every calendar year from 1999 to 2017, except for 2011 and 2017 when she was injured or on maternity leave.<br><br>
+
+Career record: Serena has a career win-loss record of 851-151, for a winning percentage of 85.0%. She has also won 73 singles titles and 23 doubles titles in her career.<br><br>
+
+Olympic success: Serena has won four Olympic gold medals, including one in singles at the 2012 London Olympics.<br><br>
+
+Impact on the sport: Serena has been a trailblazer in many ways, including as a Black woman in a predominantly white sport and as a mother who has continued to compete at the highest level. She has inspired many young players and has used her platform to advocate for social justice and women's rights.<br><br>
+
+Overall, these are some of the reasons why Serena Williams is considered by many to be the GOAT in women's tennis.</div>
+ <span class="set-green">Create study notes</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Can you make a spreadsheet of these fields : jazz musicians, songs and era of songs? </span><br><br>
+	 ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Sure, here's an example spreadsheet with jazz musicians, songs, and the era of the songs:
+        <table>
+            <thead>
+                <tr>
+                    <th>Jazz Musicians</th>
+                    <th>Song</th>
+                    <th>Era</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Louis Armstrong</td>
+                    <td>West End Blues</td>
+                    <td>1920s</td>
+                </tr>
+                <tr>
+                    <td>Billie Holiday</td>
+                    <td>God Bless the Child</td>
+                    <td>1940s</td>
+                </tr>
+                <tr>
+                    <td>Dizzy Gillespie</td>
+                    <td>Salt Peanuts</td>
+                    <td>1940s</td>
+                </tr>
+                <tr>
+                    <td>Miles Davis</td>
+                    <td>So What</td>
+                    <td>1950s</td>
+                </tr>
+                <tr>
+                    <td>Thelonious Monk</td>
+                    <td>'Round Midnight</td>
+                    <td>1940s</td>
+                </tr>
+                <tr>
+                
+            </tbody>
+        </table>
+</div>
+ <span class="set-green">Spreadsheet creator</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Speak in the voice of Octavia E. Butler. Give 10 product travel service names which would be space travel for black travelers across the universe.</span>
+	<br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+	
+As a science fiction author, I am always excited to explore new and innovative ideas for space travel. In keeping with the theme of creating travel service names that would be suitable for black travelers across the universe, here are ten ideas that I came up with:<br><br>
+
+Afronaut Adventures<br><br>
+Black Star Travel Co.<br><br>
+Galactic Soul Express<br><br>
+Melanin Voyager Tours<br><br>
+Cosmic Odyssey Excursions<br><br>
+Afrocosmo Expeditions<br><br>
+Dark Matter Destinations<br><br>
+Nebula Navigators<br><br>
+Black Hole Tours<br><br>
+Astro Essence Journeys<br><br>
+These are just a few ideas that could be used to make space travel more accessible and inclusive for people of all backgrounds. With a little creativity, we can make space travel an experience that truly reflects the diversity and richness of our planet.
+</div>
+ <span class="set-green">Product name generator</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">How do I create javascript for the words "Mozambique Coastline" with protruding 3D effect using text shadows along with a slight diagonal slant? </span><br><br>
+	 ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+You can use CSS to create the 3D effect with text shadows and a diagonal slant. Here's an example of how you can achieve this effect:
+<pre>&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+&lt;style>
+   h1 {
+      font-size: 5em;
+      font-weight: bold;
+      text-shadow: 3px 3px 0 #fff, 6px 6px 0 #555, 9px 9px 0 #111;
+      transform: rotate(-5deg);
+      display: inline-block;
+    }
+ &lt;/style>
+&lt;/head>
+&lt;body>
+&lt;h1>Mozambique Coastline&lt;/h1>
+&lt;/body>
+</pre>
+</div>
+ <span class="set-green">Javascript helper chatbot</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Speak in the voice of Stacey Abrams. What are some social progress books by black women written in the past year you would recommend? </span><br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Here are some social progress books written by Black women that were published in the past year that I highly recommend:<br><br>
+
+"The Sum of Us: What Racism Costs Everyone and How We Can Prosper Together" by Heather McGhee<br><br>
+"The Three Mothers: How the Mothers of Martin Luther King Jr., Malcolm X, and James Baldwin Shaped a Nation" by Anna Malaika Tubbs<br><br>
+"Hood Feminism: Notes from the Women That a Movement Forgot" by Mikki Kendall<br><br>
+"The Fire This Time: A New Generation Speaks About Race" edited by Jesmyn Ward<br><br>
+"How to Be an Antiracist: A Journal" by Ibram X. Kendi<br><br>
+"The Purpose of Power: How We Come Together When We Fall Apart" by Alicia Garza<br><br>
+"Just Us: An American Conversation" by Claudia Rankine<br><br>
+These books offer powerful insights on race, feminism, activism, and more. I hope you find them as thought-provoking and inspiring as I have.
+
+</div>
+ <span class="set-green">Provide views in a person's style of response</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Respond as Ben Okri. Give me science fiction titles where black Star Trek characters go on assignments with black Marvel characters.</span><br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Here are science fiction titles that come to mind where black Star Trek characters go on assignments with black Marvel characters:<br><br>
+
+"The Cosmic Collision" - Captain Sisko from Star Trek: Deep Space Nine and Storm from the X-Men are dispatched to prevent a catastrophic collision of two planets in different galaxies.<br><br>
+
+"Wakanda to the Final Frontier" - Lieutenant Uhura from the original Star Trek series joins forces with Black Panther to investigate a mysterious energy signature at the edge of the galaxy.<br><br>
+
+"The Infinity Alliance" - T'Challa and the Guardians of the Galaxy team up with Commander Michael Burnham from Star Trek: Discovery to defend the universe from Thanos and his army.<br><br>
+
+"Time Travel Trouble" - Lt. Commander Worf from Star Trek: The Next Generation and the time-traveling superhero Bishop race to stop a dangerous temporal paradox from destroying the universe.<br><br>
+
+"Galactic Rescue" - Captain Benjamin Sisko and the crew of Deep Space Nine assist the Avengers in rescuing Ironheart from a group of rogue Kree soldiers.<br><br>
+
+</div>
+ <span class="set-green">Provide views in a person's style of response</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Fix this html code : 
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+	&lt;title>Glowing Text Example&lt;/title>&lt;/head>
+	&lt;style>
+		.glowing-text {
+			font-size: px;
+			font-weight: bold;
+			color: transparent;
+			text-shadow: 0 0 10px #00BFFF;
+			animation: glow 1s ease-in-out infinite alternate;
+		}
+		
+		@keyframes glow {
+			from {
+				text-shadow: 0 0 10px #00BFFF;
+			}
+			to {
+				text-shadow: 0 0 px #00BFFF;
+			}
+		}
+	&lt;/style>
+&lt;body>
+	&lt;h1 class="glowing-text">Wu-Tang: 36 Chambers&lt;/h1>
+&lt;/body>
+&lt;/html> </span><br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+
+There are a couple of issues with the provided HTML and CSS code. Here is the corrected code:<br><br>
+<pre><!DOCTYPE html>
+&lt;html>
+&lt;head>
+	&lt;title>Glowing Text Example&lt;/title>
+	&lt;style>
+		.glowing-text {
+			font-size: 36px;
+			font-weight: bold;
+			color: transparent;
+			text-shadow: 0 0 10px #00BFFF;
+			animation: glow 1s ease-in-out infinite alternate;
+		}
+		
+		@keyframes glow {
+			from {
+				text-shadow: 0 0 1px #00BFFF;
+			}
+			to {
+				text-shadow: 0 0 20px #00BFFF;
+			}
+		}
+	&lt;/style>
+&lt;/head>
+&lt;body>
+	&lt;h1 class="glowing-text">Wu-Tang: 36 Chambers&lt;/h1>
+&lt;/body>
+&lt;/html>
+</pre>
+</div>
+ <span class="set-green">HTML, Javascript and Python bug fixer</span>
+</div>
+		
+		
+<!--1st Column div -->		
+		</div>
+		
+<!--2nd Column open div -->		
+		<div class="column">
+		
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+    <span class="highlight-blue">What is a table of these albums: 1. Protocol – Skeng and Tommy Lee Sparta, Green , 2. Whap Whap – Skillibeng, Blue, 3. Born Fighter – Jahshii, Black 4. Elevate – Popcaan and Imeru Tafari, Green 5. Pull Up – Koffee, Orange </span><br><br>
+    ChatGPT Response (Scrollable):
+    <div class="myBox" style="border:2px solid #88ba1c;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Album</th>
+                    <th>Artist</th>
+                    <th>Color</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Protocol</td>
+                    <td>Skeng and Tommy Lee Sparta</td>
+                    <td>Green</td>
+                </tr>
+                <tr>
+                    <td>Whap Whap</td>
+                    <td>Skillibeng</td>
+                    <td>Blue</td>
+                </tr>
+                <tr>
+                    <td>Born Fighter</td>
+                    <td>Jahshii</td>
+                    <td>Black</td>
+                </tr>
+                <tr>
+                    <td>Elevate</td>
+                    <td>Popcaan and Imeru Tafari</td>
+                    <td>Green</td>
+                </tr>
+                <tr>
+                    <td>Pull Up</td>
+                    <td>Koffee</td>
+                    <td>Orange</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <span class="set-green">Parse unstructured data</span>
+    <br><br><br>
+    </div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt ">Typed Prompt: </span><br>
+    <span class="highlight-blue">What does this javascript code display: : <br>
+<code> &lt;div id="wave-text"&gt;Wu-Tang : Sound The Horns &lt;/div&gt;
+const text = document.getElementById('wave-text');
+let waveText = '';
+for (let i = 0; i < text.textContent.length; i++) {
+  waveText += `&lt;span style="animation-delay: ${i * 0.1}s"&gt;${text.textContent[i]}&lt;/span&gt;`;
+}
+text.innerHTML = waveText;</code>
+</span>
+    <br><br>
+     ChatGPT Response (Scrollable):
+    <div class="myBox" style="border:2px solid #88ba1c;">
+This code creates a text animation effect for the phrase "Wu-Tang : Sound The Horns" by wrapping each letter in a &lt;span> tag and applying a CSS animation property to each span.
+
+First, the JavaScript code gets the element with the id "wave-text" using document.getElementById(). Then, it loops through each character in the text content of the element using a for loop. For each character, it adds a new span element to the waveText string variable that wraps the character, and sets the animation delay for that span based on the character's position in the string.
+
+Finally, the code sets the innerHTML of the wave-text element to the waveText string variable, which updates the HTML on the page to show the animated text effect.
+ </div>
+    <span class="set-green">Python to natural language</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">In the voice of Zora Neale Hurston, what would she describe as the contributions of the hip hop musician Nicki Minaj to world culture?  </span><br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+My dear friend, if you were to ask me about the contributions of the hip hop musician Nicki Minaj to world culture, I would say that she is a remarkable and unique voice that has contributed to the ongoing evolution of black music and culture.
+
+Nicki Minaj is an artist who has always been unapologetically herself, refusing to conform to anyone else's expectations. She has created her own unique style, blending her Trinidadian heritage, her New York City upbringing, and her love of fashion and visual art. Her music is filled with playful, clever wordplay, and her distinctive flow has set her apart from her peers.<br><br>
+
+Beyond her musical contributions, Nicki Minaj has also been a trailblazer for women in hip hop. She has broken down barriers and shattered glass ceilings, paving the way for a new generation of female rappers to follow in her footsteps. Her influence on the industry is undeniable, and her unapologetic femininity and self-expression have inspired countless young women to embrace their own power and voice.<br><br>
+
+Nicki Minaj is also an icon in the fashion world, and her unique sense of style has inspired countless young people to embrace their own individuality and creativity. She has used her platform to promote body positivity and self-love, encouraging people to celebrate their own beauty and uniqueness.<br><br>
+
+In short, Nicki Minaj is a powerful force in the world of music and culture. She has contributed to the ongoing evolution of black music and culture, and has inspired countless young people to embrace their own individuality and creativity. We are fortunate to have her as a voice in our cultural landscape.<br><br>
+</div>
+ <span class="set-green">Provide views in a person's style of response</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">How does AI give responses with order of steps?</span><br><br>
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+	AI can give responses in order of steps through a variety of methods depending on the specific task and the type of AI model used. One common approach is to use a sequence-to-sequence model, which is a type of neural network that is trained on pairs of input/output sequences. For example, in a math problem-solving scenario, the input sequence might be a math problem expressed in natural language, and the output sequence would be a sequence of steps to solve the problem.<br>
+<br>
+The model is trained to predict the output sequence given the input sequence, and it does this by learning to associate each step in the output sequence with the relevant part of the input sequence. Once the model has been trained, it can be used to generate a sequence of steps for a new input sequence.<br><br>
+
+Another approach is to use a rule-based system, which defines a set of rules that can be applied in a specific order to generate a sequence of steps. For example, in a cooking recipe scenario, the rules might be based on the order in which ingredients are added and the cooking times for each step.<br><br>
+
+Overall, the specific method used to generate a sequence of steps will depend on the task and the type of AI model being used.<br><br>
+</div>
+ <span class="set-green">ML/AI language model tutoor</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Can you say this in French : Wu-Tang torches all crews, scorching all mc's here to Takamatsu.</span><br><br>
+	 ChatGPT Response :
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Wu-Tang embrase toutes les équipes, calcinant tous les MC ici à Takamatsu.
+</div>
+ <span class="set-green">English to another language</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Make a classification list of Martin Luther King's Jr's best speeches, based on topic. </span><br><br>
+	
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Here is a classification list of Martin Luther King Jr's best speeches based on topic:<br><br>
+Civil Rights<br><br>
+"I Have a Dream" (1963)<br><br>
+"Our God is Marching On" (1965)<br><br>
+"The Other America" (1968)<br><br>
+"I've Been to the Mountaintop" (1968)<br><br><br><br>
+Nonviolence and Peace<br><br>
+"Loving Your Enemies" (1957)<br><br>
+"A Time to Break Silence" (1967)<br><br>
+Faith and Spirituality<br><br>
+"Paul's Letter to American Christians" (1956)<br><br>
+"But If Not" (1962)<br><br><br><br>
+Social Justice and Equality<br><br>
+"The American Dream" (1961)<br><br>
+"Where Do We Go From Here?" (1967)<br><br><br><br>
+Labor and Economic Rights<br><br>
+"The Negro and the American Dream" (1961)<br><br>
+"All Labor Has Dignity" (1968)<br><br><br><br>
+Education and Learning<br><br>
+"The Purpose of Education" (1947)<br><br>
+"The Drum Major Instinct" (1968)</div>
+ <span class="set-green">Classification</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">What are The Roots top 15 lyrical songs? </span><br><br>
+	
+	 ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+As an AI language model, I cannot have personal opinions or preferences as humans do. However, here are 15 popular songs by The Roots that are often cited as being notable for their lyrics and wordplay:<br><br>
+
+"The Next Movement"<br>
+"What They Do"<br>
+"You Got Me"<br>
+"The Seed 2.0"<br>
+"Act Too (Love of My Life)"<br>
+"The Fire"<br> 
+"Proceed"<br>
+"The Lesson Pt. 1"<br>
+"Distortion to Static"<br>
+"Mellow My Man"<br>
+"Silent Treatment"<br>
+"Essaywhuman?!!!??!"<br>
+"Don't Say Nuthin'"<br>
+"Clones"<br>
+"Concerto of the Desperado"<br>
+</div>
+ <span class="set-green">Chat</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Use list comprehension to convert this into one line of JavaScript:
+brazilTeams.forEach((brazilCrew) => {
+    worldcupChamps.push(brazilCrew);
+});</span><br><br>
+
+ChatGPT Response :
+	<div class="myBox" style="border:2px solid #88ba1c;">
+worldcupChamps = [brazilCrew for brazilCrew in brazilTeams];
+</div>
+ <span class="set-green">Javascript one line function</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">Speak in the voice of Nnedi Okorafor. Consider a hypothetical restaurant created by bell hooks. Write a restaurant review for the restaurant. </span><br><br>
+
+	  ChatGPT Response (Scrollable):
+	<div class="myBox" style="border:2px solid #88ba1c;">
+Greetings, my fellow Earthlings. Today, I had the pleasure of visiting a unique establishment created by none other than the legendary bell hooks. The restaurant, located in the heart of the city, is a space of not only nourishment but also enlightenment.<br><br>
+
+From the moment I walked in, I was struck by the sense of warmth and community that permeated the atmosphere. The decor was simple, yet elegant, with vibrant colors and patterns that reflect a celebration of blackness and diversity.<br><br>
+
+As for the food, it was absolutely divine. Each dish was crafted with care and intention, using ingredients that were fresh and locally sourced. The menu itself was a work of art, featuring not only the typical fare but also innovative dishes that reflect the unique heritage and flavors of the African diaspora.<br><br>
+
+One of my favorite dishes was the jollof rice, a classic West African staple that was prepared to perfection. The vegetarian platter was another standout, featuring a variety of flavorful dishes that would make even the most ardent carnivore rethink their dietary choices.<br><br>
+
+But what truly sets this restaurant apart is its commitment to social justice and community engagement. Throughout the space, there are flyers and posters promoting local grassroots organizations and events, as well as resources for self-education and community building.<br><br>
+
+In all, this restaurant created by bell hooks is a must-visit for anyone looking for not only delicious food but also a truly transformative dining experience. I highly recommend it to all, and I look forward to my next visit.
+</div>
+ <span class="set-green">Provide views in a person's style of response</span>
+</div>
+
+<br><br><br>
+
+	<div class ="topmyBox">
+	<span class="highlight-blue-prompt">Typed Prompt: </span><br>
+	<span class="highlight-blue">What's the airport code for Zambia?</span><br><br>
+	 ChatGPT Response :
+	<div class="myBox" style="border:2px solid #88ba1c;">
+The airport code for Zambia is LUN, which stands for Kenneth Kaunda International Airport, located in Lusaka, the capital city of Zambia.
+</div>
+ <span class="set-green">Airport code extractor</span>
+</div>
+<!--2nd Column div -->
+		</div>
+
+<!--Row div -->
+	</div>
+	
+<div style="font: 22px sans-serif ">
+<br><br>	
+A range of responses above. Converting code to English, to creating tables for spreadsheets, filling in an author's voice for type of response and translating to other languages.
+<br><br>
+<img src="../screens/DeskPic6.png" height="auto" width="auto" style=" 
+        max-height: 100px; display:block; margin:auto;">
+<br><br>
+This page is open source, can get code and JavaScript here :  <a href="https://github.com/codejetz/codejetz.github.io/blob/master/chatgpta/index.html">ChatGPT-Samples Source</a>
+<br><br>
+Can send any questions you'd recommend asking ChatGPT-3, or prompts you've enjoyed trying to sourcejethub@gmail.com  or @codejetz .
+</div>
+</body>
+</html>
