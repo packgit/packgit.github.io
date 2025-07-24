@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Feeds</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .site-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+            transition: background-color 0.2s;
+        }
+        .site-item:hover {
+            background: #f0f0f0;
+        }
+        .site-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        .site-info {
+            flex: 1;
+        }
+        .site-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .site-url {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .submit-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+        .description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select Your Feeds</h1>
+        <p class="description">Choose the websites you'd like to follow by checking the boxes below.</p>
+        <form id="feedForm">
+            <div class="site-item">
+                <input type="checkbox" id="site0" name="selectedSites" value="The Berrics – https://theberrics.com/">
+                <div class="site-info">
+                    <div class="site-name">The Berrics</div>
+                    <div class="site-url">https://theberrics.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site1" name="selectedSites" value="Transworld Skateboarding – https://skateboarding.transworld.net/">
+                <div class="site-info">
+                    <div class="site-name">Transworld Skateboarding</div>
+                    <div class="site-url">https://skateboarding.transworld.net/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site2" name="selectedSites" value="SkateDeluxe – https://www.skatedeluxe.com/">
+                <div class="site-info">
+                    <div class="site-name">SkateDeluxe</div>
+                    <div class="site-url">https://www.skatedeluxe.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site3" name="selectedSites" value="Braille Skateboarding – https://www.brailleskateboarding.com/">
+                <div class="site-info">
+                    <div class="site-name">Braille Skateboarding</div>
+                    <div class="site-url">https://www.brailleskateboarding.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site4" name="selectedSites" value="Moxi Skates – https://www.moxiskates.com/">
+                <div class="site-info">
+                    <div class="site-name">Moxi Skates</div>
+                    <div class="site-url">https://www.moxiskates.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site5" name="selectedSites" value="SkateFresh – https://www.skatefresh.com/">
+                <div class="site-info">
+                    <div class="site-name">SkateFresh</div>
+                    <div class="site-url">https://www.skatefresh.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site6" name="selectedSites" value="Powerslide – https://www.powerslide.com/">
+                <div class="site-info">
+                    <div class="site-name">Powerslide</div>
+                    <div class="site-url">https://www.powerslide.com/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site7" name="selectedSites" value="U.S. Figure Skating – https://www.usfigureskating.org/">
+                <div class="site-info">
+                    <div class="site-name">U.S. Figure Skating</div>
+                    <div class="site-url">https://www.usfigureskating.org/</div>
+                </div>
+            </div>
+            <div class="site-item">
+                <input type="checkbox" id="site8" name="selectedSites" value="IceSkatingWorld – https://iceskatingworld.com/">
+                <div class="site-info">
+                    <div class="site-name">IceSkatingWorld</div>
+                    <div class="site-url">https://iceskatingworld.com/</div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Submit Selection</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('feedForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedSites = [];
+            const checkboxes = document.querySelectorAll('input[name="selectedSites"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                selectedSites.push(checkbox.value);
+            });
+            
+            if (selectedSites.length === 0) {
+                alert('Please select at least one site.');
+                return;
+            }
+            
+            // Here you would typically send the data to your server
+            console.log('Selected sites:', selectedSites);
+            alert('Thank you! Your selection has been recorded.');
+        });
+    </script>
+</body>
+</html>
