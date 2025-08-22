@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Runner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 39px;
+        }
+
+        .process-button {
+            background: linear-gradient(135deg, #90EE90 0%, #98FB98 100%);
+            color: #333;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(144, 238, 144, 0.3);
+            transform: translateY(-10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .process-button:hover::before {
+            left: 100%;
+        }
+
+        .process-button:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 12px 35px rgba(144, 238, 144, 0.4);
+        }
+
+        .process-button:active {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(144, 238, 144, 0.3);
+        }
+
+        .process-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: translateY(-10px);
+        }
+
+        .image-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            border: 2px dashed #ddd;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .pick-image-btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .pick-image-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+
+        .image-status {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            min-height: 20px;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 10px;
+            margin: 10px auto;
+            display: none;
+        }
+
+        .process-image-btn {
+            background: linear-gradient(135deg, #87CEEB 0%, #ADD8E6 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(135, 206, 235, 0.3);
+            display: inline-block;
+        }
+
+        .process-image-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(135, 206, 235, 0.4);
+        }
+
+        .process-image-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message-container {
+            margin-top: 30px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+
+            .process-button {
+                padding: 16px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Process Runner</h1>
+        
+        <!-- Image Upload Section -->
+        <div class="image-section">
+            <input type="file" id="imageInput" class="file-input" accept="image/*">
+            <button class="pick-image-btn" onclick="document.getElementById('imageInput').click()">
+                Pick Image
+            </button>
+            <div class="image-status" id="imageStatus"></div>
+            <img id="imagePreview" class="image-preview" alt="Image preview">
+            <button class="process-image-btn" id="processImageBtn" onclick="processImage()">
+                Process Image
+            </button>
+        </div>
+        
+        <div class="button-container">
+        </div>
+        
+        <div class="message-container" id="messageContainer">
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedImage = null;
+
+        // Handle image selection
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedImage = file;
+                const imageStatus = document.getElementById('imageStatus');
+                const imagePreview = document.getElementById('imagePreview');
+                const processImageBtn = document.getElementById('processImageBtn');
+                
+                // Show image preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+                
+                // Update status and enable process button
+                imageStatus.textContent = 'Image can be processed';
+                imageStatus.style.color = '#4CAF50';
+                processImageBtn.disabled = false;
+            }
+        });
+
+        function processImage() {
+            if (!selectedImage) {
+                showMessage('Please select an image first');
+                return;
+            }
+
+            const button = document.getElementById('processImageBtn');
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            
+            showMessage('Image processing running...', true);
+            
+            // Create FormData to send the image
+            const formData = new FormData();
+            formData.append('data', selectedImage);
+            
+            // Send POST request to the n8n webhook
+            fetch('https://addanapp.app.n8n.cloud/webhook/a079c56a-16fb-4ab3-9c13-517b2084dbce', {
+                method: 'POST',
+                body: formData,
+                signal: AbortSignal.timeout(180000) // 3 minutes = 180,000 milliseconds
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok');
+            })
+            .then(data => {
+                button.disabled = false;
+                button.textContent = 'Process Image';
+                showMessage('Image processing complete');
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                button.disabled = false;
+                button.textContent = 'Process Image';
+                if (error.name === 'TimeoutError') {
+                    showMessage('Request timed out after 3 minutes');
+                } else {
+                    showMessage('Error processing image: ' + error.message);
+                }
+                console.error('Error:', error);
+            });
+        }
+
+        function showMessage(text, isComplete = false) {
+            const messageContainer = document.getElementById('messageContainer');
+            const message = document.getElementById('message');
+            
+            if (isComplete) {
+                message.innerHTML = `<span class="loading"></span>${text}`;
+            } else {
+                message.innerHTML = text;
+            }
+            
+            message.classList.add('show');
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 3000);
+        }
+
+        function runFunction1() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Running...';
+            
+            showMessage('Function 1 running...', true);
+            
+            // Open the n8n webhook URL in a new tab
+            window.open('https://addanapp.app.n8n.cloud/webhook/53ca78b7-c43c-4036-a471-e5ed89e4d3fc', '_blank');
+            
+            // Simulate function execution
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = 'Function Email-List Call';
+                showMessage('Function Email-List complete');
+            }, 2000);
+        }
+
+        function runFunction2() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Running...';
+            
+            showMessage('Function 2 running...', true);
+            
+            // Open the n8n webhook URL in a new tab
+            window.open('https://addanapp.app.n8n.cloud/webhook/d63bb55c-23ce-4148-83b4-7ac7dac6b16e', '_blank');
+            
+            // Simulate function execution
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = 'Function Twtr Call';
+                showMessage('Function Twtr Call complete');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
