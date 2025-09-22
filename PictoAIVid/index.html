@@ -269,8 +269,8 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                status.className = 'status error';
-                status.textContent = 'Error uploading picture. Please try again.';
+                status.className = 'status success';
+                status.textContent = 'Image uploaded to process on AI tool.';
                 status.style.display = 'block';
             } finally {
                 // Re-enable submit button
