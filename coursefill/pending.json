@@ -1,0 +1,18 @@
+
+[
+  {"coursename": "Math 226 Calculus I", "unitsdone": 4, "college": "tba"},
+  {"coursename": "Math 227 Calculus II", "unitsdone": 4, "college": "tba"},
+  {"coursename": "Math 225 Introduction to Linear Algebra", "unitsdone": 3, "college": "tba"},
+  {"coursename": "CSC 230 Discrete Mathematical Structures for Computer Science", "unitsdone": 3, "college": "tba"},
+  {"coursename": "Phys 220/222 General Physics with Calculus I", "unitsdone": 3, "college": "tba"},
+  {"coursename": "Phys 230/237 General Physics with Calculus II", "unitsdone": 4, "college": "tba"},
+  {"coursename": "CSC 256 Machine Structures", "unitsdone": 4, "college": "tba"},
+  {"coursename": "CSC 300 Ethics, Communication, and Tools for Software Development", "unitsdone": 3, "college": "tba"},
+  {"coursename": "CSC 413 Software Development", "unitsdone": 3, "college": "tba"},
+  {"coursename": "Math 324 Probability and Statistics with Computing", "unitsdone": 3, "college": "tba"},
+  {"coursename": "CSC 415 Operating System Principles", "unitsdone": 3, "college": "tba"},
+  {"coursename": "CCS 510 Analysis of Algorithms", "unitsdone": 3, "college": "tba"},
+  {"coursename": "CSC 648 Software Engineering", "unitsdone": 3, "college": "tba"},
+  {"coursename": "Upper Level CS Electives", "unitsdone": 15, "college": "tba"},
+  {"coursename": "Upper Division General Electives", "unitsdone": 9, "college": "tba"}
+]
