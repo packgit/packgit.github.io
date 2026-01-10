@@ -2,22 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Course Dashboard</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
       background: #f5f5f5;
+      min-height: 100vh;
     }
+
     h1 {
       margin-top: 0;
       margin-bottom: 20px;
+      text-align: center;
+      font-size: clamp(1.4rem, 5vw, 2rem);
     }
+
+    /* Chart section - full width on mobile, 60% height */
+    #chart-section {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 10px;
+    }
+
+    .chart-label {
+      min-width: 140px;
+      text-align: right;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #333;
+      flex-shrink: 0;
+    }
+
+    .chart-label strong {
+      display: block;
+    }
+
+    .chart-container {
+      text-align: center;
+      flex: 1;
+    }
+
+    .chart-container h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+    }
+
+    #classesChart {
+      max-width: 100%;
+      max-height: 60vh;
+      width: 260px;
+      height: 260px;
+      display: block;
+    }
+
+    .percent-legend {
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      color: #444;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .percent-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .percent-item strong {
+      color: #222;
+    }
+
+    /* Desktop: two column layout */
     .dashboard {
       display: flex;
       gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
+
     .column {
       flex: 1;
       border-radius: 8px;
@@ -26,104 +103,163 @@
       min-height: 200px;
       background: #ffffff;
     }
+
     #completed-column {
       background-color: #e3f9e5;
     }
+
     .column h2, .column h3 {
       margin-top: 0;
       font-size: 1.2rem;
       border-bottom: 1px solid #ddd;
       padding-bottom: 8px;
     }
+
     .column h3 {
       font-size: 1rem;
       margin-top: 20px;
     }
+
     ul {
       list-style: none;
       padding-left: 0;
       margin: 0;
     }
-    #completed-list li {
+
+    #completed-list li, #right-completed-list li {
       background-color: #ffe8cc;
       padding: 8px 10px;
       margin-bottom: 6px;
       border-radius: 4px;
-      border-bottom: none;
     }
-    #right-completed-list li {
-      background-color: #ffe8cc;
-      padding: 8px 10px;
-      margin-bottom: 6px;
-      border-radius: 4px;
-      border-bottom: none;
-    }
+
     #pending-list li {
       background-color: #e0f0ff;
       padding: 8px 10px;
       margin-bottom: 6px;
       border-radius: 4px;
-      border-bottom: none;
     }
+
     .course-name {
       font-weight: bold;
+      display: block;
     }
+
     .course-meta {
       color: #444;
       font-size: 0.85rem;
     }
+
     .error {
       color: #b00020;
       font-size: 0.9rem;
       margin-top: 8px;
     }
+
+    /* Mobile: stack layout, show only right column */
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      #completed-column {
+        display: none; /* Hide left column on mobile */
+      }
+
+      #pending-column {
+        order: 2; /* Ensure right column shows below chart */
+      }
+
+      .chart-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chart-label {
+        text-align: center;
+        min-width: auto;
+        order: 1;
+      }
+
+      #classesChart {
+        width: 100%;
+        max-height: 60vh;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .column {
+        padding: 12px;
+      }
+
+      #pending-column h2 {
+        font-size: 1.1rem;
+      }
+
+      #pending-column h3 {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* Very small screens */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .column li {
+        padding: 6px 8px;
+        font-size: 0.9rem;
+      }
+
+      .course-name {
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="page-container">
-    <h1>Course Dashboard</h1>
+  <h1>Course Dashboard</h1>
 
-    <!-- Pie chart + left label -->
-    <section id="chart-section" style="margin-bottom: 20px;">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
-        <!-- Left-side label -->
+  <!-- Pie chart section -->
+  <section id="chart-section">
+    <div class="chart-wrapper">
+      <div class="chart-label">
+        <strong>Classes Overview</strong>
+        <div>Share of finished vs pending courses</div>
+      </div>
 
-
-        <!-- Chart and percentages -->
-        <div style="text-align: center;">
-          <h2 style="margin-bottom: 6px;">Classes Overview</h2>
-          <canvas id="classesChart" width="260" height="260"></canvas>
-          <div style="margin-top: 8px; font-size: 0.9rem; color: #444;">
-            <span style="margin-right: 24px;">
-              Classes Completed <strong id="completed-percent">0%</strong>
-            </span>
-            <span>
-              Classes Pending <strong id="pending-percent">0%</strong>
-            </span>
-          </div>
+      <div class="chart-container">
+        <canvas id="classesChart" width="260" height="260"></canvas>
+        <div class="percent-legend">
+          <span class="percent-item">
+            Classes Completed <strong id="completed-percent">0%</strong>
+          </span>
+          <span class="percent-item">
+            Classes Pending <strong id="pending-percent">0%</strong>
+          </span>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div class="dashboard">
-      <!-- Left: Completed Courses -->
-      <div class="column" id="completed-column">
-        <h2>Completed Courses</h2>
-        <ul id="completed-list"></ul>
-        <div class="error" id="completed-error"></div>
-      </div>
+  <div class="dashboard">
+    <!-- Left: Completed Courses (hidden on mobile) -->
+    <div class="column" id="completed-column">
+      <h2>Completed Courses</h2>
+      <ul id="completed-list"></ul>
+      <div class="error" id="completed-error"></div>
+    </div>
 
-      <!-- Right: Completed (Summary) + Pending -->
-      <div class="column" id="pending-column">
-        <h2>Completed (Summary) & Pending</h2>
-
-        <h3>Completed (same as left)</h3>
-        <ul id="right-completed-list"></ul>
-
-        <h3>Pending</h3>
-        <ul id="pending-list"></ul>
-        <div class="error" id="pending-error"></div>
-      </div>
+    <!-- Right: Completed (Summary) + Pending (shown on all devices) -->
+    <div class="column" id="pending-column">
+      <h2>All Courses</h2>
+      <h3>✅ Completed</h3>
+      <ul id="right-completed-list"></ul>
+      <h3>⏳ Pending</h3>
+      <ul id="pending-list"></ul>
+      <div class="error" id="pending-error"></div>
     </div>
   </div>
 
@@ -149,7 +285,6 @@
         metaDiv.textContent = `Units: ${units} · College: ${college}`;
 
         li.appendChild(nameSpan);
-        li.appendChild(document.createElement("br"));
         li.appendChild(metaDiv);
 
         ul.appendChild(li);
@@ -206,7 +341,7 @@
       // Rotate 180° counter-clockwise around center
       ctx.save();
       ctx.translate(centerX, centerY);
-      ctx.rotate(-Math.PI);  // 180° CCW
+      ctx.rotate(-Math.PI);
       ctx.translate(-centerX, -centerY);
 
       let startAngle = -Math.PI / 2;
@@ -225,11 +360,11 @@
         startAngle = endAngle;
       });
 
-      ctx.restore(); // back to normal
+      ctx.restore();
 
-      // Draw readable labels in normal orientation (rotated angles)
-      startAngle = -Math.PI / 2 + Math.PI; // adjust for 180° rotation
-      data.forEach((slice, index) => {
+      // Draw readable labels
+      startAngle = -Math.PI / 2 + Math.PI;
+      data.forEach((slice) => {
         if (slice.value <= 0) return;
         
         const sliceAngle = (slice.value / total) * Math.PI * 2;
@@ -249,7 +384,6 @@
         startAngle += sliceAngle;
       });
 
-      // Outline
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
       ctx.strokeStyle = "#ffffff";
@@ -257,7 +391,6 @@
       ctx.stroke();
     }
 
-    // Load completed courses
     loadJson("completed.json", function(data) {
       completedCount = Array.isArray(data) ? data.length : 0;
       renderCourses(data, "completed-list");
@@ -266,7 +399,6 @@
       drawPie();
     }, "completed-error");
 
-    // Load pending courses
     loadJson("pending.json", function(data) {
       pendingCount = Array.isArray(data) ? data.length : 0;
       renderCourses(data, "pending-list");
