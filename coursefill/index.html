@@ -164,30 +164,44 @@
   </style>
 </head>
 <body>
-    <center><h1>Course Dashboard to be Completed</h1></center>
+  <div class="page-container">
+    <h1>Course Dashboard</h1>
 
-  <div class="dashboard">
-    <!-- Left: Completed Courses -->
-    <div class="column" id="completed-column">
-      <h2>Completed Courses</h2>
-      <ul id="completed-list"></ul>
-      <div class="error" id="completed-error"></div>
-    </div>
+    <!-- Pie chart section -->
+    <section id="chart-section" style="margin-bottom: 20px; text-align: center;">
+      <h2>Classes Overview</h2>
+      <canvas id="classesChart" width="260" height="260"></canvas>
+      <div style="margin-top: 8px; font-size: 0.9rem; color: #444;">
+        <span style="margin-right: 12px;">🟧 Classes Completed</span>
+        <span>🟦 Classes Pending</span>
+      </div>
+    </section>
 
-    <!-- Right: Completed (on top) + Pending (below) -->
-    <div class="column" id="pending-column">
-      <h2>Completed (Summary) & Pending</h2>
+    <div class="dashboard">
+      <!-- Left: Completed Courses -->
+      <div class="column" id="completed-column">
+        <h2>Completed Courses</h2>
+        <ul id="completed-list"></ul>
+        <div class="error" id="completed-error"></div>
+      </div>
 
-      <h3>Completed (same as left)</h3>
-      <ul id="right-completed-list"></ul>
+      <!-- Right: Completed (Summary) + Pending -->
+      <div class="column" id="pending-column">
+        <h2>Completed (Summary) & Pending</h2>
 
-      <h3>Pending</h3>
-      <ul id="pending-list"></ul>
-      <div class="error" id="pending-error"></div>
+        <h3>Completed (same as left)</h3>
+        <ul id="right-completed-list"></ul>
+
+        <h3>Pending</h3>
+        <ul id="pending-list"></ul>
+        <div class="error" id="pending-error"></div>
+      </div>
     </div>
   </div>
 
   <script>
+    /* ---------- Existing list rendering & JSON loading ---------- */
+
     function renderCourses(courses, listElementId) {
       const ul = document.getElementById(listElementId);
       ul.innerHTML = "";
@@ -233,18 +247,74 @@
         });
     }
 
+    let completedCount = 0;
+    let pendingCount = 0;
+
     // Load completed courses once, render to both left and top of right
     loadJson("completed.json", function(data) {
-      renderCourses(data, "completed-list");       // left column
-      renderCourses(data, "right-completed-list"); // top of right column
+      completedCount = Array.isArray(data) ? data.length : 0;
+      renderCourses(data, "completed-list");
+      renderCourses(data, "right-completed-list");
+      drawPie(); // try to draw after we know completedCount
     }, "completed-error");
 
     // Load pending courses for bottom of right column
     loadJson("pending.json", function(data) {
+      pendingCount = Array.isArray(data) ? data.length : 0;
       renderCourses(data, "pending-list");
+      drawPie(); // try to draw after we know pendingCount
     }, "pending-error");
+
+    /* ---------- Simple canvas pie chart (Completed vs Pending) ---------- */
+    function drawPie() {
+      const total = completedCount + pendingCount;
+      if (total === 0) return; // nothing to draw
+
+      const canvas = document.getElementById("classesChart");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+
+      // Clear previous
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+
+      // Angles
+      const completedAngle = (completedCount / total) * Math.PI * 2;
+      const pendingAngle = (pendingCount / total) * Math.PI * 2;
+
+      // Slice 1: Completed (orange)
+      let startAngle = -Math.PI / 2; // start at top
+      let endAngle = startAngle + completedAngle;
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = "#ffe8cc"; // same light orange as list
+      ctx.fill();
+
+      // Slice 2: Pending (blue)
+      startAngle = endAngle;
+      endAngle = startAngle + pendingAngle;
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = "#e0f0ff"; // same light blue as list
+      ctx.fill();
+
+      // Optional thin white outline
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
   </script>
 </body>
+
 </html>
 
 
