@@ -202,6 +202,37 @@
       box-sizing: border-box;
     }
 
+    /* NEW: Estimated Cost Summary */
+    #cost-summary {
+      display: none;
+      background: linear-gradient(135deg, #e3f9e5 0%, #d1f2d5 100%);
+      border: 2px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #065f46;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.2);
+      animation: slideDown 0.3s ease-out;
+    }
+
+    #cost-summary.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .course-name {
       font-weight: bold;
       display: block;
@@ -308,6 +339,12 @@
       <ul id="right-completed-list"></ul>
       <h3>⏳ Pending</h3>
       <ul id="pending-list"></ul>
+      
+      <!-- NEW: Estimated Cost Summary -->
+      <div id="cost-summary">
+        <strong>Estimated Cost:</strong> <span id="total-cost">$0</span>
+      </div>
+      
       <div class="error" id="pending-error"></div>
     </div>
   </div>
@@ -316,6 +353,7 @@
     let completedCount = 0;
     let pendingCount = 0;
     let pendingCourses = [];
+    let activeCostButtons = new Set(); // Track which cost buttons are active
 
     // Regular course renderer
     function renderCourses(courses, listElementId) {
@@ -428,6 +466,33 @@
       });
     }
 
+    // NEW: Calculate total cost of active cost buttons
+    function calculateTotalCost() {
+      let total = 0;
+      activeCostButtons.forEach(index => {
+        const course = pendingCourses[index];
+        if (course && course.cost) {
+          total += Number(course.cost);
+        }
+      });
+      return total;
+    }
+
+    // NEW: Update cost summary display
+    function updateCostSummary() {
+      const total = calculateTotalCost();
+      const costEl = document.getElementById("total-cost");
+      const summaryEl = document.getElementById("cost-summary");
+      
+      costEl.textContent = `$${total.toLocaleString()}`;
+      
+      if (total > 0) {
+        summaryEl.classList.add("show");
+      } else {
+        summaryEl.classList.remove("show");
+      }
+    }
+
     function handleSplitButtonClick(e) {
       const btn = e.currentTarget;
       const index = parseInt(btn.dataset.courseIndex);
@@ -441,14 +506,15 @@
           // Revert to "Cost"
           btn.textContent = "Cost";
           btn.classList.remove("active");
+          activeCostButtons.delete(index);
         } else {
-          // Show cost value
-
-            const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
-
+          // Show cost value and track as active
+          const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
           btn.textContent = cost;
           btn.classList.add("active");
+          activeCostButtons.add(index);
         }
+        updateCostSummary();
       } else if (type === "length") {
         if (btn.classList.contains("active")) {
           // Revert to "Length"
