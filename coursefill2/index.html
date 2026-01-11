@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+    }
+
+    /* Chart section */
+    #chart-section {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 10px;
+    }
+
+    .chart-label {
+      min-width: 140px;
+      text-align: right;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #333;
+      flex-shrink: 0;
+    }
+
+    .chart-label strong {
+      display: block;
+    }
+
+    .chart-container {
+      text-align: center;
+      flex: 1;
+    }
+
+    #classesChart {
+      max-width: 100%;
+      max-height: 60vh;
+      width: 260px;
+      height: 260px;
+      display: block;
+    }
+
+    .percent-legend {
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      color: #444;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .percent-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .percent-item strong {
+      color: #222;
+    }
+
+    /* Desktop layout */
+    .dashboard {
+      display: flex;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .column {
+      flex: 1;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-height: 200px;
+      background: #ffffff;
+    }
+
+    #completed-column {
+      background-color: #e3f9e5;
+    }
+
+    .column h2, .column h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    .column h3 {
+      font-size: 1rem;
+      margin-top: 70px;
+    }
+
+    /* Total Units Styling */
+    .total-units {
+      margin: 12px 0 10px auto;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #d1f2d5, #a7f3d0);
+      color: #000000;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(16,185,129,0.2);
+      display: inline-block;
+      float: right;
+    }
+
+    /* Completed course items */
+    #completed-list li, #right-completed-list li {
+      background-color: #ffe8cc;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 4px;
+    }
+
+    /* Pending course items */
+    #pending-list .pending-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background-color: #e0f0ff;
+      margin-bottom: 6px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .pending-main-row {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .pending-main {
+      flex: 1;
+      padding: 8px 12px;
+    }
+
+    /* Split action button - 50/50 top/bottom */
+    .pending-action {
+      flex: 0 0 20%;
+      background-color: #22c55e;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .action-top, .action-bottom {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .action-top {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .action-top.active, .action-bottom.active {
+      background: rgba(255,255,255,0.15);
+      font-size: 0.65rem;
+    }
+
+    /* Slide-out details row */
+    .pending-expand {
+      max-height: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-top: 2px solid #f59e0b;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+      width: 100%;
+    }
+
+    .pending-expand.open {
+      max-height: 50px;
+    }
+
+    .pending-expand-content {
+      font-size: 0.8rem;
+      color: #92400e;
+      line-height: 1.2;
+      padding: 6px 12px;
+      font-weight: 500;
+      box-sizing: border-box;
+    }
+
+    /* Estimated Cost Summary */
+    #cost-summary {
+      display: none;
+      background: linear-gradient(135deg, #e3f9e5 0%, #d1f2d5 100%);
+      border: 2px solid #10b981;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #065f46;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.2);
+      animation: slideDown 0.3s ease-out;
+    }
+
+    #cost-summary.show {
+      display: block;
+    }
+
+    #time-summary {
+      display: none;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #92400e;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(245, 158, 11, 0.2);
+      animation: slideDown 0.3s ease-out;
+    }
+
+    #time-summary.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .course-name {
+      font-weight: bold;
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .course-meta {
+      color: #444;
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+
+    .error {
+      color: #b00020;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    /* Debug info */
+    #debug {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 10px 0;
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      #completed-column {
+        display: none;
+      }
+
+      #classesChart {
+        width: 100%;
+        max-height: 60vh;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .chart-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chart-label {
+        text-align: center;
+        min-width: auto;
+      }
+
+      .column {
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .pending-main {
+        padding: 8px 10px;
+      }
+
+      .action-top, .action-bottom {
+        font-size: 0.65rem;
+      }
+    }
+
+.overall-cost-btn, .overall-time-btn {
+  margin: 12px 0 10px auto !important;  /* Same as .total-units */
+  padding: 6px 12px !important;        /* Same as .total-units */
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;                   /* Same as .total-units */
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(16,185,129,0.2);
+  display: inline-block;
+  float: right;
+  width: auto;                         /* Let it size naturally */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.overall-time-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 2px 4px rgba(245,158,11,0.2);
+}
+
+.overall-cost-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-1px);
+}
+
+.overall-time-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  transform: translateY(-1px);
+}
+
+.overall-cost-btn.active, .overall-time-btn.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+      
+      #pending-column h3:first-of-type {
+  margin-top: 21px !important; /* Reduced from ~70px (70% reduction) */
+}
+      
+  </style>
+</head>
+<body>
+  <h1>Course Dashboard</h1>
+
+  <!-- Debug section -->
+  <div id="debug">
+    <strong>Debug Info:</strong> 
+    <span id="debug-completed">completed.json: loading...</span> | 
+    <span id="debug-pending">pending.json: loading...</span>
+  </div>
+
+  <!-- Chart section -->
+  <section id="chart-section">
+    <div class="chart-wrapper">
+      <div class="chart-label">
+        <strong>Classes Overview</strong>
+        <div>Share of finished vs pending courses</div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="classesChart" width="280" height="280"></canvas>
+        <div class="percent-legend">
+          <span class="percent-item">
+            🟧 Classes Completed <strong id="completed-percent">0%</strong>
+          </span>
+          <span class="percent-item">
+            🟦 Classes Pending <strong id="pending-percent">0%</strong>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard">
+    <!-- Left column (hidden on mobile) -->
+    <div class="column" id="completed-column">
+      <h2>✅ Completed Courses</h2>
+      <ul id="completed-list"></ul>
+      <div id="total-units-left" class="total-units"></div>
+      <div class="error" id="completed-error"></div>
+    </div>
+
+    <!-- Right column (always visible) -->
+    <div class="column" id="pending-column">
+      <h2>All Courses</h2>
+      <h3>✅ Completed</h3>
+      <ul id="right-completed-list"></ul>
+      <div id="total-units-right" class="total-units"></div>
+        <h3>⏳ Pending</h3>
+        <div class="button-row">
+          <button id="overall-cost-btn" class="overall-cost-btn">Overall Cost View</button>
+          <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
+        </div>
+        <ul id="pending-list"></ul>
+        <div class="pending-spacer"></div>
+      
+      <div id="cost-summary">
+        <strong>Estimated Cost:</strong> <span id="total-cost">$0</span>
+      </div>
+      <div id="time-summary">
+        <strong>Estimated Time:</strong> <span id="total-time">0 months</span>
+      </div>
+      
+      <div class="error" id="pending-error"></div>
+    </div>
+  </div>
+
+  <script>
+    let completedCount = 0;
+    let pendingCount = 0;
+    let pendingCourses = [];
+    let activeCostButtons = new Set();
+    let activeLengthButtons = new Set();
+
+    // ✅ FIXED: renderCourses only updates its own list and total
+    function renderCourses(courses, listElementId) {
+      const ul = document.getElementById(listElementId);
+      if (!ul) {
+        console.error("List element not found:", listElementId);
+        return;
+      }
+      
+      ul.innerHTML = "";
+      
+      if (!courses || !Array.isArray(courses)) {
+        console.warn("Expected array for", listElementId, "got:", courses);
+        document.getElementById(`debug-${listElementId.includes('completed') ? 'completed' : 'pending'}`).textContent += " (not array)";
+        return;
+      }
+
+      let totalUnits = 0;
+      console.log(`Rendering ${courses.length} courses to ${listElementId}`);
+
+      courses.forEach((course) => {
+        const li = document.createElement("li");
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : 0;
+        const college = course.college || "n/a";
+        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+
+        li.appendChild(nameSpan);
+        li.appendChild(metaDiv);
+        ul.appendChild(li);
+
+        totalUnits += Number(units) || 0;
+      });
+
+      // ✅ FIXED: Only update the correct total display for this list
+      const totalEl = listElementId === "completed-list" 
+        ? document.getElementById("total-units-left")
+        : document.getElementById("total-units-right");
+
+      if (totalEl) {
+        totalEl.textContent = `Total Completed Units: ${totalUnits}`;
+      }
+    }
+
+    // ✅ FIXED: renderPendingCourses - handles both array and {courses: [...]}
+    function renderPendingCourses(coursesData) {
+      const ul = document.getElementById("pending-list");
+      ul.innerHTML = "";
+      
+      let courses = coursesData;
+      if (coursesData && coursesData.courses && Array.isArray(coursesData.courses)) {
+        courses = coursesData.courses; // Handle {courses: [...]}
+      }
+      
+      if (!courses || !Array.isArray(courses)) {
+        console.warn("Expected array for pending courses, got:", coursesData);
+        return;
+      }
+
+      courses.forEach((course, index) => {
+        const li = document.createElement("li");
+        li.className = "pending-item";
+
+        const mainRow = document.createElement("div");
+        mainRow.className = "pending-main-row";
+
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "pending-main";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : "?";
+        const college = course.college || "n/a";
+        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+
+        mainDiv.appendChild(nameSpan);
+        mainDiv.appendChild(metaDiv);
+        mainRow.appendChild(mainDiv);
+
+        const actionDiv = document.createElement("div");
+        actionDiv.className = "pending-action";
+
+        const costBtn = document.createElement("button");
+        costBtn.className = "action-top";
+        costBtn.textContent = "Cost";
+        costBtn.dataset.courseIndex = index;
+        costBtn.dataset.type = "cost";
+
+        const lengthBtn = document.createElement("button");
+        lengthBtn.className = "action-bottom";
+        lengthBtn.textContent = "Length";
+        lengthBtn.dataset.courseIndex = index;
+        lengthBtn.dataset.type = "length";
+
+        actionDiv.appendChild(costBtn);
+        actionDiv.appendChild(lengthBtn);
+        mainRow.appendChild(actionDiv);
+
+        const expandDiv = document.createElement("div");
+        expandDiv.id = "expand-" + index;
+        expandDiv.className = "pending-expand";
+
+        const expandContent = document.createElement("div");
+        expandContent.className = "pending-expand-content";
+        expandContent.textContent = `More info: ${course.coursename || "Pending course"} - ${course.college || 'N/A'} • Units: ${course.unitsdone || '?'}`;
+
+        expandDiv.appendChild(expandContent);
+
+        li.appendChild(mainRow);
+        li.appendChild(expandDiv);
+        ul.appendChild(li);
+      });
+
+      attachSplitButtonListeners();
+    }
+
+    function attachSplitButtonListeners() {
+      document.querySelectorAll(".action-top").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
+      });
+      document.querySelectorAll(".action-bottom").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
+      });
+    }
+
+    function calculateTotalCost() {
+      let total = 0;
+      activeCostButtons.forEach(index => {
+        const course = pendingCourses[index];
+        if (course && course.cost) {
+          total += Number(course.cost);
+        }
+      });
+      return total;
+    }
+
+function updateCostSummary() {
+  const total = calculateTotalCost();
+  const costEl = document.getElementById("total-cost");
+  const summaryEl = document.getElementById("cost-summary");
+  
+  // Calculate total units from active cost buttons
+  let totalPendingUnits = 0;
+  activeCostButtons.forEach(index => {
+    const course = pendingCourses[index];
+    if (course && course.unitsdone != null) {
+      totalPendingUnits += Number(course.unitsdone) || 0;
+    }
+  });
+  
+  costEl.textContent = `$${total.toLocaleString()}`;
+  
+  // Update summary text with pending units count
+  summaryEl.innerHTML = `
+    <strong>Estimated Cost for ${totalPendingUnits} Pending Units:</strong> 
+    <span id="total-cost">$${total.toLocaleString()}</span>
+  `;
+  
+  if (total > 0) {
+    summaryEl.classList.add("show");
+  } else {
+    summaryEl.classList.remove("show");
+  }
+}
+
+
+function calculateTotalTime() {
+  let totalMonths = 0;
+  let estimatedMonths = 0;
+
+  activeLengthButtons.forEach(index => {
+    const course = pendingCourses[index];
+    if (course && course.length) {
+      const lengthStr = course.length.toString().toLowerCase();
+      const monthMatch = lengthStr.match(/(\d+)\s*(months?|mo)/i);
+      if (monthMatch) {
+        totalMonths += parseInt(monthMatch[1], 10);
+      }
+    }
+  });
+
+  // If totalMonths is 0, return 0 (nothing displayed)
+  if (totalMonths === 0) {
+    return 0;
+  }
+
+  const remainder = totalMonths % 12;
+
+  // ✅ Special case: 12 months → 12/2 = 6 months
+  if (remainder === 0) {
+    estimatedMonths = totalMonths / 2;
+  } 
+  // ✅ MOD 12 = 6 case
+  else if (remainder === 6) {
+    estimatedMonths = (totalMonths - remainder) / 2 + 6;
+  } 
+  // ✅ All other cases (like your 38 months example)
+  else {
+    estimatedMonths = (totalMonths - remainder) / 2 + 6;
+  }
+
+  return estimatedMonths;
+}
+
+
+
+
+function updateTimeSummary() {
+  const totalMonths = calculateTotalTime();
+  const timeEl = document.getElementById("total-time");
+  const summaryEl = document.getElementById("time-summary");
+  
+  if (totalMonths > 0) {
+    // Calculate years and remaining months
+    const years = Math.floor(totalMonths / 12);
+    const remainingMonths = totalMonths % 12;
+    
+ let displayText;
+    if (years === 0) {
+      displayText = `${totalMonths} months`;
+    } else if (remainingMonths === 0) {
+      displayText = `${totalMonths} months (${years} Year${years === 1 ? '' : 's'})`;
+    } else {
+      displayText = `${totalMonths} months (${years} Year${years === 1 ? '' : 's'}, ${remainingMonths} months)`;
+    }
+    
+    timeEl.textContent = displayText;
+    summaryEl.classList.add("show");
+  } else {
+    summaryEl.classList.remove("show");
+  }
+}
+
+
+
+    function handleSplitButtonClick(e) {
+      const btn = e.currentTarget;
+      const index = parseInt(btn.dataset.courseIndex);
+      const type = btn.dataset.type;
+      const course = pendingCourses[index];
+      
+      if (!course) return;
+
+      if (type === "cost") {
+        if (btn.classList.contains("active")) {
+          btn.textContent = "Cost";
+          btn.classList.remove("active");
+          activeCostButtons.delete(index);
+        } else {
+          const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
+          btn.textContent = cost;
+          btn.classList.add("active");
+          activeCostButtons.add(index);
+        }
+        updateCostSummary();
+      } else if (type === "length") {
+        if (btn.classList.contains("active")) {
+          btn.textContent = "Length";
+          btn.classList.remove("active");
+          activeLengthButtons.delete(index);
+        } else {
+          const length = course.length || course.duration || course.hours || "TBD";
+          btn.textContent = length;
+          btn.classList.add("active");
+          activeLengthButtons.add(index);
+        }
+        updateTimeSummary();
+      }
+    }
+
+    function loadJson(url, onSuccess, onErrorElementId, debugId) {
+      // ✅ Try fetch first, fallback to embedded sample data
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then(data => {
+          console.log(`✅ Loaded ${url}:`, data);
+          document.getElementById(debugId).textContent = `${url}: ${Array.isArray(data) ? data.length : 'object'} items OK`;
+          onSuccess(data);
+        })
+        .catch(err => {
+          console.warn(`❌ ${url} failed (${err.message}), using sample data`);
+          document.getElementById(debugId).textContent = `${url}: failed, using sample (${err.message})`;
+          
+          // ✅ FALLBACK: Sample data so you can test immediately
+          const sampleData = [
+            {
+              "coursename": "Sample Math 101",
+              "unitsdone": 3,
+              "college": "Santa Clara College",
+              "cost": 300,
+              "length": "6 months"
+            },
+            {
+              "coursename": "Sample English 102", 
+              "unitsdone": 4,
+              "college": "Mission College",
+              "cost": 250,
+              "length": "4 months"
+            }
+          ];
+          
+          onSuccess(sampleData);
+        });
+    }
+
+    function updatePercentages() {
+      const total = completedCount + pendingCount;
+      const completedEl = document.getElementById("completed-percent");
+      const pendingEl = document.getElementById("pending-percent");
+      if (completedEl) {
+        completedEl.textContent = total > 0 ? ((completedCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+      if (pendingEl) {
+        pendingEl.textContent = total > 0 ? ((pendingCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+    }
+
+    function drawPie() {
+      const total = completedCount + pendingCount;
+      if (total === 0) return;
+
+      const canvas = document.getElementById("classesChart");
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+
+      const data = [
+        { value: completedCount, color: "#ffe8cc" },
+        { value: pendingCount, color: "#e0f0ff" }
+      ];
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(-Math.PI);
+      ctx.translate(-centerX, -centerY);
+
+      let startAngle = -Math.PI / 2;
+      data.forEach(slice => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = slice.color;
+        ctx.fill();
+        startAngle = endAngle;
+      });
+      ctx.restore();
+
+      startAngle = -Math.PI / 2 + Math.PI;
+      data.forEach(slice => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const midAngle = startAngle + sliceAngle / 2;
+        const labelRadius = radius * 0.7;
+        const labelX = centerX + labelRadius * Math.cos(midAngle);
+        const labelY = centerY + labelRadius * Math.sin(midAngle);
+
+        const percentage = ((slice.value / total) * 100).toFixed(0) + "%";
+        ctx.fillStyle = "#222";
+        ctx.font = `bold ${Math.min(16, canvas.width * 0.06)}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(percentage, labelX, labelY);
+
+        startAngle += sliceAngle;
+      });
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // ✅ Load data with improved error handling and sample fallback
+    loadJson("completed.json", function(data) {
+      completedCount = Array.isArray(data) ? data.length : 0;
+      renderCourses(data, "completed-list");
+      renderCourses(data, "right-completed-list");
+      updatePercentages();
+      drawPie();
+    }, "completed-error", "debug-completed");
+
+    loadJson("pending.json", function(data) {
+      pendingCount = Array.isArray(data) ? data.length : 0;
+      pendingCourses = data;
+      renderPendingCourses(data);
+      updatePercentages();
+      drawPie();
+    }, "pending-error", "debug-pending");
+      
+
+let overallCostViewActive = false;
+let overallTimeViewActive = false;
+
+function toggleOverallCostView() {
+  const btn = document.getElementById("overall-cost-btn");
+  const costButtons = document.querySelectorAll(".action-top");
+  
+  overallCostViewActive = !overallCostViewActive;
+  
+  if (overallCostViewActive) {
+    btn.textContent = "Overall Cost View - Toggle";
+    btn.classList.add("active");
+    costButtons.forEach((btn, index) => {
+      if (!btn.classList.contains("active")) btn.click();
+    });
+  } else {
+    btn.textContent = "Overall Cost View";
+    btn.classList.remove("active");
+    costButtons.forEach((btn, index) => {
+      if (btn.classList.contains("active")) btn.click();
+    });
+  }
+}
+
+function toggleOverallTimeView() {
+  const btn = document.getElementById("overall-time-btn");
+  const timeButtons = document.querySelectorAll(".action-bottom");
+  
+  overallTimeViewActive = !overallTimeViewActive;
+  
+  if (overallTimeViewActive) {
+    btn.textContent = "Overall Time View - Toggle";
+    btn.classList.add("active");
+    timeButtons.forEach((btn, index) => {
+      if (!btn.classList.contains("active")) btn.click();
+    });
+  } else {
+    btn.textContent = "Overall Time View";
+    btn.classList.remove("active");
+    timeButtons.forEach((btn, index) => {
+      if (btn.classList.contains("active")) btn.click();
+    });
+  }
+}
+
+// ✅ UPDATED: Add both button listeners
+function attachSplitButtonListeners() {
+  document.querySelectorAll(".action-top").forEach((btn) => {
+    btn.addEventListener("click", handleSplitButtonClick);
+  });
+  document.querySelectorAll(".action-bottom").forEach((btn) => {
+    btn.addEventListener("click", handleSplitButtonClick);
+  });
+  
+  const costBtn = document.getElementById("overall-cost-btn");
+  const timeBtn = document.getElementById("overall-time-btn");
+  if (costBtn) costBtn.addEventListener("click", toggleOverallCostView);
+  if (timeBtn) timeBtn.addEventListener("click", toggleOverallTimeView);
+}
+
+  </script>
+</body>
+</html>
