@@ -123,7 +123,7 @@
       border-radius: 4px;
     }
 
-    /* Pending course items - flex layout with 20% right green panel */
+    /* Pending course items */
     #pending-list .pending-item {
       display: flex;
       flex-direction: column;
@@ -145,32 +145,38 @@
       padding: 8px 12px;
     }
 
+    /* Split action button - 50/50 top/bottom */
     .pending-action {
       flex: 0 0 20%;
       background-color: #22c55e;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      position: relative;
     }
 
-    .pending-action button {
+    .action-top, .action-bottom {
+      flex: 1;
       border: none;
       background: transparent;
       color: #ffffff;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      padding: 8px 12px;
       cursor: pointer;
-      width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
     }
 
-    .pending-action button:hover {
-      background: rgba(255,255,255,0.2);
+    .action-top {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .action-top.active, .action-bottom.active {
+      background: rgba(255,255,255,0.15);
+      font-size: 0.65rem;
     }
 
     /* Slide-out details row */
@@ -256,9 +262,8 @@
         padding: 8px 10px;
       }
 
-      .pending-action button {
-        font-size: 0.75rem;
-        padding: 6px 8px;
+      .action-top, .action-bottom {
+        font-size: 0.65rem;
       }
     }
   </style>
@@ -337,7 +342,7 @@
       });
     }
 
-    // Pending course renderer with slide-out row
+    // Pending course renderer with split buttons
     function renderPendingCourses(courses) {
       const ul = document.getElementById("pending-list");
       ul.innerHTML = "";
@@ -368,18 +373,26 @@
         mainDiv.appendChild(metaDiv);
         mainRow.appendChild(mainDiv);
 
-        // Action button column
+        // Split action buttons (Top: Cost, Bottom: Length)
         const actionDiv = document.createElement("div");
         actionDiv.className = "pending-action";
 
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = "Details";
-        btn.dataset.expandId = "expand-" + index;
-        btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-controls', "expand-" + index);
+        // Top half - Cost button
+        const costBtn = document.createElement("button");
+        costBtn.className = "action-top";
+        costBtn.textContent = "Cost";
+        costBtn.dataset.courseIndex = index;
+        costBtn.dataset.type = "cost";
 
-        actionDiv.appendChild(btn);
+        // Bottom half - Length button
+        const lengthBtn = document.createElement("button");
+        lengthBtn.className = "action-bottom";
+        lengthBtn.textContent = "Length";
+        lengthBtn.dataset.courseIndex = index;
+        lengthBtn.dataset.type = "length";
+
+        actionDiv.appendChild(costBtn);
+        actionDiv.appendChild(lengthBtn);
         mainRow.appendChild(actionDiv);
 
         // Slide-out details row
@@ -399,19 +412,55 @@
         ul.appendChild(li);
       });
 
-      // Attach event listeners
-      document.querySelectorAll(".pending-action button").forEach((btn) => {
-        btn.addEventListener("click", function() {
-          const expandId = this.dataset.expandId;
-          const target = document.getElementById(expandId);
-          if (target) {
-            const isOpen = target.classList.contains("open");
-            target.classList.toggle("open");
-            this.setAttribute('aria-expanded', !isOpen);
-            this.textContent = isOpen ? "Details" : "Close";
-          }
-        });
+      // Attach event listeners for split buttons
+      attachSplitButtonListeners();
+    }
+
+    function attachSplitButtonListeners() {
+      // Cost buttons
+      document.querySelectorAll(".action-top").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
       });
+      
+      // Length buttons  
+      document.querySelectorAll(".action-bottom").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
+      });
+    }
+
+    function handleSplitButtonClick(e) {
+      const btn = e.currentTarget;
+      const index = parseInt(btn.dataset.courseIndex);
+      const type = btn.dataset.type;
+      const course = pendingCourses[index];
+      
+      if (!course) return;
+
+      if (type === "cost") {
+        if (btn.classList.contains("active")) {
+          // Revert to "Cost"
+          btn.textContent = "Cost";
+          btn.classList.remove("active");
+        } else {
+          // Show cost value
+
+            const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
+
+          btn.textContent = cost;
+          btn.classList.add("active");
+        }
+      } else if (type === "length") {
+        if (btn.classList.contains("active")) {
+          // Revert to "Length"
+          btn.textContent = "Length";
+          btn.classList.remove("active");
+        } else {
+          // Show length value  
+          const length = course.length || course.duration || course.hours || "TBD";
+          btn.textContent = length;
+          btn.classList.add("active");
+        }
+      }
     }
 
     function loadJson(url, onSuccess, onErrorElementId) {
