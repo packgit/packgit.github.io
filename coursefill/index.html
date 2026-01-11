@@ -342,6 +342,56 @@
         font-size: 0.65rem;
       }
     }
+
+.overall-cost-btn, .overall-time-btn {
+  margin: 12px 0 10px auto !important;  /* Same as .total-units */
+  padding: 6px 12px !important;        /* Same as .total-units */
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;                   /* Same as .total-units */
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(16,185,129,0.2);
+  display: inline-block;
+  float: right;
+  width: auto;                         /* Let it size naturally */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.overall-time-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 2px 4px rgba(245,158,11,0.2);
+}
+
+.overall-cost-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-1px);
+}
+
+.overall-time-btn:hover {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  transform: translateY(-1px);
+}
+
+.overall-cost-btn.active, .overall-time-btn.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+      
+      #pending-column h3:first-of-type {
+  margin-top: 21px !important; /* Reduced from ~70px (70% reduction) */
+}
+      
   </style>
 </head>
 <body>
@@ -391,8 +441,13 @@
       <h3>✅ Completed</h3>
       <ul id="right-completed-list"></ul>
       <div id="total-units-right" class="total-units"></div>
-      <h3>⏳ Pending</h3>
-      <ul id="pending-list"></ul>
+        <h3>⏳ Pending</h3>
+        <div class="button-row">
+          <button id="overall-cost-btn" class="overall-cost-btn">Overall Cost View</button>
+          <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
+        </div>
+        <ul id="pending-list"></ul>
+        <div class="pending-spacer"></div>
       
       <div id="cost-summary">
         <strong>Estimated Cost:</strong> <span id="total-cost">$0</span>
@@ -557,22 +612,35 @@
       return total;
     }
 
-    function updateCostSummary() {
-      const total = calculateTotalCost();
-      const costEl = document.getElementById("total-cost");
-      const summaryEl = document.getElementById("cost-summary");
-      
-      costEl.textContent = `$${total.toLocaleString()}`;
-      if (total > 0) {
-        summaryEl.classList.add("show");
-      } else {
-        summaryEl.classList.remove("show");
-      }
+function updateCostSummary() {
+  const total = calculateTotalCost();
+  const costEl = document.getElementById("total-cost");
+  const summaryEl = document.getElementById("cost-summary");
+  
+  // Calculate total units from active cost buttons
+  let totalPendingUnits = 0;
+  activeCostButtons.forEach(index => {
+    const course = pendingCourses[index];
+    if (course && course.unitsdone != null) {
+      totalPendingUnits += Number(course.unitsdone) || 0;
     }
+  });
+  
+  costEl.textContent = `$${total.toLocaleString()}`;
+  
+  // Update summary text with pending units count
+  summaryEl.innerHTML = `
+    <strong>Estimated Cost for ${totalPendingUnits} Pending Units:</strong> 
+    <span id="total-cost">$${total.toLocaleString()}</span>
+  `;
+  
+  if (total > 0) {
+    summaryEl.classList.add("show");
+  } else {
+    summaryEl.classList.remove("show");
+  }
+}
 
-    function convertMonths(totalMonths) {
-      return Math.floor(totalMonths / 2);
-    }
 
 function calculateTotalTime() {
   let totalMonths = 0;
@@ -814,6 +882,68 @@ function updateTimeSummary() {
       updatePercentages();
       drawPie();
     }, "pending-error", "debug-pending");
+      
+
+let overallCostViewActive = false;
+let overallTimeViewActive = false;
+
+function toggleOverallCostView() {
+  const btn = document.getElementById("overall-cost-btn");
+  const costButtons = document.querySelectorAll(".action-top");
+  
+  overallCostViewActive = !overallCostViewActive;
+  
+  if (overallCostViewActive) {
+    btn.textContent = "Overall Cost View - Toggle";
+    btn.classList.add("active");
+    costButtons.forEach((btn, index) => {
+      if (!btn.classList.contains("active")) btn.click();
+    });
+  } else {
+    btn.textContent = "Overall Cost View";
+    btn.classList.remove("active");
+    costButtons.forEach((btn, index) => {
+      if (btn.classList.contains("active")) btn.click();
+    });
+  }
+}
+
+function toggleOverallTimeView() {
+  const btn = document.getElementById("overall-time-btn");
+  const timeButtons = document.querySelectorAll(".action-bottom");
+  
+  overallTimeViewActive = !overallTimeViewActive;
+  
+  if (overallTimeViewActive) {
+    btn.textContent = "Overall Time View - Toggle";
+    btn.classList.add("active");
+    timeButtons.forEach((btn, index) => {
+      if (!btn.classList.contains("active")) btn.click();
+    });
+  } else {
+    btn.textContent = "Overall Time View";
+    btn.classList.remove("active");
+    timeButtons.forEach((btn, index) => {
+      if (btn.classList.contains("active")) btn.click();
+    });
+  }
+}
+
+// ✅ UPDATED: Add both button listeners
+function attachSplitButtonListeners() {
+  document.querySelectorAll(".action-top").forEach((btn) => {
+    btn.addEventListener("click", handleSplitButtonClick);
+  });
+  document.querySelectorAll(".action-bottom").forEach((btn) => {
+    btn.addEventListener("click", handleSplitButtonClick);
+  });
+  
+  const costBtn = document.getElementById("overall-cost-btn");
+  const timeBtn = document.getElementById("overall-time-btn");
+  if (costBtn) costBtn.addEventListener("click", toggleOverallCostView);
+  if (timeBtn) timeBtn.addEventListener("click", toggleOverallTimeView);
+}
+
   </script>
 </body>
 </html>
