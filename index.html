@@ -1,458 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>PackGit</title>
-    <!-- Bootstrap & Snippet plugin core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="stickup.css" rel="stylesheet">
-  </head>
-  <body>
-    <!-- START THE COVER -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-    <center>
-      <div id="home" class="carousel">
-        <div class="carousel-inner">
-          <div class="item active">
-            <div class="container">
-              <div class="carousel-caption">
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
 
-                <h1>Packgit</h1>
-                <h3></h3>
-                <p>A compilation of Git tips, from basic methods to in-depth tutorials. Git is a software collaboration tool for multiple users to develop with. This resource also includes some tools to get you past hurdles during development with Open Source and Git.
-                  <br>
-                <img src="screens/DeskPic5.png" alt="" height="200" width="200" align="right">
-                </p>
-              </div>
-            </div>
-          </div>
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+    }
+
+    /* Chart section */
+    #chart-section {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 10px;
+    }
+
+    .chart-label {
+      min-width: 140px;
+      text-align: right;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #333;
+      flex-shrink: 0;
+    }
+
+    .chart-label strong {
+      display: block;
+    }
+
+    .chart-container {
+      text-align: center;
+      flex: 1;
+    }
+
+    #classesChart {
+      max-width: 100%;
+      max-height: 60vh;
+      width: 260px;
+      height: 260px;
+      display: block;
+    }
+
+    .percent-legend {
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      color: #444;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .percent-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .percent-item strong {
+      color: #222;
+    }
+
+    /* Desktop layout */
+    .dashboard {
+      display: flex;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .column {
+      flex: 1;
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-height: 200px;
+      background: #ffffff;
+    }
+
+    #completed-column {
+      background-color: #e3f9e5;
+    }
+
+    .column h2, .column h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    .column h3 {
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+
+    /* Completed course items */
+    #completed-list li, #right-completed-list li {
+      background-color: #ffe8cc;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 4px;
+    }
+
+    /* Pending course items - flex layout with 20% right green panel */
+    #pending-list .pending-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background-color: #e0f0ff;
+      margin-bottom: 6px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .pending-main-row {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .pending-main {
+      flex: 1;
+      padding: 8px 12px;
+    }
+
+    .pending-action {
+      flex: 0 0 20%;
+      background-color: #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pending-action button {
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .pending-action button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Slide-out details row */
+    .pending-expand {
+      max-height: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-top: 2px solid #f59e0b;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+      width: 100%;
+    }
+
+    .pending-expand.open {
+      max-height: 50px;
+    }
+
+    .pending-expand-content {
+      font-size: 0.8rem;
+      color: #92400e;
+      line-height: 1.2;
+      padding: 6px 12px;
+      font-weight: 500;
+      box-sizing: border-box;
+    }
+
+    .course-name {
+      font-weight: bold;
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .course-meta {
+      color: #444;
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+
+    .error {
+      color: #b00020;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      #completed-column {
+        display: none;
+      }
+
+      #classesChart {
+        width: 100%;
+        max-height: 60vh;
+        height: auto;
+        aspect-ratio: 1;
+      }
+
+      .chart-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .chart-label {
+        text-align: center;
+        min-width: auto;
+      }
+
+      .column {
+        padding: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .pending-main {
+        padding: 8px 10px;
+      }
+
+      .pending-action button {
+        font-size: 0.75rem;
+        padding: 6px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Course Dashboard</h1>
+
+  <!-- Chart section -->
+  <section id="chart-section">
+    <div class="chart-wrapper">
+      <div class="chart-label">
+        <strong>Classes Overview</strong>
+        <div>Share of finished vs pending courses</div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="classesChart" width="280" height="280"></canvas>
+        <div class="percent-legend">
+          <span class="percent-item">
+            🟧 Classes Completed <strong id="completed-percent">0%</strong>
+          </span>
+          <span class="percent-item">
+            🟦 Classes Pending <strong id="pending-percent">0%</strong>
+          </span>
         </div>
       </div>
-    </center>
-    <!-- END COVER -->
-    <!-- START THE NAVBAR -->
-    <div class="navbar-wrapper">
-      <div class="container">
-        <div class="navwrapper">
-          <div class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-              <div class="navbar-header"> <button type="button" class="navbar-toggle"
-                  data-toggle="collapse"
-                  data-target=".navbar-collapse">
-                  <span class="icon-bar"></span> <span class="icon-bar"></span>
-                  <span class="icon-bar"></span> </button> <a class="navbar-brand"
-                  href="#">Packgit</a>
-              </div>
-              <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                  <li class="menuItem active"><a href="#home">Home</a></li>
-                  <li class="menuItem"><a href="#gittips">Git Tips</a></li>
-                  <li class="menuItem"><a href="#gitvlogs">Git Vlogs</a></li>
-                  <li class="menuItem"><a href="#gitscripts">Scripts in Git</a></li>
-                  <li class="menuItem"><a href="#slack">Git Slacks and Discs</a></li>
-                  <li class="menuItem"><a href="#bhub">NSBE Hub</a></li>
-                  <li class="menuItem"><a href="#laptopsforstudents">Laptop Drives</a></li>
-                  <!-- <li class="menuItem"><a href="#samples">Android Samples</a></li> -->
-                  <!--            <li class="menuItem"><a href="#agilehub">Scrum Hub</a></li>    -->
-                  <!--             <li class="menuItem"><a href="#contact">Footer</a></li>   -->
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Navbar --> </div>
     </div>
-    <!-- END NAVBAR -->
-    <!-- START THE CONTENT -->
-    <div id="contents">
-      <!-- START THE FEATURES -->
-      <div id="features" class="row featurette container marketing"></div>
-      <!-- Three columns of text -->
-      <!--        </div> <!-- END FEATURES -->
-      <!-- START THE GITTIPS -->
-      <div id="gittips" class="row featurette">
-        <div class="col-lg-offset-1 col-lg-12">
-          <h2 class="featurette-heading">Git Tips</h2>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://dzone.com/articles/top-20-git-commands-with-examples%0A"
-              target="_blank"><b>Top
-                Git Commands on Dzone.com</b></a> : Most Used Git Commands With
-            Examples</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.hostinger.com/tutorials/basic-git-commands"
-              target="_blank"><b>Overivew
-                of Git Commands on Hostinger.com</b> </a> : Basic Git Commands</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://learngitbranching.js.org/" target="_blank"><b>Git
-                Branching on Learngitbranching.js.org</b></a> : Learn Git
-            Branching</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.infoworld.com/article/3205884/27-essential-tips-for-git-and-github-users.html"
-              target="_blank"><b>Essential
-                Git Tips at Infoworld.com</b></a> : 27 essential tips for Git
-            and GitHub users</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://tutorialzine.com/2017/11/10-useful-git-tips"
-              target="_blank"><b>10
-                Git Tips on Tutorialzone.com</b></a> : 10 Useful Git Tips</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://gcapes.github.io/git-course/12-hints-and-tips/"
-              target="_blank"><b>Git
-                Hints at Gscapes.github.io</b></a> : Git Hints and Tips </p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://rogerdudler.github.io/git-guide" target="_blank"><b>Git
-                Guide at Rogerdudler.github.io</b></a> : Git - the simple guide</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.freecodecamp.org/news/learn-the-basics-of-git-in-under-10-minutes-da548267cc91"
-              target="_blank"><b>Some
-                Git Basics from Freecodecamp.org</b></a> : Learn the Basics of
-            Git in Under 10 Minutes</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.toptal.com/git/tips-and-practices"
-              target="_blank"><b>Git
-                Best Practices on Toptal.com</b></a> : Git Best Practices and
-            Tips</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="http://alanpryorjr.com/2019-03-09-git_tips"
-              target="_blank"><b>Advanced
-                Git Tips on Alanpryorjr.com</b></a> : 10 Advanced Git Tips to
-            Improve Your Developer Workflow</p>
-        </div>
-                <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.freecodecamp.org/news/finding-your-first-open-source-project-or-bug-to-work-on-1712f651e5ba/"
-              target="_blank"><b>Ways to Contribute to Open Source from Freecodecamp.org</b></a> : Open Source Projects to Contribute to on Github</p>
-        </div>
+  </section>
 
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.git-tower.com/learn/git/ebook/"
-              target="_blank"><b>Git Version Control at Git-tower.com</b> </a> : Overview of Version Control with Git</p>
-        </div>
-      </div>
-      <!-- END GITTIPS -->
-      <!-- START GITVLOGS -->
-      <div id="gitvlogs" class="row featurette">
-        <div "col-lg-offset-1="" col-lg-10"="">
-          <h2 class="featurette-heading">Git Vlogs<span class="text-muted"><br>
-              In-depth approaches.</span></h2>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=8JJ101D3knE%0A"
-              target="_blank"><b>Programming
-                with Mosh</b></a> : Git Tutorial for Beginners.</p>
-        </div>  
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=6KoBsJfYBPM%0A"
-              target="_blank"><b>Dave
-                Gray Vlogs</b></a> : Learn Git and GitHub Basics for Beginners.</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=Lr7sYCrhxE0%0A"
-              target="_blank"><b>Kode
-                Kloud</b></a> : Git Basics for DevOps Beginners.</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=KXmVakqnFC8"
-              target="_blank"><b>Maya
-                Bello Vlogs</b></a> : Github Basics for Beginners.</p>
-        </div>
-
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=AQ9ksXoBAOg%0A"
-              target="_blank"><b>Simplelearn</b></a>
-            : What is Git? Git Explained.</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=Y6zELNR7lio%0A"
-              target="_blank"><b>Eddie
-                Jaoude Vlogs</b></a> : Git's Most Useful Commands .</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10"> </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=R8_veQiYBjI%0A"
-              target="_blank"><b>Techworld
-                with Nana </b></a> : Github Actions Tutorial. </p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10"> </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=-9Tb76tBoFU%0A"
-              target="_blank"><b>Faraday
-                Academy</b></a> : Intro to Git - Learn Version Control from the
-            Web and Command Line.</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=kP-rEaamgHM%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20"
-              target="_blank"><b>Digital
-                Ocean</b></a> : Tips for Contributing to Open Source on Github.
-          </p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10"> </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=56jga91Nff8%0A"
-              target="_blank"><b>Fullstack
-                Academy</b></a> : Learn Git Tips &amp; Tricks.</p>
-        </div>
-      </div>
-      <!-- END GITVLOGS -->
-      <!-- START THE GITSCRIPTS -->
-      <div id="gitscripts" class="row featurette">
-        <div class="col-md-5"> </div>
-        <div class="col-md-7">
-          <h2 class="featurette-heading">Git Scripts<br>
-            <span class="text-muted"></span></h2>
-        </div>
-        <div class="col-md-5"> </div>
-        <div class="col-md-5">
-          <p class="lead"><a href="https://opensource.com/article/20/4/git-extras"
-              target="_blank"><b>Opensource.com</b></a> : How to install and use Git Extras scripts.</p>
-        </div>
-        <div class="col-md-5"> </div>
-        <div class="col-md-5">
-          <p class="lead"><a href="https://www.freecodecamp.org/news/automate-project-github-setup-mac/"
-              target="_blank"><b>Freecamp</b></a>
-            : How to automate your project and Github repo setup from the command line.</p>
-        </div>
-        <div class="col-md-5"> </div>
-        <div class="col-md-5">
-          <p class="lead"><a href="https://egghead.io/lessons/tools-practical-git-run-scripts-on-git-events-with-git-hooks"
-              target="_blank"><b>Egghead.io</b></a> : Practical Git : Run scripts on git events with git hooks.</p>
-        </div>
-                <div class="col-md-5"> </div>
-        <div class="col-md-5">
-          <p class="lead"><a href="https://dev.to/shobhit/git-refresh-4hn"
-              target="_blank"><b>Dev.to</b></a> : How to write your own git command scripts.</p>
-        </div>
-                        <img src="screens/DeskPic6.png" alt="" height="225"
-          width="330"
-          align="left"><br>
-        </div>
-    
-      <!-- END GITSCRIPTS -->
-      <!-- START GIT ON SLACK AND DISCS -->
-      <div id="slack" class="row featurette">
-        <div class="col-md-5"> </div>
-        <div class="col-lg-offset-1 col-lg-12"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <h2 class="featurette-heading">Git on Slack<span class="text-muted"><br>
-              Discover more resources.</span></h2>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://devchat.devolio.net/" target="_blank"><b>DevChat</b></a>
-            : Community of developers with many using Git, asking and answering dev
-            questions, solving challenges.</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://codenewbie.typeform.com/to/uwsWlZ" target="_blank"><b>CodeNewbie</b></a>
-            : Supportive community of programmers and people learning to code in
-            several languages, also using Git for development.</p>
-        </div>
-
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="http://android-united.community/" target="_blank"><b>Android
-                United</b></a> : Friendly Slack community of developers
-            with thousands of people from all over the world. General channels for questions on Git.</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="http://codebuddiesmeet.herokuapp.com/" target="_blank"><b>Codebuddies</b></a> : A global community of amazing people who help each other become better at software development, with open-source Git info and general channels.</p>
-        </div>
- <!--        <div>
-          	<br>
-          	<br>
-            <img src="screens/DeskPic6.png" alt="" height="300" width="400" align="left"><br>
-        </div>-->
-      </div>
-    <!-- END GIT ON SLACK AND DISCS -->
-    <!-- START OF AGILEHUB -->
-      <div id="bhub" class="row featurette">
-        <div class= "col-lg-offset-1 col-lg-10">
-          <h2 class="featurette-heading">NSBE Hub for Black engineers, resources and other coding info</h2>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=D2GQMoJt8vs" target="_blank" ><b>NSBE at Microsoft</b></a> : NSBE Conference Announcment for Partnership with Microsoft.</p>
-        </div>
-
-         <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://blackfacts.com" target="_blank" ><b>Blackfacts.com</b></a> : Longest-running data-driven online Black History Resource. Serving millions of BlackFacts to users around the world in the past 28 years.</p>
-        </div>
-     
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=HnRr7gWiDaI" target="_blank" ><b>NSBE at UofM</b></a> : NSBE CS at the University of Minnesota.</p>
-        </div>
-
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=WRmR-lT-Yn8" target="_blank" ><b>NSBE Convention</b></a> : Trip to NSBE Convention, Penn State Chapter.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/channel/UCYJEQ18qiYUqB7xM3tWsU7g" target="_blank" ><b>Wayne’s Vlogs</b></a> : Tutorials in Java and Coding Tips.</p>
-        </div> 
-                <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/MayaBello" target="_blank" ><b>Learn to Code with Me</b></a> : Coding Tutorials & How-To’s.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=Jh0mIOFQB-s" target="_blank" ><b>NSBE Women in STEM</b></a> : NSBE Women In STEM: Presentation and Panel Vlog.</p>
-        </div>    
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/Gerardonfiya" target="_blank" ><b>Be a Better Programmer</b></a> : Java and OOP Tips.</p>
-        </div> 
-                <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/JyroneParker" target="_blank" ><b>Jyrone’s Vlogs</b></a> : Live Coding and Overviews.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=gy1GIIEMMDw" target="_blank" ><b>Experiences in STEM</b></a> : NSBE Engineer on the Need for Women in Science, Technology, Engineering, and Math (STEM).</p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/BackToBackSWE" target="_blank" ><b>Back to Back SWE</b></a> : Tips for Algorithms Used in Major Software Companies.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/ChandlerKeyes" target="_blank" ><b>Coding with Chandler</b></a> : Tutorials in React and Java.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/GyasiLinje" target="_blank" ><b>Gyasi’s Vlogs</b></a> : Coding/Tech.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/PrettyPrinted
-" target="_blank" ><b>Pretty Printed</b></a> : Python and Django.</p>
-        </div> 
-         <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/watch?v=wwuYISaT_7g
-" target="_blank" ><b>NSBE Software Process Tools</b></a> : Data Science and Establishing Data Quality.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/TechCareerJourney" target="_blank" ><b>Tech Career Journey</b></a> : Software Development Tips.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/SidneyBuckner" target="_blank" ><b>Sidney’s Vlogs</b></a> : Tech/Coding Mindset.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/CodingPhase" target="_blank" ><b>CodingPhase</b></a> : Javascript, PHP, and CSS.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/BuildAppswithPaulo" target="_blank" ><b>Build Apps with Paulo</b></a> : Build Android Apps and Become a Well-rounded Developer.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.packgit.org/chatgpta" target="_blank" ><b>ChatGPT and Bard AI Sample Prompts</b></a> : Some ChatGPT and Google Bard AI Prompt Samples including JavaScript, The Roots and Wu-Tang Clan. </p>
-        </div>
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/c/IjemmaOnwuzulike" target="_blank" ><b>Ijemma's Vlogs</b></a> : All Things Javascript and WebDev.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/channel/UC-bFgwL_kFKLZA60AiB-CCQ" target="_blank" ><b>The Come Up</b></a> : Tips for People Interested in Entering Tech.</p>
-        </div> 
-        <div class="col-lg-offset-1 col-lg-10">
-          <p class="lead"><a href="https://www.youtube.com/Sosa_jpg" target="_blank" ><b>Sosa</b></a> : React Native and Devops.</p>
-        </div> 
+  <div class="dashboard">
+    <!-- Left column (hidden on mobile) -->
+    <div class="column" id="completed-column">
+      <h2>✅ Completed Courses</h2>
+      <ul id="completed-list"></ul>
+      <div class="error" id="completed-error"></div>
     </div>
-    <!-- END AGILEHUB -->
-    <!-- START HARDWARE DRIVES -->
-      <div id="laptopsforstudents" class="row featurette">
-        <div class="col-md-5"> </div>
-        <div class="col-lg-offset-1 col-lg-12"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <h2 class="featurette-heading">Laptop Drives<span class="text-muted"><br>
-              Ways to donate laptops to students.</span></h2>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.donorschoose.org/donors/search.html?keywords=laptop&costToComplete=5&proposalType=7" target="_blank"><b>DonorsChoose</b></a>
-            : Site which makes it easier for anyone to help teachers for students to have the tools they need for a great education.</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://arkansasstemcoalition.com/donate/" target="_blank"><b>Arkansas S.T.E.M. Coalition</b></a>
-            : An educational center contributing to S.T.E.M. opportunities and tools for students in Arkansas.</p>
-        </div>
 
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://e2d.salsalabs.org/websitedonationform/index.html" target="_blank"><b>E2D - Eliminate the Digital Divide</b></a> : Has assisted more than 30,000 families bridge the digital divide using laptops provided by E2D in North Carolina.</p>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10"> </div>
-        <div class="col-lg-offset-2 col-lg-10">
-          <p class="lead"><a href="https://www.cfkid.org/donate" target="_blank"><b>Upward Bound</b></a> : A community in Oregon assisting with donation of laptops and computer hardware to youth in need.</p>
-        </div>
- <!--        <div>
-          	<br>
-          	<br>
-            <img src="screens/DeskPic6.png" alt="" height="300" width="400" align="left"><br>
-        </div>-->
-      </div>
-    <!-- END HARDWARE DRIVES -->
-    <div id="bottomhub" class="row featurette"> 
-      <br>
-      <center> <a href="mailto:packgitamp@gmail.com" target="_blank"><img src="screens/IconEmail1.png"
-            height="60"
-            width="60"></a>
-        <a href="https://github.com/packgit/packgit.github.io" target="_blank"><img src="screens/IconGit1.png"
-            height="60"
-            width="60"></a>
-      </center>
-        <br>
+    <!-- Right column (always visible) -->
+    <div class="column" id="pending-column">
+      <h2>All Courses</h2>
+      <h3>✅ Completed</h3>
+      <ul id="right-completed-list"></ul>
+      <h3>⏳ Pending</h3>
+      <ul id="pending-list"></ul>
+      <div class="error" id="pending-error"></div>
     </div>
-    <!-- START THE FOOTER -->
-    <footer id="contact" class="row featurette">
-      <div class="row"> <br>
-        <div class="text-center col-sm-12 col-lg-12">
-          <h2 class="featurette-heading"><span class="text-muted"></span></h2>
-          <br>
-          <br>
-        </div>
-        <div class="row">
-          <!--        <p>© </p>--> </div>
-      </div>
-    </footer>
-    <!-- END FOOTER -->
-    </div>
-    <!-- END CONTENT -->
-    <!-- Bootstrap & Plugins core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <!-- ### IMPORTANT ### stickUp javascript file -->
-    <!-- ######################################### -->
-    <script src="js/stickUp.min.js"></script>
-    <!-- ######################################### -->
-    <!-- ### IMPORTANT ### stickUp options in use -->
-    <!-- ######################################## -->
-    <script type="text/javascript">
-      jQuery(function($) {
-        $(document).ready( function() {
-          $('.navbar-wrapper').stickUp({
-                        parts: {
-                          0:'home',
-                          1: 'gittips',
-                          2: 'gitvlogs',
-                          3: 'gitscripts',
-                          4: 'slack',
-                          5: 'bhub',  
-                          6: 'laptopsforstudents',
-                        },
-                        itemClass: 'menuItem',
-                        itemHover: 'active',
-                        topMargin: 'auto'
-                      });
+  </div>
+
+  <script>
+    let completedCount = 0;
+    let pendingCount = 0;
+    let pendingCourses = [];
+
+    // Regular course renderer
+    function renderCourses(courses, listElementId) {
+      const ul = document.getElementById(listElementId);
+      ul.innerHTML = "";
+      if (!courses || !Array.isArray(courses)) return;
+
+      courses.forEach((course) => {
+        const li = document.createElement("li");
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : "?";
+        const college = course.college || "n/a";
+        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+
+        li.appendChild(nameSpan);
+        li.appendChild(metaDiv);
+        ul.appendChild(li);
+      });
+    }
+
+    // Pending course renderer with slide-out row
+    function renderPendingCourses(courses) {
+      const ul = document.getElementById("pending-list");
+      ul.innerHTML = "";
+      if (!courses || !Array.isArray(courses)) return;
+
+      courses.forEach((course, index) => {
+        const li = document.createElement("li");
+        li.className = "pending-item";
+
+        // Main content row
+        const mainRow = document.createElement("div");
+        mainRow.className = "pending-main-row";
+
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "pending-main";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : "?";
+        const college = course.college || "n/a";
+        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+
+        mainDiv.appendChild(nameSpan);
+        mainDiv.appendChild(metaDiv);
+        mainRow.appendChild(mainDiv);
+
+        // Action button column
+        const actionDiv = document.createElement("div");
+        actionDiv.className = "pending-action";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "Details";
+        btn.dataset.expandId = "expand-" + index;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', "expand-" + index);
+
+        actionDiv.appendChild(btn);
+        mainRow.appendChild(actionDiv);
+
+        // Slide-out details row
+        const expandDiv = document.createElement("div");
+        expandDiv.id = "expand-" + index;
+        expandDiv.className = "pending-expand";
+
+        const expandContent = document.createElement("div");
+        expandContent.className = "pending-expand-content";
+        expandContent.textContent = `More info: ${course.coursename || "Pending course"} - ${course.college || 'N/A'} • Units: ${course.unitsdone || '?'}`;
+
+        expandDiv.appendChild(expandContent);
+
+        // Assemble structure
+        li.appendChild(mainRow);
+        li.appendChild(expandDiv);
+        ul.appendChild(li);
+      });
+
+      // Attach event listeners
+      document.querySelectorAll(".pending-action button").forEach((btn) => {
+        btn.addEventListener("click", function() {
+          const expandId = this.dataset.expandId;
+          const target = document.getElementById(expandId);
+          if (target) {
+            const isOpen = target.classList.contains("open");
+            target.classList.toggle("open");
+            this.setAttribute('aria-expanded', !isOpen);
+            this.textContent = isOpen ? "Details" : "Close";
+          }
         });
       });
-    </script>
-    <!-- ######################################## -->
-    <!--                       1:'features',
- 7: 'contact'-->
-  </body>
+    }
+
+    function loadJson(url, onSuccess, onErrorElementId) {
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} for ${url}`);
+          }
+          return response.json();
+        })
+        .then(data => onSuccess(data))
+        .catch(err => {
+          const errorDiv = document.getElementById(onErrorElementId);
+          if (errorDiv) {
+            errorDiv.textContent = "Error loading " + url + ": " + err.message;
+          }
+          console.error(err);
+        });
+    }
+
+    function updatePercentages() {
+      const total = completedCount + pendingCount;
+      const completedEl = document.getElementById("completed-percent");
+      const pendingEl = document.getElementById("pending-percent");
+      if (completedEl) {
+        completedEl.textContent = total > 0 ? ((completedCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+      if (pendingEl) {
+        pendingEl.textContent = total > 0 ? ((pendingCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+    }
+
+    function drawPie() {
+      const total = completedCount + pendingCount;
+      if (total === 0) return;
+
+      const canvas = document.getElementById("classesChart");
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+
+      const data = [
+        { value: completedCount, color: "#ffe8cc" },
+        { value: pendingCount, color: "#e0f0ff" }
+      ];
+
+      // Rotate 180° CCW
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(-Math.PI);
+      ctx.translate(-centerX, -centerY);
+
+      let startAngle = -Math.PI / 2;
+      data.forEach(slice => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = slice.color;
+        ctx.fill();
+        startAngle = endAngle;
+      });
+      ctx.restore();
+
+      // Labels (adjusted for rotation)
+      startAngle = -Math.PI / 2 + Math.PI;
+      data.forEach(slice => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const midAngle = startAngle + sliceAngle / 2;
+        const labelRadius = radius * 0.7;
+        const labelX = centerX + labelRadius * Math.cos(midAngle);
+        const labelY = centerY + labelRadius * Math.sin(midAngle);
+
+        const percentage = ((slice.value / total) * 100).toFixed(0) + "%";
+        ctx.fillStyle = "#222";
+        ctx.font = `bold ${Math.min(16, canvas.width * 0.06)}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(percentage, labelX, labelY);
+
+        startAngle += sliceAngle;
+      });
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Load data
+    loadJson("completed.json", function(data) {
+      completedCount = Array.isArray(data) ? data.length : 0;
+      renderCourses(data, "completed-list");
+      renderCourses(data, "right-completed-list");
+      updatePercentages();
+      drawPie();
+    }, "completed-error");
+
+    loadJson("pending.json", function(data) {
+      pendingCount = Array.isArray(data) ? data.length : 0;
+      pendingCourses = data;
+      renderPendingCourses(data);
+      updatePercentages();
+      drawPie();
+    }, "pending-error");
+  </script>
+</body>
 </html>
