@@ -443,6 +443,15 @@
       <div id="total-units-right" class="total-units"></div>
         <h3>⏳ Pending</h3>
         <div class="button-row">
+  <button id="bachelors-btn" style="background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+    Bachelor's
+  </button>
+  <button id="as-btn" style="background: linear-gradient(135deg, #93c5fd, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+    A.S.
+  </button>
+</div>
+
+        <div class="button-row">
           <button id="overall-cost-btn" class="overall-cost-btn">Overall Cost View</button>
           <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
         </div>
@@ -943,6 +952,31 @@ function attachSplitButtonListeners() {
   if (costBtn) costBtn.addEventListener("click", toggleOverallCostView);
   if (timeBtn) timeBtn.addEventListener("click", toggleOverallTimeView);
 }
+      
+      // === Load Bachelor's or A.S. pending course data ===
+function loadPendingSet(jsonFile) {
+  loadJson(jsonFile, function (data) {
+    pendingCourses = data;
+    renderPendingCourses(data);
+    pendingCount = Array.isArray(data) ? data.length : 0;
+    updatePercentages();
+    drawPie();
+  }, "pending-error", "debug-pending");
+}
+
+// Button event listeners
+document.getElementById("bachelors-btn").addEventListener("click", function () {
+  this.classList.add("active");
+  document.getElementById("as-btn").classList.remove("active");
+  loadPendingSet("pending.json");
+});
+
+document.getElementById("as-btn").addEventListener("click", function () {
+  this.classList.add("active");
+  document.getElementById("bachelors-btn").classList.remove("active");
+  loadPendingSet("pendingcas.json");
+});
+
 
   </script>
 </body>
