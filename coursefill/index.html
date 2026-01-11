@@ -112,7 +112,22 @@
 
     .column h3 {
       font-size: 1rem;
-      margin-top: 20px;
+      margin-top: 70px;
+    }
+
+    /* Total Units Styling */
+    .total-units {
+      margin: 12px 0 10px auto;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #d1f2d5, #a7f3d0);
+      color: #000000;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(16,185,129,0.2);
+      display: inline-block;
+      float: right;
     }
 
     /* Completed course items */
@@ -202,7 +217,7 @@
       box-sizing: border-box;
     }
 
-    /* NEW: Estimated Cost Summary */
+    /* Estimated Cost Summary */
     #cost-summary {
       display: none;
       background: linear-gradient(135deg, #e3f9e5 0%, #d1f2d5 100%);
@@ -219,6 +234,25 @@
     }
 
     #cost-summary.show {
+      display: block;
+    }
+
+    #time-summary {
+      display: none;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #92400e;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(245, 158, 11, 0.2);
+      animation: slideDown 0.3s ease-out;
+    }
+
+    #time-summary.show {
       display: block;
     }
 
@@ -249,6 +283,17 @@
       color: #b00020;
       font-size: 0.9rem;
       margin-top: 8px;
+    }
+
+    /* Debug info */
+    #debug {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 10px 0;
+      font-family: monospace;
+      font-size: 0.8rem;
     }
 
     /* Mobile responsive */
@@ -302,6 +347,13 @@
 <body>
   <h1>Course Dashboard</h1>
 
+  <!-- Debug section -->
+  <div id="debug">
+    <strong>Debug Info:</strong> 
+    <span id="debug-completed">completed.json: loading...</span> | 
+    <span id="debug-pending">pending.json: loading...</span>
+  </div>
+
   <!-- Chart section -->
   <section id="chart-section">
     <div class="chart-wrapper">
@@ -329,6 +381,7 @@
     <div class="column" id="completed-column">
       <h2>✅ Completed Courses</h2>
       <ul id="completed-list"></ul>
+      <div id="total-units-left" class="total-units"></div>
       <div class="error" id="completed-error"></div>
     </div>
 
@@ -337,12 +390,15 @@
       <h2>All Courses</h2>
       <h3>✅ Completed</h3>
       <ul id="right-completed-list"></ul>
+      <div id="total-units-right" class="total-units"></div>
       <h3>⏳ Pending</h3>
       <ul id="pending-list"></ul>
       
-      <!-- NEW: Estimated Cost Summary -->
       <div id="cost-summary">
         <strong>Estimated Cost:</strong> <span id="total-cost">$0</span>
+      </div>
+      <div id="time-summary">
+        <strong>Estimated Time:</strong> <span id="total-time">0 months</span>
       </div>
       
       <div class="error" id="pending-error"></div>
@@ -353,13 +409,27 @@
     let completedCount = 0;
     let pendingCount = 0;
     let pendingCourses = [];
-    let activeCostButtons = new Set(); // Track which cost buttons are active
+    let activeCostButtons = new Set();
+    let activeLengthButtons = new Set();
 
-    // Regular course renderer
+    // ✅ FIXED: renderCourses only updates its own list and total
     function renderCourses(courses, listElementId) {
       const ul = document.getElementById(listElementId);
+      if (!ul) {
+        console.error("List element not found:", listElementId);
+        return;
+      }
+      
       ul.innerHTML = "";
-      if (!courses || !Array.isArray(courses)) return;
+      
+      if (!courses || !Array.isArray(courses)) {
+        console.warn("Expected array for", listElementId, "got:", courses);
+        document.getElementById(`debug-${listElementId.includes('completed') ? 'completed' : 'pending'}`).textContent += " (not array)";
+        return;
+      }
+
+      let totalUnits = 0;
+      console.log(`Rendering ${courses.length} courses to ${listElementId}`);
 
       courses.forEach((course) => {
         const li = document.createElement("li");
@@ -370,27 +440,46 @@
 
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
-        const units = course.unitsdone != null ? course.unitsdone : "?";
+        const units = course.unitsdone != null ? course.unitsdone : 0;
         const college = course.college || "n/a";
         metaDiv.textContent = `Units: ${units} · College: ${college}`;
 
         li.appendChild(nameSpan);
         li.appendChild(metaDiv);
         ul.appendChild(li);
+
+        totalUnits += Number(units) || 0;
       });
+
+      // ✅ FIXED: Only update the correct total display for this list
+      const totalEl = listElementId === "completed-list" 
+        ? document.getElementById("total-units-left")
+        : document.getElementById("total-units-right");
+
+      if (totalEl) {
+        totalEl.textContent = `Total Completed Units: ${totalUnits}`;
+      }
     }
 
-    // Pending course renderer with split buttons
-    function renderPendingCourses(courses) {
+    // ✅ FIXED: renderPendingCourses - handles both array and {courses: [...]}
+    function renderPendingCourses(coursesData) {
       const ul = document.getElementById("pending-list");
       ul.innerHTML = "";
-      if (!courses || !Array.isArray(courses)) return;
+      
+      let courses = coursesData;
+      if (coursesData && coursesData.courses && Array.isArray(coursesData.courses)) {
+        courses = coursesData.courses; // Handle {courses: [...]}
+      }
+      
+      if (!courses || !Array.isArray(courses)) {
+        console.warn("Expected array for pending courses, got:", coursesData);
+        return;
+      }
 
       courses.forEach((course, index) => {
         const li = document.createElement("li");
         li.className = "pending-item";
 
-        // Main content row
         const mainRow = document.createElement("div");
         mainRow.className = "pending-main-row";
 
@@ -411,18 +500,15 @@
         mainDiv.appendChild(metaDiv);
         mainRow.appendChild(mainDiv);
 
-        // Split action buttons (Top: Cost, Bottom: Length)
         const actionDiv = document.createElement("div");
         actionDiv.className = "pending-action";
 
-        // Top half - Cost button
         const costBtn = document.createElement("button");
         costBtn.className = "action-top";
         costBtn.textContent = "Cost";
         costBtn.dataset.courseIndex = index;
         costBtn.dataset.type = "cost";
 
-        // Bottom half - Length button
         const lengthBtn = document.createElement("button");
         lengthBtn.className = "action-bottom";
         lengthBtn.textContent = "Length";
@@ -433,7 +519,6 @@
         actionDiv.appendChild(lengthBtn);
         mainRow.appendChild(actionDiv);
 
-        // Slide-out details row
         const expandDiv = document.createElement("div");
         expandDiv.id = "expand-" + index;
         expandDiv.className = "pending-expand";
@@ -444,29 +529,23 @@
 
         expandDiv.appendChild(expandContent);
 
-        // Assemble structure
         li.appendChild(mainRow);
         li.appendChild(expandDiv);
         ul.appendChild(li);
       });
 
-      // Attach event listeners for split buttons
       attachSplitButtonListeners();
     }
 
     function attachSplitButtonListeners() {
-      // Cost buttons
       document.querySelectorAll(".action-top").forEach((btn) => {
         btn.addEventListener("click", handleSplitButtonClick);
       });
-      
-      // Length buttons  
       document.querySelectorAll(".action-bottom").forEach((btn) => {
         btn.addEventListener("click", handleSplitButtonClick);
       });
     }
 
-    // NEW: Calculate total cost of active cost buttons
     function calculateTotalCost() {
       let total = 0;
       activeCostButtons.forEach(index => {
@@ -478,20 +557,91 @@
       return total;
     }
 
-    // NEW: Update cost summary display
     function updateCostSummary() {
       const total = calculateTotalCost();
       const costEl = document.getElementById("total-cost");
       const summaryEl = document.getElementById("cost-summary");
       
       costEl.textContent = `$${total.toLocaleString()}`;
-      
       if (total > 0) {
         summaryEl.classList.add("show");
       } else {
         summaryEl.classList.remove("show");
       }
     }
+
+    function convertMonths(totalMonths) {
+      return Math.floor(totalMonths / 2);
+    }
+
+function calculateTotalTime() {
+  let totalMonths = 0;
+  let estimatedMonths = 0;
+
+  activeLengthButtons.forEach(index => {
+    const course = pendingCourses[index];
+    if (course && course.length) {
+      const lengthStr = course.length.toString().toLowerCase();
+      const monthMatch = lengthStr.match(/(\d+)\s*(months?|mo)/i);
+      if (monthMatch) {
+        totalMonths += parseInt(monthMatch[1], 10);
+      }
+    }
+  });
+
+  // If totalMonths is 0, return 0 (nothing displayed)
+  if (totalMonths === 0) {
+    return 0;
+  }
+
+  const remainder = totalMonths % 12;
+
+  // ✅ Special case: 12 months → 12/2 = 6 months
+  if (remainder === 0) {
+    estimatedMonths = totalMonths / 2;
+  } 
+  // ✅ MOD 12 = 6 case
+  else if (remainder === 6) {
+    estimatedMonths = (totalMonths - remainder) / 2 + 6;
+  } 
+  // ✅ All other cases (like your 38 months example)
+  else {
+    estimatedMonths = (totalMonths - remainder) / 2 + 6;
+  }
+
+  return estimatedMonths;
+}
+
+
+
+
+function updateTimeSummary() {
+  const totalMonths = calculateTotalTime();
+  const timeEl = document.getElementById("total-time");
+  const summaryEl = document.getElementById("time-summary");
+  
+  if (totalMonths > 0) {
+    // Calculate years and remaining months
+    const years = Math.floor(totalMonths / 12);
+    const remainingMonths = totalMonths % 12;
+    
+ let displayText;
+    if (years === 0) {
+      displayText = `${totalMonths} months`;
+    } else if (remainingMonths === 0) {
+      displayText = `${totalMonths} months (${years} Year${years === 1 ? '' : 's'})`;
+    } else {
+      displayText = `${totalMonths} months (${years} Year${years === 1 ? '' : 's'}, ${remainingMonths} months)`;
+    }
+    
+    timeEl.textContent = displayText;
+    summaryEl.classList.add("show");
+  } else {
+    summaryEl.classList.remove("show");
+  }
+}
+
+
 
     function handleSplitButtonClick(e) {
       const btn = e.currentTarget;
@@ -503,12 +653,10 @@
 
       if (type === "cost") {
         if (btn.classList.contains("active")) {
-          // Revert to "Cost"
           btn.textContent = "Cost";
           btn.classList.remove("active");
           activeCostButtons.delete(index);
         } else {
-          // Show cost value and track as active
           const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
           btn.textContent = cost;
           btn.classList.add("active");
@@ -517,33 +665,54 @@
         updateCostSummary();
       } else if (type === "length") {
         if (btn.classList.contains("active")) {
-          // Revert to "Length"
           btn.textContent = "Length";
           btn.classList.remove("active");
+          activeLengthButtons.delete(index);
         } else {
-          // Show length value  
           const length = course.length || course.duration || course.hours || "TBD";
           btn.textContent = length;
           btn.classList.add("active");
+          activeLengthButtons.add(index);
         }
+        updateTimeSummary();
       }
     }
 
-    function loadJson(url, onSuccess, onErrorElementId) {
+    function loadJson(url, onSuccess, onErrorElementId, debugId) {
+      // ✅ Try fetch first, fallback to embedded sample data
       fetch(url)
         .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status} for ${url}`);
-          }
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
           return response.json();
         })
-        .then(data => onSuccess(data))
+        .then(data => {
+          console.log(`✅ Loaded ${url}:`, data);
+          document.getElementById(debugId).textContent = `${url}: ${Array.isArray(data) ? data.length : 'object'} items OK`;
+          onSuccess(data);
+        })
         .catch(err => {
-          const errorDiv = document.getElementById(onErrorElementId);
-          if (errorDiv) {
-            errorDiv.textContent = "Error loading " + url + ": " + err.message;
-          }
-          console.error(err);
+          console.warn(`❌ ${url} failed (${err.message}), using sample data`);
+          document.getElementById(debugId).textContent = `${url}: failed, using sample (${err.message})`;
+          
+          // ✅ FALLBACK: Sample data so you can test immediately
+          const sampleData = [
+            {
+              "coursename": "Sample Math 101",
+              "unitsdone": 3,
+              "college": "Santa Clara College",
+              "cost": 300,
+              "length": "6 months"
+            },
+            {
+              "coursename": "Sample English 102", 
+              "unitsdone": 4,
+              "college": "Mission College",
+              "cost": 250,
+              "length": "4 months"
+            }
+          ];
+          
+          onSuccess(sampleData);
         });
     }
 
@@ -582,7 +751,6 @@
         { value: pendingCount, color: "#e0f0ff" }
       ];
 
-      // Rotate 180° CCW
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(-Math.PI);
@@ -604,7 +772,6 @@
       });
       ctx.restore();
 
-      // Labels (adjusted for rotation)
       startAngle = -Math.PI / 2 + Math.PI;
       data.forEach(slice => {
         if (slice.value <= 0) return;
@@ -631,14 +798,14 @@
       ctx.stroke();
     }
 
-    // Load data
+    // ✅ Load data with improved error handling and sample fallback
     loadJson("completed.json", function(data) {
       completedCount = Array.isArray(data) ? data.length : 0;
       renderCourses(data, "completed-list");
       renderCourses(data, "right-completed-list");
       updatePercentages();
       drawPie();
-    }, "completed-error");
+    }, "completed-error", "debug-completed");
 
     loadJson("pending.json", function(data) {
       pendingCount = Array.isArray(data) ? data.length : 0;
@@ -646,7 +813,7 @@
       renderPendingCourses(data);
       updatePercentages();
       drawPie();
-    }, "pending-error");
+    }, "pending-error", "debug-pending");
   </script>
 </body>
 </html>
