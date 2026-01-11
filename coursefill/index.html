@@ -24,7 +24,7 @@
       font-size: clamp(1.4rem, 5vw, 2rem);
     }
 
-    /* Chart section - full width on mobile, 60% height */
+    /* Chart section */
     #chart-section {
       margin-bottom: 20px;
       width: 100%;
@@ -55,11 +55,6 @@
       flex: 1;
     }
 
-    .chart-container h2 {
-      margin-bottom: 12px;
-      font-size: clamp(1.1rem, 4vw, 1.4rem);
-    }
-
     #classesChart {
       max-width: 100%;
       max-height: 60vh;
@@ -87,7 +82,7 @@
       color: #222;
     }
 
-    /* Desktop: two column layout */
+    /* Desktop layout */
     .dashboard {
       display: flex;
       gap: 20px;
@@ -120,12 +115,7 @@
       margin-top: 20px;
     }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
+    /* Completed course items */
     #completed-list li, #right-completed-list li {
       background-color: #ffe8cc;
       padding: 8px 10px;
@@ -133,21 +123,89 @@
       border-radius: 4px;
     }
 
-    #pending-list li {
+    /* Pending course items - flex layout with 20% right green panel */
+    #pending-list .pending-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
       background-color: #e0f0ff;
-      padding: 8px 10px;
       margin-bottom: 6px;
       border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .pending-main-row {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .pending-main {
+      flex: 1;
+      padding: 8px 12px;
+    }
+
+    .pending-action {
+      flex: 0 0 20%;
+      background-color: #22c55e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pending-action button {
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .pending-action button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Slide-out details row */
+    .pending-expand {
+      max-height: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-top: 2px solid #f59e0b;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+      width: 100%;
+    }
+
+    .pending-expand.open {
+      max-height: 50px;
+    }
+
+    .pending-expand-content {
+      font-size: 0.8rem;
+      color: #92400e;
+      line-height: 1.2;
+      padding: 6px 12px;
+      font-weight: 500;
+      box-sizing: border-box;
     }
 
     .course-name {
       font-weight: bold;
       display: block;
+      font-size: 0.95rem;
     }
 
     .course-meta {
       color: #444;
       font-size: 0.85rem;
+      margin-top: 2px;
     }
 
     .error {
@@ -156,7 +214,7 @@
       margin-top: 8px;
     }
 
-    /* Mobile: stack layout, show only right column */
+    /* Mobile responsive */
     @media (max-width: 768px) {
       .dashboard {
         flex-direction: column;
@@ -164,11 +222,14 @@
       }
 
       #completed-column {
-        display: none; /* Hide left column on mobile */
+        display: none;
       }
 
-      #pending-column {
-        order: 2; /* Ensure right column shows below chart */
+      #classesChart {
+        width: 100%;
+        max-height: 60vh;
+        height: auto;
+        aspect-ratio: 1;
       }
 
       .chart-wrapper {
@@ -179,42 +240,25 @@
       .chart-label {
         text-align: center;
         min-width: auto;
-        order: 1;
-      }
-
-      #classesChart {
-        width: 100%;
-        max-height: 60vh;
-        height: auto;
-        aspect-ratio: 1;
       }
 
       .column {
         padding: 12px;
       }
-
-      #pending-column h2 {
-        font-size: 1.1rem;
-      }
-
-      #pending-column h3 {
-        font-size: 0.95rem;
-      }
     }
 
-    /* Very small screens */
     @media (max-width: 480px) {
       body {
         padding: 10px;
       }
 
-      .column li {
-        padding: 6px 8px;
-        font-size: 0.9rem;
+      .pending-main {
+        padding: 8px 10px;
       }
 
-      .course-name {
-        font-size: 0.95rem;
+      .pending-action button {
+        font-size: 0.75rem;
+        padding: 6px 8px;
       }
     }
   </style>
@@ -222,7 +266,7 @@
 <body>
   <h1>Course Dashboard</h1>
 
-  <!-- Pie chart section -->
+  <!-- Chart section -->
   <section id="chart-section">
     <div class="chart-wrapper">
       <div class="chart-label">
@@ -231,13 +275,13 @@
       </div>
 
       <div class="chart-container">
-        <canvas id="classesChart" width="260" height="260"></canvas>
+        <canvas id="classesChart" width="280" height="280"></canvas>
         <div class="percent-legend">
           <span class="percent-item">
-            Classes Completed <strong id="completed-percent">0%</strong>
+            🟧 Classes Completed <strong id="completed-percent">0%</strong>
           </span>
           <span class="percent-item">
-            Classes Pending <strong id="pending-percent">0%</strong>
+            🟦 Classes Pending <strong id="pending-percent">0%</strong>
           </span>
         </div>
       </div>
@@ -245,14 +289,14 @@
   </section>
 
   <div class="dashboard">
-    <!-- Left: Completed Courses (hidden on mobile) -->
+    <!-- Left column (hidden on mobile) -->
     <div class="column" id="completed-column">
-      <h2>Completed Courses</h2>
+      <h2>✅ Completed Courses</h2>
       <ul id="completed-list"></ul>
       <div class="error" id="completed-error"></div>
     </div>
 
-    <!-- Right: Completed (Summary) + Pending (shown on all devices) -->
+    <!-- Right column (always visible) -->
     <div class="column" id="pending-column">
       <h2>All Courses</h2>
       <h3>✅ Completed</h3>
@@ -266,10 +310,13 @@
   <script>
     let completedCount = 0;
     let pendingCount = 0;
+    let pendingCourses = [];
 
+    // Regular course renderer
     function renderCourses(courses, listElementId) {
       const ul = document.getElementById(listElementId);
       ul.innerHTML = "";
+      if (!courses || !Array.isArray(courses)) return;
 
       courses.forEach((course) => {
         const li = document.createElement("li");
@@ -286,8 +333,84 @@
 
         li.appendChild(nameSpan);
         li.appendChild(metaDiv);
-
         ul.appendChild(li);
+      });
+    }
+
+    // Pending course renderer with slide-out row
+    function renderPendingCourses(courses) {
+      const ul = document.getElementById("pending-list");
+      ul.innerHTML = "";
+      if (!courses || !Array.isArray(courses)) return;
+
+      courses.forEach((course, index) => {
+        const li = document.createElement("li");
+        li.className = "pending-item";
+
+        // Main content row
+        const mainRow = document.createElement("div");
+        mainRow.className = "pending-main-row";
+
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "pending-main";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : "?";
+        const college = course.college || "n/a";
+        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+
+        mainDiv.appendChild(nameSpan);
+        mainDiv.appendChild(metaDiv);
+        mainRow.appendChild(mainDiv);
+
+        // Action button column
+        const actionDiv = document.createElement("div");
+        actionDiv.className = "pending-action";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "Details";
+        btn.dataset.expandId = "expand-" + index;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', "expand-" + index);
+
+        actionDiv.appendChild(btn);
+        mainRow.appendChild(actionDiv);
+
+        // Slide-out details row
+        const expandDiv = document.createElement("div");
+        expandDiv.id = "expand-" + index;
+        expandDiv.className = "pending-expand";
+
+        const expandContent = document.createElement("div");
+        expandContent.className = "pending-expand-content";
+        expandContent.textContent = `More info: ${course.coursename || "Pending course"} - ${course.college || 'N/A'} • Units: ${course.unitsdone || '?'}`;
+
+        expandDiv.appendChild(expandContent);
+
+        // Assemble structure
+        li.appendChild(mainRow);
+        li.appendChild(expandDiv);
+        ul.appendChild(li);
+      });
+
+      // Attach event listeners
+      document.querySelectorAll(".pending-action button").forEach((btn) => {
+        btn.addEventListener("click", function() {
+          const expandId = this.dataset.expandId;
+          const target = document.getElementById(expandId);
+          if (target) {
+            const isOpen = target.classList.contains("open");
+            target.classList.toggle("open");
+            this.setAttribute('aria-expanded', !isOpen);
+            this.textContent = isOpen ? "Details" : "Close";
+          }
+        });
       });
     }
 
@@ -295,13 +418,11 @@
       fetch(url)
         .then(response => {
           if (!response.ok) {
-            throw new Error("HTTP " + response.status + " for " + url);
+            throw new Error(`HTTP ${response.status} for ${url}`);
           }
           return response.json();
         })
-        .then(data => {
-          onSuccess(data);
-        })
+        .then(data => onSuccess(data))
         .catch(err => {
           const errorDiv = document.getElementById(onErrorElementId);
           if (errorDiv) {
@@ -313,10 +434,14 @@
 
     function updatePercentages() {
       const total = completedCount + pendingCount;
-      document.getElementById("completed-percent").textContent = 
-        total > 0 ? ((completedCount / total) * 100).toFixed(0) + "%" : "0%";
-      document.getElementById("pending-percent").textContent = 
-        total > 0 ? ((pendingCount / total) * 100).toFixed(0) + "%" : "0%";
+      const completedEl = document.getElementById("completed-percent");
+      const pendingEl = document.getElementById("pending-percent");
+      if (completedEl) {
+        completedEl.textContent = total > 0 ? ((completedCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+      if (pendingEl) {
+        pendingEl.textContent = total > 0 ? ((pendingCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
     }
 
     function drawPie() {
@@ -325,7 +450,11 @@
 
       const canvas = document.getElementById("classesChart");
       if (!canvas) return;
+      
       const ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -335,10 +464,10 @@
 
       const data = [
         { value: completedCount, color: "#ffe8cc" },
-        { value: pendingCount,   color: "#e0f0ff" }
+        { value: pendingCount, color: "#e0f0ff" }
       ];
 
-      // Rotate 180° counter-clockwise around center
+      // Rotate 180° CCW
       ctx.save();
       ctx.translate(centerX, centerY);
       ctx.rotate(-Math.PI);
@@ -356,27 +485,23 @@
         ctx.closePath();
         ctx.fillStyle = slice.color;
         ctx.fill();
-
         startAngle = endAngle;
       });
-
       ctx.restore();
 
-      // Draw readable labels
+      // Labels (adjusted for rotation)
       startAngle = -Math.PI / 2 + Math.PI;
-      data.forEach((slice) => {
+      data.forEach(slice => {
         if (slice.value <= 0) return;
-        
         const sliceAngle = (slice.value / total) * Math.PI * 2;
         const midAngle = startAngle + sliceAngle / 2;
-        
-        const labelRadius = radius * 0.6;
+        const labelRadius = radius * 0.7;
         const labelX = centerX + labelRadius * Math.cos(midAngle);
         const labelY = centerY + labelRadius * Math.sin(midAngle);
 
         const percentage = ((slice.value / total) * 100).toFixed(0) + "%";
         ctx.fillStyle = "#222";
-        ctx.font = "bold 14px Arial";
+        ctx.font = `bold ${Math.min(16, canvas.width * 0.06)}px Arial`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(percentage, labelX, labelY);
@@ -387,10 +512,11 @@
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
       ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 2;
       ctx.stroke();
     }
 
+    // Load data
     loadJson("completed.json", function(data) {
       completedCount = Array.isArray(data) ? data.length : 0;
       renderCourses(data, "completed-list");
@@ -401,7 +527,8 @@
 
     loadJson("pending.json", function(data) {
       pendingCount = Array.isArray(data) ? data.length : 0;
-      renderCourses(data, "pending-list");
+      pendingCourses = data;
+      renderPendingCourses(data);
       updatePercentages();
       drawPie();
     }, "pending-error");
