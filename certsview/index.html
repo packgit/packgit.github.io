@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cert Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #ccffcc; /* light green */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background-color: #cce6ff; /* light blue */
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      margin-bottom: 16px;
+    }
+
+    .card h1 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 4px 0;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .btn-info {
+      background-color: #ffffff;
+    }
+
+    .btn-practice {
+      background-color: #4caf50;
+      color: #ffffff;
+    }
+
+    /* Quiz styles */
+    .quiz-card {
+      background-color: #cce6ff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      margin-top: 8px;
+      transition: opacity 0.3s ease; /* simple transition */
+    }
+
+    .quiz-question {
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .options {
+      list-style: none;
+    }
+
+    .options li {
+      margin-bottom: 8px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #888;
+      background-color: #ffffff;
+      font-size: 0.95rem;
+    }
+
+    .option-btn.selected {
+      border-color: #2196f3;
+      background-color: #e3f2fd;
+    }
+
+    .option-btn.disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .quiz-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .quiz-footer button {
+      flex: none;
+      min-width: 100px;
+    }
+
+    .quiz-status {
+      font-size: 0.9rem;
+    }
+
+    .result {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 8px;
+      min-height: 1.2em;
+      transition: opacity 0.4s ease;
+    }
+
+    .result.hidden {
+      opacity: 0;
+    }
+
+    .result.correct {
+      color: #2e7d32; /* green */
+    }
+
+    .result.incorrect {
+      color: #ef6c00; /* orange */
+    }
+
+    .chart-container {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .btn-main-view {          /* NEW: style for main view button */
+      margin-top: 12px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #000;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 1px solid #4caf50;
+    }
+
+    @media (max-width: 480px) {
+      .card h1 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- AWS Certificate Info Card -->
+    <div class="card" id="cert-card-aws">
+      <h1 id="cert-name-aws">Loading AWS...</h1>
+      <p id="cert-hours-aws"></p>
+      <p id="cert-questions-aws"></p>
+      <div class="btn-row">
+        <button class="btn-info" id="btn-info-aws">I</button>
+        <button class="btn-practice btn-practice-main" id="btn-practice-aws">Practice</button>
+      </div>
+    </div>
+
+    <!-- Google Certificate Info Card -->
+    <div class="card" id="cert-card-gcp">
+      <h1 id="cert-name-gcp">Loading Google...</h1>
+      <p id="cert-hours-gcp"></p>
+      <p id="cert-questions-gcp"></p>
+      <div class="btn-row">
+        <button class="btn-info" id="btn-info-gcp">I</button>
+        <button class="btn-practice btn-practice-main" id="btn-practice-gcp">Practice</button>
+      </div>
+    </div>
+
+    <!-- Quiz Area (initially hidden) -->
+    <div id="quiz-area" style="display:none;">
+      <div class="quiz-card" id="quiz-card">
+        <div class="quiz-question" id="quiz-question"></div>
+        <ul class="options" id="quiz-options"></ul>
+        <div class="quiz-footer">
+          <span class="quiz-status" id="quiz-status"></span>
+          <button id="btn-next" style="display:none;">Next</button>
+        </div>
+        <div class="result" id="quiz-result"></div>
+        <div class="chart-container" id="chart-container" style="display:none;">
+          <canvas id="result-chart" width="260" height="260"></canvas>
+          <div id="chart-label"></div>
+        </div>
+        <!-- NEW: main view button (hidden until summary) -->
+        <button id="btn-main-view" class="btn-main-view" style="display:none;">
+          Certs Main View
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadCertCards() {
+      try {
+        const res = await fetch('certs1.json');
+        const data = await res.json();
+
+        const awsCert = data.find(c => c.Cert.includes('AWS Certified AI Practitioner')) || data[0];
+        document.getElementById('cert-name-aws').textContent = awsCert.Cert;
+        document.getElementById('cert-hours-aws').textContent = 'Hours: ' + awsCert.Hours;
+        document.getElementById('cert-questions-aws').textContent = 'Questions: ' + awsCert.Questions;
+        document.getElementById('btn-info-aws').onclick = () => window.open(awsCert.Info, '_blank');
+
+        const gcpCert = data.find(c => c.Cert === 'Google Generative A.I. Leader');
+        if (gcpCert) {
+          document.getElementById('cert-name-gcp').textContent = gcpCert.Cert;
+          document.getElementById('cert-hours-gcp').textContent = 'Hours: ' + gcpCert.Hours;
+          document.getElementById('cert-questions-gcp').textContent = 'Questions: ' + gcpCert.Questions;
+          document.getElementById('btn-info-gcp').onclick = () => window.open(gcpCert.Info, '_blank');
+        } else {
+          document.getElementById('cert-name-gcp').textContent = 'Google Generative A.I. Leader';
+        }
+      } catch (e) {
+        document.getElementById('cert-name-aws').textContent = 'Error loading certs';
+        document.getElementById('cert-name-gcp').textContent = 'Error loading certs';
+      }
+    }
+
+    // Quiz state
+    let quizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let correctAnswerForCurrent = null;
+    let attemptsForCurrent = 0;
+
+    async function startPractice(quizFile) {
+      document.getElementById('cert-card-aws').style.display = 'none';
+      document.getElementById('cert-card-gcp').style.display = 'none';
+
+      const quizArea = document.getElementById('quiz-area');
+      const quizCard = document.getElementById('quiz-card');
+      quizArea.style.display = 'block';
+      quizCard.style.opacity = '0';
+      requestAnimationFrame(() => {
+        quizCard.style.opacity = '1';
+      });
+
+      document.getElementById('chart-container').style.display = 'none';
+      document.getElementById('btn-main-view').style.display = 'none';
+
+      try {
+        const res = await fetch(quizFile);
+        quizQuestions = await res.json();
+        currentIndex = 0;
+        score = 0;
+        showQuestion();
+      } catch (e) {
+        document.getElementById('quiz-question').textContent = 'Error loading practice questions.';
+      }
+    }
+
+    function showQuestion() {
+      selectedOption = null;
+      attemptsForCurrent = 0;
+
+      const qObj = quizQuestions[currentIndex];
+      const qEl = document.getElementById('quiz-question');
+      const optionsEl = document.getElementById('quiz-options');
+      const statusEl = document.getElementById('quiz-status');
+      const resultEl = document.getElementById('quiz-result');
+      const nextBtn = document.getElementById('btn-next');
+      const chartContainer = document.getElementById('chart-container');
+
+      chartContainer.style.display = 'none';
+      document.getElementById('btn-main-view').style.display = 'none';
+
+      resultEl.textContent = '';
+      resultEl.className = 'result hidden';
+      nextBtn.style.display = 'none';
+
+      qEl.textContent = 'Q' + qObj.questionnumber + '. ' + qObj.question;
+      optionsEl.innerHTML = '';
+
+      const correct = qObj.correctanswer;
+      correctAnswerForCurrent = Array.isArray(correct) ? correct[0] : correct;
+
+      const opts = [];
+      opts.push(correctAnswerForCurrent);
+      if (qObj.incorrectansweroption2) opts.push(qObj.incorrectansweroption2);
+      if (qObj.incorrectansweroption3) opts.push(qObj.incorrectansweroption3);
+      if (qObj.incorrectansweroption4) opts.push(qObj.incorrectansweroption4);
+      if (qObj.incorrectansweroption5) opts.push(qObj.incorrectansweroption5);
+
+      for (let i = opts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opts[i], opts[j]] = [opts[j], opts[i]];
+      }
+
+      opts.forEach((optText) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.textContent = optText;
+        btn.onclick = () => handleOptionClick(btn, optText);
+        li.appendChild(btn);
+        optionsEl.appendChild(li);
+      });
+
+      statusEl.textContent = 'Question ' + (currentIndex + 1) + ' of ' + quizQuestions.length;
+    }
+
+    function disableOptions() {
+      document.querySelectorAll('.option-btn').forEach(b => {
+        b.classList.add('disabled');
+        b.disabled = true;
+      });
+    }
+
+    function handleOptionClick(buttonEl, optText) {
+      const resultEl = document.getElementById('quiz-result');
+      const nextBtn = document.getElementById('btn-next');
+
+      if (buttonEl.classList.contains('disabled')) {
+        return;
+      }
+
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      buttonEl.classList.add('selected');
+      selectedOption = optText;
+
+      if (optText === correctAnswerForCurrent) {
+        score++;
+        resultEl.textContent = 'Correct!';
+        resultEl.className = 'result correct';
+        disableOptions();
+        nextBtn.style.display = 'inline-block';
+      } else {
+        attemptsForCurrent++;
+        if (attemptsForCurrent < 2) {
+          resultEl.textContent = 'Incorrect, please try again';
+          resultEl.className = 'result incorrect';
+          setTimeout(() => {
+            resultEl.classList.add('hidden');
+          }, 1000);
+        } else {
+          resultEl.textContent = 'Incorrect. Moving on.';
+          resultEl.className = 'result incorrect';
+          disableOptions();
+          nextBtn.style.display = 'inline-block';
+        }
+      }
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < quizQuestions.length) {
+        showQuestion();
+      } else {
+        showFinalResults();
+      }
+    }
+
+    function showFinalResults() {
+      const qEl = document.getElementById('quiz-question');
+      const optionsEl = document.getElementById('quiz-options');
+      const statusEl = document.getElementById('quiz-status');
+      const resultEl = document.getElementById('quiz-result');
+      const nextBtn = document.getElementById('btn-next');
+      const chartContainer = document.getElementById('chart-container');
+      const canvas = document.getElementById('result-chart');
+      const ctx = canvas.getContext('2d');
+
+      qEl.textContent = 'Quiz complete!';
+      optionsEl.innerHTML = '';
+      statusEl.textContent = '';
+      nextBtn.style.display = 'none';
+
+      const total = quizQuestions.length;
+      const pctCorrect = total > 0 ? Math.round((score / total) * 100) : 0;
+      const pctIncorrect = 100 - pctCorrect;
+
+      resultEl.textContent = 'Your score: ' + score + ' / ' + total + ' (' + pctCorrect + '%)';
+      resultEl.className = 'result';
+
+      chartContainer.style.display = 'block';
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+
+      const correctAngle = (pctCorrect / 100) * 2 * Math.PI;
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + correctAngle);
+      ctx.closePath();
+      ctx.fillStyle = '#4caf50';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, -Math.PI / 2 + correctAngle, -Math.PI / 2 + 2 * Math.PI);
+      ctx.closePath();
+      ctx.fillStyle = '#f44336';
+      ctx.fill();
+
+      document.getElementById('chart-label').textContent =
+        pctCorrect + '% correct (green) / ' + pctIncorrect + '% incorrect (red)';
+
+      // NEW: show main view button on summary screen
+      document.getElementById('btn-main-view').style.display = 'block';
+    }
+
+    function backToMainView() {
+      const quizArea = document.getElementById('quiz-area');
+      const quizCard = document.getElementById('quiz-card');
+
+      quizCard.style.opacity = '1';
+      quizCard.style.opacity = '0';
+      setTimeout(() => {
+        quizArea.style.display = 'none';
+        document.getElementById('cert-card-aws').style.display = 'block';
+        document.getElementById('cert-card-gcp').style.display = 'block';
+      }, 250);
+    }
+
+    document.getElementById('btn-practice-aws').addEventListener('click', () => startPractice('certsaws1.json'));
+    document.getElementById('btn-practice-gcp').addEventListener('click', () => startPractice('certsgcp2.json'));
+    document.getElementById('btn-next').addEventListener('click', nextQuestion);
+    document.getElementById('btn-main-view').addEventListener('click', backToMainView);  // NEW
+
+    loadCertCards();
+  </script>
+</body>
+</html>

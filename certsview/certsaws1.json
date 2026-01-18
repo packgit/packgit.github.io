@@ -1,0 +1,59 @@
+[
+  {
+    "questionnumber": 1,
+    "question": "BlueQuill Systems, a design automation startup, wants to add generative AI to tools used by eight internal teams and is comparing Amazon Q for automating enterprise workflows with Amazon Bedrock for working with foundation models; which statements correctly explain their key differences in capabilities, model choice, and typical use so the team can assign the right service to each workload? (Choose 2)",
+    "correctanswer": [
+      "B. Amazon Q is a generative AI assistant for ready-to-use business and developer workflows, while Amazon Bedrock is a managed platform to build and scale generative AI solutions with foundation models",
+      "D. Amazon Bedrock offers a catalog of foundation models to choose from, but Amazon Q does not let you select the underlying model"
+    ],
+    "incorrectansweroption2": "A. Amazon Q allows you to pick from multiple foundation models, whereas Amazon Bedrock restricts you to a single default model",
+    "incorrectansweroption3": "C. Both Amazon Q and Amazon Bedrock are assistants that ship as prepackaged generative AI apps",
+    "incorrectansweroption4": "E. Amazon SageMaker",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 2,
+    "question": "An academic consortium is building a climate forecasting model using Amazon SageMaker and wants other scientists to verify how the model makes decisions. They are considering adopting an open-source model to improve openness and reviewability. What is the primary transparency advantage of choosing an open-source model?",
+    "correctanswer": "C. The source code can be examined and adapted, making behavior easier to understand",
+    "incorrectansweroption2": "A. Open-source projects include automatic explanations for every prediction",
+    "incorrectansweroption3": "B. Open-source licensing always permits unrestricted commercial use",
+    "incorrectansweroption4": "D. Amazon SageMaker Clarify",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 3,
+    "question": "Meridian Finance operates an AI-powered HR analytics platform on AWS that processes confidential employee records. The security team needs a service that continuously evaluates the environment against security best practices and provides prioritized remediation guidance. Which service should they use?",
+    "correctanswer": "C. AWS Trusted Advisor",
+    "incorrectansweroption2": "A. Amazon Macie",
+    "incorrectansweroption3": "B. AWS Well-Architected Tool",
+    "incorrectansweroption4": "D. AWS CloudTrail",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 4,
+    "question": "A parcel delivery network at MetroShip uses Amazon Bedrock to forecast late arrivals from traffic feeds. The predictions often miss abrupt events such as lane closures or multi-vehicle accidents that occur within minutes. What change would most improve the model’s responsiveness to these rapid conditions?",
+    "correctanswer": "B. Ingest live traffic events with Amazon Kinesis Data Streams",
+    "incorrectansweroption2": "A. Embedding indexing",
+    "incorrectansweroption3": "C. Fine-tuning",
+    "incorrectansweroption4": "D. Amazon SageMaker Clarify",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 5,
+    "question": "A regional airline plans to launch a customer help assistant built with Amazon Bedrock to answer booking and policy questions. Which AWS feature will most improve the assistant’s factual accuracy and safe, consistent behavior?",
+    "correctanswer": "B. Guardrails",
+    "incorrectansweroption2": "A. SageMaker Model Monitor",
+    "incorrectansweroption3": "C. Amazon Polly",
+    "incorrectansweroption4": "D. Amazon Rekognition",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 6,
+    "question": "A ride-hailing startup aims to group trip paths from the last 90 days into similar clusters based on geographic proximity and congestion trends to improve driver dispatching. Which category of machine learning should they use?",
+    "correctanswer": "C. Unsupervised learning",
+    "incorrectansweroption2": "A. Supervised Learning",
+    "incorrectansweroption3": "B. Reinforcement Learning",
+    "incorrectansweroption4": "D. Semi-Supervised Learning",
+    "incorrectansweroption5": ""
+  }
+]

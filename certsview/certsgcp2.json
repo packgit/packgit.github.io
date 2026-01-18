@@ -1,0 +1,74 @@
+[
+  {
+    "questionnumber": 1,
+    "question": "A customer success manager at BrightWave Systems wants Gemini to always remember their role and standard account playbooks across everyday chats, but also needs a separate assistant specialized for preparing quarterly business reviews with custom slide templates and tone. Which configuration best uses Gemini capabilities for persistent context and a dedicated QBR assistant?",
+    "correctanswer": "Use Saved Info for the enduring role and defaults, and create a Gem for the QBR-focused assistant",
+    "incorrectansweroption2": "Use only Saved Info to store both the persistent profile and the full QBR workflow",
+    "incorrectansweroption3": "Use a single Gem to hold both the ongoing context and the QBR workflow without Saved Info",
+    "incorrectansweroption4": "Use Saved Info for QBR templates and a Gem for general everyday conversations",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 2,
+    "question": "An engineering team spends many hours each week writing repetitive scaffolding and boilerplate for new service endpoints. They want an AI capability that can generate this routine code from concise requirements so developers can focus on complex logic. Which primary generative AI use case does this describe?",
+    "correctanswer": "Automated code synthesis",
+    "incorrectansweroption2": "Personalized user experience",
+    "incorrectansweroption3": "Data analysis and insight extraction",
+    "incorrectansweroption4": "Image generation for UI assets",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 3,
+    "question": "A team at Summit Dynamics needs full control of the guest operating system and specific NVIDIA drivers to experiment with new AI frameworks. Another group wants a managed environment where they only write Python while Google handles autoscaling and infrastructure. A third department wants a ready-to-use assistant directly inside Gmail and Docs with no coding. Which mapping correctly aligns these needs to IaaS, PaaS, and SaaS on Google Cloud?",
+    "correctanswer": "Use Compute Engine for IaaS, Vertex AI for PaaS, and Gemini for Workspace for SaaS",
+    "incorrectansweroption2": "Use Vertex AI for IaaS, Compute Engine for PaaS, and Gemini for Workspace for SaaS",
+    "incorrectansweroption3": "Use GKE for IaaS, Vertex AI for SaaS, and Compute Engine for PaaS",
+    "incorrectansweroption4": "Use Gemini for Workspace for IaaS, Compute Engine for PaaS, and Vertex AI for SaaS",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 4,
+    "question": "A generative AI assistant is asked to plan a multi-city delivery itinerary. It gathers constraints, proposes a draft plan, calls tools for new data, updates the plan, and repeats these observe–reason–act steps until the goal is met or an iteration limit is reached. This recurring cycle of deciding and acting until a stop condition is satisfied is a defining characteristic of which part of an AI agent?",
+    "correctanswer": "The agent’s reasoning loop",
+    "incorrectansweroption2": "The foundation model architecture",
+    "incorrectansweroption3": "Vertex AI Safety Filters",
+    "incorrectansweroption4": "The agent’s data ingestion pipeline",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 5,
+    "question": "A travel app lets users upload a photo of a landmark and returns a written overview with history and nearby attractions. The system must understand the image and then generate explanatory text. What kind of model capability does this workflow require?",
+    "correctanswer": "A multimodal learning model",
+    "incorrectansweroption2": "A pure image classification model",
+    "incorrectansweroption3": "A time-series forecasting model",
+    "incorrectansweroption4": "A text-only unimodal language model",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 6,
+    "question": "A nonprofit news analytics lab wants to combine open-source models and tools with managed Google Cloud services, minimize vendor lock-in, and benefit from innovations across the broader AI community. Which aspect of Google Cloud’s generative AI strategy best matches these goals?",
+    "correctanswer": "An open ecosystem that supports open-source models, tools, and interoperability",
+    "incorrectansweroption2": "A focus on prebuilt, proprietary industry solutions for common generative AI use cases",
+    "incorrectansweroption3": "Exclusive reliance on custom TPUs tuned for select Google model families",
+    "incorrectansweroption4": "A closed platform optimized only for first-party Google models",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 7,
+    "question": "An online travel marketplace is piloting a generative AI system that crafts personalized in-app messages for weekend deals. Executives ask which factor should be treated as a business requirement because it defines success for the project. Which factor fits this definition?",
+    "correctanswer": "The targeted percentage lift in open rate for those in-app messages",
+    "incorrectansweroption2": "Whether inference runs on Cloud Run or Google Kubernetes Engine",
+    "incorrectansweroption3": "Which foundation model family is selected from Vertex AI Model Garden",
+    "incorrectansweroption4": "The availability of NVIDIA GPUs for training and fine-tuning",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 8,
+    "question": "TrailShip Logistics wants a single Google Cloud product to manage around 25 machine learning initiatives end to end, from data preparation and training through tuning, deployment, and production monitoring, including generative AI use cases. Which product best provides this unified lifecycle platform?",
+    "correctanswer": "Vertex AI",
+    "incorrectansweroption2": "BigQuery",
+    "incorrectansweroption3": "Dataproc",
+    "incorrectansweroption4": "Google AI Studio",
+    "incorrectansweroption5": ""
+  }
+]

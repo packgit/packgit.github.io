@@ -1,0 +1,101 @@
+[
+  {
+    "Cert": "AWS Certified AI Practitioner (AIF-C01)",
+    "Platform": "AWS",
+    "Hours": "90 Mins",
+    "Questions": 65,
+    "Info": "https://aws.amazon.com/certification/certified-ai-practitioner/",
+    "Price": "$100",
+    "PracticeFile": "certsaws1.json"
+  },
+  {
+    "Cert": "AWS Generative AI Professional Certification",
+    "Platform": "AWS",
+    "Hours": "205 Mins",
+    "Questions": 85,
+    "Info": "https://aws.amazon.com/certification/certified-generative-ai-developer-professional/",
+    "Price": "$150",
+    "PracticeFile": "certsaws2.json"
+  },
+  {
+    "Cert": "AWS Certified Machine Learning Engineer - Associate",
+    "Platform": "AWS",
+    "Hours": "130 Mins",
+    "Questions": 65,
+    "Info": "https://aws.amazon.com/certification/certified-data-engineer-associate/",
+    "Price": "$150",
+    "PracticeFile": "certsaws3.json"
+  },
+  {
+    "Cert": "AWS Certified Data Engineer - Associate",
+    "Platform": "AWS",
+    "Hours": "130 Mins",
+    "Questions": 65,
+    "Info": "https://aws.amazon.com/certification/certified-data-engineer-associate/",
+    "Price": "$150",
+    "PracticeFile": "certsaws4.json"
+  },
+  {
+    "Cert": "Microsoft Certified: Azure AI Fundamentals",
+    "Platform": "Microsoft",
+    "Hours": "45 Mins",
+    "Questions": "40-60",
+    "Info": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/?practice-assessment-type=certification",
+    "Price": "$165",
+    "PracticeFile": "certsms1.json"
+  },
+  {
+    "Cert": "Microsoft Certified: Azure AI Engineer Associate",
+    "Platform": "Microsoft",
+    "Hours": "100 Mins",
+    "Questions": "40-60",
+    "Info": "https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/?practice-assessment-type=certification",
+    "Price": "$165",
+    "PracticeFile": "certsms2.json"
+  },
+  {
+    "Cert": "Microsoft Certified: Agentic AI Business Solutions Architect",
+    "Platform": "Microsoft",
+    "Hours": "100 Mins",
+    "Questions": "40-60",
+    "Info": "https://learn.microsoft.com/en-us/credentials/certifications/agentic-ai-business-solutions-architect/?practice-assessment-type=certification",
+    "Price": "$165",
+    "PracticeFile": "certsms3.json"
+  },
+  {
+    "Cert": "Google Cloud Data Analytics Certificate",
+    "Platform": "Google",
+    "Hours": "7-10 Days",
+    "Questions": null,
+    "Info": "https://www.skills.google/paths/420?utm_source=cgc&utm_medium=website&utm_campaign=evergreen",
+    "Price": "$29/Month = $300",
+    "PracticeFile": "certsgcp1.json"
+  },
+  {
+    "Cert": "Google Generative A.I. Leader",
+    "Platform": "Google",
+    "Hours": "90 Mins",
+    "Questions": 60,
+    "Info": "https://cloud.google.com/learn/certification/generative-ai-leader",
+    "Price": "$100",
+    "PracticeFile": "certsgcp2.json"
+  },
+  {
+    "Cert": "Associate Data Practitioner",
+    "Platform": "Google",
+    "Hours": "120 Mins",
+    "Questions": 60,
+    "Info": "https://cloud.google.com/learn/certification/data-practitioner",
+    "Price": "$125",
+    "PracticeFile": "certsgcp3.json"
+  },
+  {
+    "Cert": "Professional Data Engineer",
+    "Platform": "Google",
+    "Hours": "120 Mins",
+    "Questions": 60,
+    "Info": "https://cloud.google.com/learn/certification/data-engineer/",
+    "Price": "$200",
+    "PracticeFile": "certsgcp4.json"
+  }
+]
