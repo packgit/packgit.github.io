@@ -332,5 +332,72 @@
     "incorrectansweroption3": "C. Amazon Rekognition",
     "incorrectansweroption4": "D. Making arbitrary random choices without reference to data",
     "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 30,
+    "question": "A precision medicine startup is using a Foundation Model in Amazon Bedrock to analyze high-throughput sequencing results and generate insights for new therapies. The team wants the model to become highly specialized in genomics. Which approaches would most effectively transform the general FM into a genomics-focused expert? (Choose 2)",
+    "correctanswer": [
+      "A. Continued pretraining on a large, curated corpus of genomics literature, variant databases, and sequencing data",
+      "D. Domain adaptation fine-tuning of the FM using high-quality, domain-specific genomics datasets"
+    ],
+    "incorrectansweroption2": "B. Reinforcement learning with reward signals from human feedback to adapt the model to genomics",
+    "incorrectansweroption3": "C. Supervised learning on a labeled downstream task such as gene–disease classification to specialize the FM",
+    "incorrectansweroption4": "E. Incremental learning to add new genomics samples over time without catastrophic forgetting",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 31,
+    "question": "A mobile gaming studio wants to automatically tag player reviews as positive, negative, or neutral to monitor customer sentiment. Which learning approach should they use?",
+    "correctanswer": [
+      "C. Supervised learning"
+    ],
+    "incorrectansweroption2": "A. Clustering",
+    "incorrectansweroption3": "B. Unsupervised learning",
+    "incorrectansweroption4": "D. Reinforcement learning",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 32,
+    "question": "A video streaming startup is using Amazon Bedrock to produce personalized show summaries and viewing suggestions. What does changing the Top K parameter control?",
+    "correctanswer": [
+      "C. Sets how many of the highest-probability token candidates are eligible for the next step"
+    ],
+    "incorrectansweroption2": "A. Specifies character sequences that cause generation to stop",
+    "incorrectansweroption3": "B. Controls the cumulative probability mass of candidates considered for the next token",
+    "incorrectansweroption4": "D. Adjusts randomness by increasing the chance of choosing lower-probability tokens",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 33,
+    "question": "Rivera Robotics needs sub-50 ms language model responses on handheld devices with unreliable network access. Which approach best meets this requirement?",
+    "correctanswer": [
+      "C. Run tuned small language models directly on the edge hardware"
+    ],
+    "incorrectansweroption2": "A. Deploy compressed large language models locally on the edge devices",
+    "incorrectansweroption3": "B. Use a central small language model endpoint with asynchronous calls",
+    "incorrectansweroption4": "D. Integrate a centralized large language model endpoint with asynchronous communication",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 34,
+    "question": "Aurora Retail must ensure its machine learning service complies with fairness policies and equal opportunity laws. Which capability should they prioritize?",
+    "correctanswer": [
+      "B. Bias detection and mitigation"
+    ],
+    "incorrectansweroption2": "A. Model compression techniques",
+    "incorrectansweroption3": "C. Amazon SageMaker Automatic Model Tuning",
+    "incorrectansweroption4": "D. Cross-validation",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 35,
+    "question": "A wealth management startup is concerned that a generative AI summarization tool could surface proprietary trading methods. Which discipline should they focus on first?",
+    "correctanswer": [
+      "B. AI risk management"
+    ],
+    "incorrectansweroption2": "A. Identity and access management",
+    "incorrectansweroption3": "C. Network segmentation and isolation",
+    "incorrectansweroption4": "D. Centralized logging and monitoring",
+    "incorrectansweroption5": ""
   }
 ]
