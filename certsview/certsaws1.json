@@ -41,24 +41,6 @@
   {
     "questionnumber": 5,
     "question": "A regional airline plans to launch a customer help assistant built with Amazon Bedrock to answer booking and policy questions. Which AWS feature will most improve the assistant’s factual accuracy and safe, consistent behavior?",
-    "correctanswer": "B. Guardrails",
-    "incorrectansweroption2": "A. SageMaker Model Monitor",
-    "incorrectansweroption3": "C. Amazon Polly",
-    "incorrectansweroption4": "D. Amazon Rekognition",
-    "incorrectansweroption5": ""
-  },
-  {
-    "questionnumber": 6,
-    "question": "A ride-hailing startup aims to group trip paths from the last 90 days into similar clusters based on geographic proximity and congestion trends to improve driver dispatching. Which category of machine learning should they use?",
-    "correctanswer": "C. Unsupervised learning",
-    "incorrectansweroption2": "A. Supervised Learning",
-    "incorrectansweroption3": "B. Reinforcement Learning",
-    "incorrectansweroption4": "D. Semi-Supervised Learning",
-    "incorrectansweroption5": ""
-  },
-  {
-    "questionnumber": 5,
-    "question": "A regional airline plans to launch a customer help assistant built with Amazon Bedrock to answer booking and policy questions. Which AWS feature will most improve the assistant’s factual accuracy and safe, consistent behavior?",
     "correctanswer": [
       "B. Guardrails"
     ],
