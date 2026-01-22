@@ -55,5 +55,127 @@
     "incorrectansweroption3": "B. Reinforcement Learning",
     "incorrectansweroption4": "D. Semi-Supervised Learning",
     "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 5,
+    "question": "A regional airline plans to launch a customer help assistant built with Amazon Bedrock to answer booking and policy questions. Which AWS feature will most improve the assistant’s factual accuracy and safe, consistent behavior?",
+    "correctanswer": [
+      "B. Guardrails"
+    ],
+    "incorrectansweroption2": "A. SageMaker Model Monitor",
+    "incorrectansweroption3": "C. Amazon Polly",
+    "incorrectansweroption4": "D. Amazon Rekognition",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 6,
+    "question": "A ride-hailing startup aims to group trip paths from the last 90 days into similar clusters based on geographic proximity and congestion trends to improve driver dispatching. Which category of machine learning should they use?",
+    "correctanswer": [
+      "C. Unsupervised learning"
+    ],
+    "incorrectansweroption2": "A. Supervised Learning",
+    "incorrectansweroption3": "B. Reinforcement Learning",
+    "incorrectansweroption4": "D. Semi-Supervised Learning",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 7,
+    "question": "A regional insurance provider plans a virtual assistant that can search through about 8 million policy documents and claim notes and then deliver grounded, contextual answers to staff questions. Which AI design pattern should they adopt?",
+    "correctanswer": [
+      "C. Retrieval-Augmented Generation (RAG) approach"
+    ],
+    "incorrectansweroption2": "A. Basic retrieval system without generation",
+    "incorrectansweroption3": "B. Fine-tuned model on a general-purpose dataset",
+    "incorrectansweroption4": "D. Pretrained model with no access to external knowledge",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 8,
+    "question": "A retail marketplace named RiverCart is moving to AWS and plans to power personalized product suggestions with Amazon Bedrock. The team has a curated dataset of 250,000 labeled clicks and purchases and wants the customization to remain private to their account while improving the chosen foundation model’s outputs. Which approach best meets this requirement?",
+    "correctanswer": [
+      "C. Create a private fine-tuned copy of the selected FM in Amazon Bedrock and train that copy with the labeled dataset"
+    ],
+    "incorrectansweroption2": "A. Train the base FM directly in Amazon Bedrock using the labeled dataset",
+    "incorrectansweroption3": "B. Build a brand-new model from scratch in Amazon Bedrock using the labeled dataset",
+    "incorrectansweroption4": "D. Create a publicly shareable copy of the base FM in Amazon Bedrock and train that public copy with the labeled dataset",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 9,
+    "question": "At a cybersecurity startup using Amazon SageMaker to classify unsolicited email collected over the last 120 days, you need to compare models by how well they distinguish spam from legitimate messages regardless of where the prediction threshold is set. Which evaluation method should you use to understand performance across all possible decision cutoffs?",
+    "correctanswer": [
+      "C. AUC-ROC to evaluate threshold-independent separability"
+    ],
+    "incorrectansweroption2": "A. Average precision on the precision–recall curve",
+    "incorrectansweroption3": "B. Confusion matrix at a chosen score cutoff",
+    "incorrectansweroption4": "D. F1 score computed at a single operating point",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 10,
+    "question": "A streaming startup called AuroraPlay wants to add machine learning so that when a viewer selects a title, the app shows closely related content to boost discovery and engagement. Which option describes a capability that Amazon Personalize can provide?",
+    "correctanswer": [
+      "C. Recommend items that are most similar to a product a user is viewing"
+    ],
+    "incorrectansweroption2": "A. Provide natural-language enterprise search across company content",
+    "incorrectansweroption3": "B. Automate telecom customer workflows such as SIM activation and plan changes",
+    "incorrectansweroption4": "D. Extract document layout elements like paragraphs, titles, and lists from files",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 11,
+    "question": "A logistics company is using Amazon SageMaker to train a vision model with 90,000 labeled warehouse photos to detect damaged parcels across different lighting conditions and camera angles. The team wants the model to generalize to new images and avoid both overfitting and underfitting. Which statements correctly differentiate overfitting from underfitting? (Choose 2)",
+    "correctanswer": [
+      "B. Simplifying the model can reduce overfitting, while adding more labeled training data can lessen underfitting",
+      "E. Overfitting occurs when a model performs well on training data but poorly on new data, while underfitting fails to capture patterns even in the training data"
+    ],
+    "incorrectansweroption2": "A. More complex models invariably outperform simpler ones",
+    "incorrectansweroption3": "C. Underfitting shows strong training accuracy but weak validation accuracy, while overfitting performs poorly on both",
+    "incorrectansweroption4": "D. Amazon CloudWatch",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 12,
+    "question": "A digital media company is fine-tuning a foundation model in Amazon Bedrock to study audience interactions and anticipate content demand. The team plans to run validation on roughly 40 TB of labeled data and needs a storage location that Bedrock natively supports for accessing large datasets during model validation. Which storage service should the team choose?",
+    "correctanswer": [
+      "B. Amazon S3"
+    ],
+    "incorrectansweroption2": "A. Amazon RDS",
+    "incorrectansweroption3": "C. Amazon EBS",
+    "incorrectansweroption4": "D. Amazon EFS",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 13,
+    "question": "ByteCraft Electronics operates a customer help portal where shoppers ask about device compatibility and warranty terms. The team needs Amazon Q Business to return precise answers that reflect catalog and policy changes that sync every 45 minutes from internal systems. Which capability of Amazon Q Business ensures answers stay accurate and relevant to the most current business data?",
+    "correctanswer": [
+      "B. Uses Retrieval Augmented Generation to pull the latest catalog and policy content and ground the answer in that context"
+    ],
+    "incorrectansweroption2": "A. Generates responses only from the model’s general training data without checking company-specific sources",
+    "incorrectansweroption3": "C. Delivers replies from a static, rule-driven knowledge base that is not updated in real time",
+    "incorrectansweroption4": "D. Enforces guardrails and content filters to block unsafe topics instead of retrieving fresh business data",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 14,
+    "question": "A sports arena in Chicago operates gated parking with IP cameras at each entrance. The operations team wants to read license plate text from live video and instantly compare it to a denylist of about 1,200 plate numbers stored in their system so security is alerted when a match is found. Which AWS service should they use to implement this solution?",
+    "correctanswer": [
+      "B. Amazon Rekognition"
+    ],
+    "incorrectansweroption2": "A. Amazon Bedrock",
+    "incorrectansweroption3": "C. Amazon Kendra",
+    "incorrectansweroption4": "D. Amazon Comprehend",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 15,
+    "question": "A drone logistics startup is building an AI flight controller to improve obstacle avoidance and route selection for autonomous quadcopters. The team will use deep learning and wants to clearly understand how a neural network learns from large volumes of flight and video data so it can make split-second choices. What best describes the training process for a deep learning model?",
+    "correctanswer": [
+      "C. Training in deep learning iteratively updates network weights and biases using backpropagation with optimizers like gradient descent on large datasets to minimize a loss function"
+    ],
+    "incorrectansweroption2": "A. Training in deep learning involves manually configuring all weights and biases according to fixed heuristics",
+    "incorrectansweroption3": "B. Amazon SageMaker",
+    "incorrectansweroption4": "D. Training in deep learning requires no dataset, since the model learns solely from built-in rules",
+    "incorrectansweroption5": ""
   }
 ]
