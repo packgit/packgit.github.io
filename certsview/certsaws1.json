@@ -177,5 +177,160 @@
     "incorrectansweroption3": "B. Amazon SageMaker",
     "incorrectansweroption4": "D. Training in deep learning requires no dataset, since the model learns solely from built-in rules",
     "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 16,
+    "question": "Northstar Analytics is building an internal assistant with an Amazon Bedrock foundation model and wants to lower monthly token spend while keeping answer quality high. Which approach is the most effective to achieve this?",
+    "correctanswer": [
+      "B. Fine-tune the Bedrock model with domain data so prompts can be shorter while maintaining quality"
+    ],
+    "incorrectansweroption2": "A. Raise the model’s temperature to produce outputs faster",
+    "incorrectansweroption3": "C. Perform continued pretraining on Amazon SageMaker using the company’s full dataset",
+    "incorrectansweroption4": "D. Lower the maximum tokens per response to reduce output size",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 17,
+    "question": "At Helios Retail Labs, a small analytics group is transforming raw datasets before training a predictive model. They apply one-hot encoding, standardization, and build interaction terms to improve predictive quality. Which choice best describes the aim of feature engineering in this situation?",
+    "correctanswer": [
+      "C. Applying domain expertise to convert raw data into informative features that boost model performance and efficiency"
+    ],
+    "incorrectansweroption2": "A. Automatically choosing the best algorithm or architecture based on the dataset and task",
+    "incorrectansweroption3": "B. Amazon SageMaker Autopilot",
+    "incorrectansweroption4": "D. Systematically searching for the most effective hyperparameters over many training runs",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 18,
+    "question": "An analytics startup is using a foundation model with Amazon Bedrock to power an internal question-and-answer assistant. Which sequence represents techniques in increasing implementation complexity?",
+    "correctanswer": [
+      "C. Prompt engineering, Retrieval-Augmented Generation (RAG), Fine-tuning"
+    ],
+    "incorrectansweroption2": "A. Retrieval-Augmented Generation (RAG), Prompt engineering, Fine-tuning",
+    "incorrectansweroption3": "B. Fine-tuning, Retrieval-Augmented Generation (RAG), Prompt engineering",
+    "incorrectansweroption4": "D. Prompt engineering, Fine-tuning, Retrieval-Augmented Generation (RAG)",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 19,
+    "question": "Orion Logistics built a machine learning model to predict which employees might leave. Accuracy varies widely by division. Which approach best uncovers and corrects uneven performance?",
+    "correctanswer": [
+      "C. Subgroup evaluation of model performance by division"
+    ],
+    "incorrectansweroption2": "A. Amazon Polly",
+    "incorrectansweroption3": "B. Automated hyperparameter tuning",
+    "incorrectansweroption4": "D. Amazon Transcribe",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 20,
+    "question": "NorthBay Insights must ensure only authorized users can access confidential datasets and enforce least privilege. Which approach should they use?",
+    "correctanswer": [
+      "B. Use AWS IAM roles with fine-grained policies and permissions to enforce access control"
+    ],
+    "incorrectansweroption2": "A. AWS CloudTrail",
+    "incorrectansweroption3": "C. Amazon Macie",
+    "incorrectansweroption4": "D. Encrypt the data but do not configure any specific access permissions",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 21,
+    "question": "AeroTrip plans to use Agents for Amazon Bedrock to handle 25,000 daily support tickets. Which benefit most directly addresses this need?",
+    "correctanswer": [
+      "C. Automating repetitive actions and orchestrating multi-step workflows with tool and API calls"
+    ],
+    "incorrectansweroption2": "A. Automatically building and training new proprietary foundation models",
+    "incorrectansweroption3": "B. Offloading all task coordination and state management to AWS Step Functions",
+    "incorrectansweroption4": "D. Choosing and switching between multiple foundation models without setup",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 22,
+    "question": "A global insurance carrier wants a centralized place to store, discover, and version reusable ML features for multiple teams. Which AWS service fits best?",
+    "correctanswer": [
+      "B. Amazon SageMaker Feature Store"
+    ],
+    "incorrectansweroption2": "A. Amazon SageMaker Data Wrangler",
+    "incorrectansweroption3": "C. Amazon SageMaker Ground Truth",
+    "incorrectansweroption4": "D. Amazon SageMaker Canvas",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 23,
+    "question": "Skylark Retail wants to convert recorded customer support calls into text for analysis. Which AWS service should they use?",
+    "correctanswer": [
+      "B. Amazon Transcribe"
+    ],
+    "incorrectansweroption2": "A. Amazon Lex",
+    "incorrectansweroption3": "C. Amazon SageMaker Model Monitor",
+    "incorrectansweroption4": "D. Amazon Comprehend",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 24,
+    "question": "Northwind Express experiences high latency during peak traffic when calling Amazon Bedrock. What change should they prioritize?",
+    "correctanswer": [
+      "B. Increase provisioned throughput and concurrency in Amazon Bedrock"
+    ],
+    "incorrectansweroption2": "A. Fine-tune the model with more route data",
+    "incorrectansweroption3": "C. AWS Global Accelerator",
+    "incorrectansweroption4": "D. Lower the maximum tokens per response",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 25,
+    "question": "A fintech startup wants to enforce fairness and transparency during data preparation. Which SageMaker Clarify capability helps?",
+    "correctanswer": [
+      "B. Flags potential dataset bias during data preparation"
+    ],
+    "incorrectansweroption2": "A. Amazon SageMaker Model Monitor",
+    "incorrectansweroption3": "C. Amazon SageMaker Model Cards",
+    "incorrectansweroption4": "D. Amazon Bedrock Knowledge Bases",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 26,
+    "question": "Orion Mutual Insurance wants to reduce the risk of exposing sensitive data when using AI on scanned contracts. Which practices help? (Choose 2)",
+    "correctanswer": [
+      "B. Encrypt stored documents with AWS Key Management Service (KMS)",
+      "E. Implement IAM policies that tightly restrict access to AI models and datasets"
+    ],
+    "incorrectansweroption2": "A. Store document data in Amazon RDS instead of Amazon S3",
+    "incorrectansweroption3": "C. Disable API logging to prevent data leakage",
+    "incorrectansweroption4": "D. AWS Shield Advanced",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 27,
+    "question": "Luma Outfitters wants to limit generation to the smallest set of tokens whose cumulative probability reaches 88%. Which inference parameter should they use?",
+    "correctanswer": [
+      "C. Top-p sampling"
+    ],
+    "incorrectansweroption2": "A. Temperature",
+    "incorrectansweroption3": "B. Top-k",
+    "incorrectansweroption4": "D. Epochs",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 28,
+    "question": "NorthGrid Power wants a chatbot that improves over time using thumbs-up and thumbs-down feedback. Which ML approach enables this?",
+    "correctanswer": [
+      "C. Reinforcement learning that uses customer ratings as reward signals"
+    ],
+    "incorrectansweroption2": "A. Supervised learning with labeled responses",
+    "incorrectansweroption3": "B. Unsupervised learning to cluster questions",
+    "incorrectansweroption4": "D. Supervised learning retrained on updated FAQs",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 29,
+    "question": "Skyline Trails wants a simple explanation of how generative models create original content. How do these systems generate new content?",
+    "correctanswer": [
+      "B. Sampling novel outputs from models that learned statistical patterns in large training datasets"
+    ],
+    "incorrectansweroption2": "A. Using fixed rules and templates with no learning",
+    "incorrectansweroption3": "C. Amazon Rekognition",
+    "incorrectansweroption4": "D. Making arbitrary random choices without reference to data",
+    "incorrectansweroption5": ""
   }
 ]
