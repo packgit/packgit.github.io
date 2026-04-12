@@ -1,0 +1,263 @@
+[
+  {
+    "questionnumber": 1,
+    "question": "Which of the following best describes Word2vec?",
+    "correctanswer": "C. A deep learning algorithm used to generate word embeddings from text data.",
+    "incorrectansweroption2": "A. A programming language used to build artificial intelligence models.",
+    "incorrectansweroption3": "B. A statistical technique used to analyze word frequency in a text corpus.",
+    "incorrectansweroption4": "D. A database management system designed for storing and querying word data.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 2,
+    "question": "In the context of language models, what does an autoregressive model predict?",
+    "correctanswer": "A. The probability of the next token in a text given the previous tokens.",
+    "incorrectansweroption2": "B. The probability of the next token using a Monte Carlo sampling of past tokens.",
+    "incorrectansweroption3": "C. The next token solely using recurrent network or LTSM cells.",
+    "incorrectansweroption4": "D. The probability of the next token by looking at the previous and future input tokens.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 3,
+    "question": "In large-language models, what is the purpose of the attention mechanism?",
+    "correctanswer": "D. To assign weights to each word in the input sequence.",
+    "incorrectansweroption2": "A. To measure the importance of the words in the output sequence.",
+    "incorrectansweroption3": "B. To determine the order in which words are generated.",
+    "incorrectansweroption4": "C. To capture the order of the words in the input sequence.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 4,
+    "question": "In the transformer architecture, what is the purpose of positional encoding?",
+    "correctanswer": "C. To add information about the order of each token in the input sequence.",
+    "incorrectansweroption2": "A. To remove redundant information from the input sequence.",
+    "incorrectansweroption3": "B. To encode the semantic meaning of each token in the input sequence.",
+    "incorrectansweroption4": "D. To encode the importance of each token in the input sequence.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 5,
+    "question": "What is a foundation model in the context of Large Language Models (LLMs)?",
+    "correctanswer": "B. Any model trained on vast quantities of data at scale whose goal is to serve as a starter that can be adapted to a variety of downstream tasks.",
+    "incorrectansweroption2": "A. A model that sets the state-of-the-art results for any of the tasks that compose the General Language Understanding Evaluation (GLUE) benchmark.",
+    "incorrectansweroption3": "C. Any model validated by the artificial intelligence safety institute as the foundation for building transformed-based applications.",
+    "incorrectansweroption4": "D. Any model based on the foundation paper \"Attention is all you need\", that uses recurrent neural networks and convolution layers.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 6,
+    "question": "Why is layer normalization important in transformer architectures?",
+    "correctanswer": "C. To stabilize the learning process by adjusting the inputs across the features.",
+    "incorrectansweroption2": "A. To enhance the model's ability to generalize to new data.",
+    "incorrectansweroption3": "B. To compress the model size for efficient storage.",
+    "incorrectansweroption4": "D. To encode positional information within the sequence.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 7,
+    "question": "Why do we need positional encoding in transformer-based models?",
+    "correctanswer": "B. To represent the order of elements in a sequence.",
+    "incorrectansweroption2": "A. To increase the throughput of the model.",
+    "incorrectansweroption3": "C. To prevent overfitting of the model.",
+    "incorrectansweroption4": "D. To reduce the dimensionality of the input data.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 8,
+    "question": "What do we usually refer to as generative AI?",
+    "correctanswer": "A. A branch of artificial intelligence that focuses on creating models that can generate new and original data.",
+    "incorrectansweroption2": "B. A branch of artificial intelligence that focuses on auto generation of models for classification.",
+    "incorrectansweroption3": "C. A branch of artificial intelligence that focuses on improving the efficiency of existing models.",
+    "incorrectansweroption4": "D. A branch of artificial intelligence that focuses on analyzing and interpreting existing data.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 9,
+    "question": "Which of the following is an activation function used in neural networks?",
+    "correctanswer": "A. Sigmoid function",
+    "incorrectansweroption2": "B. K-means clustering function",
+    "incorrectansweroption3": "C. Mean Squared Error function",
+    "incorrectansweroption4": "D. Diffusion function",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 10,
+    "question": "You need to choose a Python package for efficient text analysis and manipulation with limited time for experimentation. Which Python package is best suited for the task?",
+    "correctanswer": "B. spaCy – a high-performance NLP library for tokenization, named entity recognition, part-of-speech tagging, and dependency parsing.",
+    "incorrectansweroption2": "A. NumPy – designed for numerical computations and array operations, not text processing.",
+    "incorrectansweroption3": "C. Pandas – useful for tabular data manipulation but lacks specialized NLP capabilities.",
+    "incorrectansweroption4": "D. Matplotlib – a data visualization library, not suited for text analysis.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 11,
+    "question": "What is the main consequence of the scaling law in deep learning for real-world applications?",
+    "correctanswer": "D. In the power-law region, increasing data, model size, or compute leads to predictable, measurable performance improvements.",
+    "incorrectansweroption2": "A. With more data it is possible to exceed the irreducible error region.",
+    "incorrectansweroption3": "B. The best performing model can be established even in the small data region.",
+    "incorrectansweroption4": "C. Small and medium error regions can approach the results of the big data region.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 12,
+    "question": "In the context of fine-tuning LLMs, which of the following metrics is most commonly used to assess the performance of a fine-tuned model?",
+    "correctanswer": "B. Accuracy on a validation set – directly measures how well the fine-tuned model generalizes to unseen data on the target task.",
+    "incorrectansweroption2": "A. Model size – an architectural characteristic, not a performance metric.",
+    "incorrectansweroption3": "C. Training duration – a training parameter that does not reflect model effectiveness.",
+    "incorrectansweroption4": "D. Number of layers – an architectural detail that does not reflect task performance.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 13,
+    "question": "When using NVIDIA RAPIDS to accelerate data preprocessing for an LLM fine-tuning pipeline, which specific feature of RAPIDS cuDF enables faster data manipulation compared to traditional CPU-based Pandas?",
+    "correctanswer": "B. GPU-accelerated columnar data processing with zero-copy memory access, enabling massive parallelism while avoiding unnecessary CPU-GPU data transfers.",
+    "incorrectansweroption2": "A. Automatic parallelization of Python code across CPU cores.",
+    "incorrectansweroption3": "C. Integration with cloud-based storage for distributed data access.",
+    "incorrectansweroption4": "D. Conversion of Pandas DataFrames to SQL tables for faster querying.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 14,
+    "question": "In the context of transformer-based large language models, how does the use of layer normalization mitigate the challenges associated with training deep neural networks?",
+    "correctanswer": "B. It stabilizes training by normalizing inputs to each layer, reducing internal covariate shift and mitigating vanishing or exploding gradients.",
+    "incorrectansweroption2": "A. It reduces computational complexity by normalizing the input embeddings.",
+    "incorrectansweroption3": "C. It increases the model's capacity by adding additional parameters to each layer.",
+    "incorrectansweroption4": "D. It replaces the attention mechanism to improve sequence processing efficiency.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 15,
+    "question": "In evaluating the transformer model for translation tasks, what is a common approach to assess its performance?",
+    "correctanswer": "B. Comparing the model's output with human-generated translations on a standard dataset.",
+    "incorrectansweroption2": "A. Analyzing the lexical diversity of the model's translations compared to source texts.",
+    "incorrectansweroption3": "C. Evaluating the consistency of translation tone and style across different genres of text.",
+    "incorrectansweroption4": "D. Measuring the syntactic complexity of the model's translations against professional translations.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 16,
+    "question": "Which metric is commonly used to evaluate machine-translation models?",
+    "correctanswer": "B. BLEU score",
+    "incorrectansweroption2": "A. Mean Absolute Error (MAE)",
+    "incorrectansweroption3": "C. F1 score",
+    "incorrectansweroption4": "D. Accuracy",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 17,
+    "question": "You want to evaluate the performance of a deep learning recommendation model using A/B testing. What is the rationale for using A/B testing?",
+    "correctanswer": "B. A/B testing allows a controlled comparison between two model versions, identifying which performs better under real conditions.",
+    "incorrectansweroption2": "A. A/B testing ensures the model is robust and handles different variations of input data.",
+    "incorrectansweroption3": "C. A/B testing integrates rationale and technical commentary from the designers of the model.",
+    "incorrectansweroption4": "D. A/B testing collects comparative latency data to evaluate deep learning model performance.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 18,
+    "question": "In NLP evaluation, what do 'validity' and 'reliability' imply regarding the selection of evaluation metrics?",
+    "correctanswer": "B. Validity ensures the metric accurately reflects the intended property; reliability ensures consistent results across repeated measurements.",
+    "incorrectansweroption2": "A. Validity predicts future data trends; reliability refers to integration with multiple data sources.",
+    "incorrectansweroption3": "C. Validity concerns computational cost; reliability concerns applicability across different NLP platforms.",
+    "incorrectansweroption4": "D. Validity refers to computation speed; reliability pertains to high-volume data processing performance.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 19,
+    "question": "What metrics would you use to evaluate the performance of a RAG workflow in terms of accuracy of responses relative to the input query? (Choose two.)",
+    "correctanswer": ["D. Response relevancy", "E. Context precision"],
+    "incorrectansweroption2": "A. Generator latency",
+    "incorrectansweroption3": "B. Retriever latency",
+    "incorrectansweroption4": "C. Tokens generated per second",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 20,
+    "question": "What is the Open Neural Network Exchange (ONNX) format used for?",
+    "correctanswer": "A. Representing deep learning models in an interoperable format that can be shared across different frameworks and tools.",
+    "incorrectansweroption2": "B. Reducing the training time of neural networks through parallelism.",
+    "incorrectansweroption3": "C. Compressing deep learning models to reduce their storage size.",
+    "incorrectansweroption4": "D. Sharing neural network research literature and papers.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 21,
+    "question": "You need to customize an LLM via prompt engineering, prompt learning, or parameter-efficient fine-tuning. Which NVIDIA framework supports all three approaches?",
+    "correctanswer": "D. NVIDIA NeMo – a framework for building, fine-tuning, and customizing LLMs with prompt engineering and PEFT support.",
+    "incorrectansweroption2": "A. NVIDIA TensorRT – optimizes models for inference, not LLM customization.",
+    "incorrectansweroption3": "B. NVIDIA DALI – a data loading and augmentation library for training pipelines.",
+    "incorrectansweroption4": "C. NVIDIA Triton – an inference serving platform, not an LLM customization framework.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 22,
+    "question": "Which of the following is a feature of the NVIDIA Triton Inference Server?",
+    "correctanswer": "B. Dynamic batching – groups multiple inference requests together to maximize GPU utilization and throughput.",
+    "incorrectansweroption2": "A. Model quantization – reducing weight precision to speed up inference.",
+    "incorrectansweroption3": "C. Gradient clipping – limiting gradient magnitude during model training.",
+    "incorrectansweroption4": "D. Model pruning – removing low-importance weights to compress a model.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 23,
+    "question": "Which of the following claims is correct about TensorRT and ONNX?",
+    "correctanswer": "A. TensorRT is used for high-performance model deployment; ONNX is used for model interchange between different frameworks.",
+    "incorrectansweroption2": "B. TensorRT is used for model deployment; ONNX is used for model creation.",
+    "incorrectansweroption3": "C. TensorRT is used for model creation; ONNX is used for model interchange.",
+    "incorrectansweroption4": "D. TensorRT is used for model creation; ONNX is used for model deployment.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 24,
+    "question": "Which of the following claims are correct about quantization in the context of deep learning? (Choose two.)",
+    "correctanswer": ["B. Quantization may help save power and reduce heat production.", "E. Quantization helps reduce memory requirements and achieve better cache utilization."],
+    "incorrectansweroption2": "A. It only involves reducing the number of bits of the parameters.",
+    "incorrectansweroption3": "C. It leads to substantial loss of model accuracy.",
+    "incorrectansweroption4": "D. It consists of removing weights whose values are zero.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 25,
+    "question": "Which of the following optimizations are provided by TensorRT? (Choose two.)",
+    "correctanswer": ["C. Multi-Stream Execution – runs multiple inference streams in parallel to maximize GPU throughput.", "D. Layer Fusion – merges consecutive layers into a single kernel to reduce memory bandwidth and latency."],
+    "incorrectansweroption2": "A. Data augmentation – randomly transforming training samples to improve generalization.",
+    "incorrectansweroption3": "B. Variable learning rate – adjusting the learning rate dynamically during training.",
+    "incorrectansweroption4": "E. Residual connections – skip connections added during model architecture design.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 26,
+    "question": "What is the purpose of the NVIDIA NGC catalog?",
+    "correctanswer": "D. To provide a curated collection of GPU-optimized AI and data science software including containers, models, and SDKs.",
+    "incorrectansweroption2": "A. To provide a platform for testing and debugging software applications.",
+    "incorrectansweroption3": "B. To provide a platform for developers to collaborate and share software development projects.",
+    "incorrectansweroption4": "C. To provide a marketplace for buying and selling software development tools.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 27,
+    "question": "You are training an LLM with billions of parameters and your training dataset is significantly larger than the available RAM. Which approach is the best alternative?",
+    "correctanswer": "B. Using a memory-mapped file so the library accesses dataset elements on demand without fully loading them into RAM.",
+    "incorrectansweroption2": "A. Using GPU memory to extend RAM capacity and moving data in/out via PCI bandwidth.",
+    "incorrectansweroption3": "C. Pruning the dataset to fit RAM capacity, reducing inference latency.",
+    "incorrectansweroption4": "D. Eliminating semantically equivalent sentences to reduce hallucination risk.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 28,
+    "question": "When implementing data parallel training, which of the following considerations needs to be taken into account?",
+    "correctanswer": "C. A ring all-reduce is an efficient algorithm for syncing weights across all processes and devices without a bottleneck node.",
+    "incorrectansweroption2": "A. Model weights are synced across all processes only at the end of every epoch.",
+    "incorrectansweroption3": "B. A master-worker method for syncing weights is desirable due to its scalability.",
+    "incorrectansweroption4": "D. Model weights are kept independent as long as possible to increase exploration.",
+    "incorrectansweroption5": ""
+  },
+  {
+    "questionnumber": 29,
+    "question": "\"Hallucinations\" is a term coined to describe when LLM models produce what?",
+    "correctanswer": "C. Correct-sounding results that are factually wrong or fabricated.",
+    "incorrectansweroption2": "A. Outputs that are only similar to the input data.",
+    "incorrectansweroption3": "B. Images generated from a prompt description.",
+    "incorrectansweroption4": "D. Grammatically incorrect or broken outputs.",
+    "incorrectansweroption5": ""
+  }
+]

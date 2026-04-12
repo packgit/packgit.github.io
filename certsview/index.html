@@ -203,6 +203,17 @@
       </div>
     </div>
 
+    <!-- NVIDIA Certificate Info Card -->
+    <div class="card" id="cert-card-nvidia">
+      <h1 id="cert-name-nvidia">Loading NVIDIA...</h1>
+      <p id="cert-hours-nvidia"></p>
+      <p id="cert-questions-nvidia"></p>
+      <div class="btn-row">
+        <button class="btn-info" id="btn-info-nvidia">I</button>
+        <button class="btn-practice btn-practice-main" id="btn-practice-nvidia">Practice</button>
+      </div>
+    </div>
+
     <!-- Quiz Area (initially hidden) -->
     <div id="quiz-area" style="display:none;">
       <div class="quiz-card" id="quiz-card">
@@ -246,9 +257,20 @@
         } else {
           document.getElementById('cert-name-gcp').textContent = 'Google Generative A.I. Leader';
         }
+
+        const nvidiaCert = data.find(c => c.Platform === 'NVIDIA');
+        if (nvidiaCert) {
+          document.getElementById('cert-name-nvidia').textContent = nvidiaCert.Cert;
+          document.getElementById('cert-hours-nvidia').textContent = 'Hours: ' + nvidiaCert.Hours;
+          document.getElementById('cert-questions-nvidia').textContent = 'Questions: ' + nvidiaCert.Questions;
+          document.getElementById('btn-info-nvidia').onclick = () => window.open(nvidiaCert.Info, '_blank');
+        } else {
+          document.getElementById('cert-name-nvidia').textContent = 'NVIDIA Certified Associate: Generative AI and LLMs';
+        }
       } catch (e) {
         document.getElementById('cert-name-aws').textContent = 'Error loading certs';
         document.getElementById('cert-name-gcp').textContent = 'Error loading certs';
+        document.getElementById('cert-name-nvidia').textContent = 'Error loading certs';
       }
     }
 
@@ -263,6 +285,7 @@
     async function startPractice(quizFile) {
       document.getElementById('cert-card-aws').style.display = 'none';
       document.getElementById('cert-card-gcp').style.display = 'none';
+      document.getElementById('cert-card-nvidia').style.display = 'none';
 
       const quizArea = document.getElementById('quiz-area');
       const quizCard = document.getElementById('quiz-card');
@@ -445,18 +468,20 @@
       const quizCard = document.getElementById('quiz-card');
 
       quizCard.style.opacity = '1';
-      quizCard.style.opacity = '0';
-      setTimeout(() => {
-        quizArea.style.display = 'none';
-        document.getElementById('cert-card-aws').style.display = 'block';
-        document.getElementById('cert-card-gcp').style.display = 'block';
-      }, 250);
+        quizCard.style.opacity = '0';
+        setTimeout(() => {
+          quizArea.style.display = 'none';
+          document.getElementById('cert-card-aws').style.display = 'block';
+          document.getElementById('cert-card-gcp').style.display = 'block';
+          document.getElementById('cert-card-nvidia').style.display = 'block';
+        }, 250);
     }
 
     document.getElementById('btn-practice-aws').addEventListener('click', () => startPractice('certsaws1.json'));
     document.getElementById('btn-practice-gcp').addEventListener('click', () => startPractice('certsgcp2.json'));
+    document.getElementById('btn-practice-nvidia').addEventListener('click', () => startPractice('certsnvidia1.json'));
     document.getElementById('btn-next').addEventListener('click', nextQuestion);
-    document.getElementById('btn-main-view').addEventListener('click', backToMainView);  // NEW
+    document.getElementById('btn-main-view').addEventListener('click', backToMainView);
 
     loadCertCards();
   </script>
