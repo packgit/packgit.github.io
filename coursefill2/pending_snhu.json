@@ -42,6 +42,20 @@
     "transferCourseName": ""
   },
   {
+    "coursename": "College Composition : General English - 2, 3 Units",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months",
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2,
+    "transferCourseName": ""
+  },
+  {
     "coursename": "MAT241 - Modern Statistics with Software (3)",
     "unitsdone": 3,
     "college": "SNHU",
