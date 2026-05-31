@@ -370,6 +370,21 @@
   box-shadow: 0 2px 8px rgba(16,185,129,0.3);
 }
 
+
+.program-btn.active {
+  outline: 3px solid #1e3a8a;
+  outline-offset: 2px;
+}
+
+.pending-complete-bar {
+  background: #1e3a8a;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 700;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
 .button-row {
   display: flex;
   flex-direction: column;
@@ -425,13 +440,13 @@
       <div id="total-units-right" class="total-units"></div>
         <h3>⏳ Pending</h3>
         <div class="button-row">
-  <button id="bachelors-btn" style="background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+  <button id="bachelors-btn" class="program-btn" style="background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
     Bachelor's SFSU
   </button>
-  <button id="as-btn" style="background: linear-gradient(135deg, #93c5fd, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+  <button id="as-btn" class="program-btn" style="background: linear-gradient(135deg, #93c5fd, #3b82f6); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
     A.S. SFSU
   </button>
-  <button id="snhu-btn" style="background: linear-gradient(135deg, #818cf8, #6366f1); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+  <button id="snhu-btn" class="program-btn" style="background: linear-gradient(135deg, #818cf8, #6366f1); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
     A.S. SNHU
   </button>
 </div>
@@ -579,6 +594,14 @@
 
         li.appendChild(mainRow);
         li.appendChild(expandDiv);
+
+        if (course.completed) {
+          const completeBar = document.createElement("div");
+          completeBar.className = "pending-complete-bar";
+          completeBar.textContent = "Complete";
+          li.appendChild(completeBar);
+        }
+
         ul.appendChild(li);
       });
 
@@ -598,7 +621,7 @@
       let total = 0;
       activeCostButtons.forEach(index => {
         const course = pendingCourses[index];
-        if (course && course.cost) {
+        if (course && course.cost && !course.completed) {
           total += Number(course.cost);
         }
       });
@@ -968,6 +991,8 @@ document.getElementById("snhu-btn").addEventListener("click", function () {
   setActiveProgramButton("snhu-btn");
   loadPendingSet("pending_snhu.json");
 });
+
+setActiveProgramButton("bachelors-btn");
 
 
   </script>
