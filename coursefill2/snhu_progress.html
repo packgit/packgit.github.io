@@ -372,15 +372,31 @@
     }
 
 
-    function updateProgramTotals(courses) {
+    function parseCourseMonths(course) {
+      if (course.timeCompletion != null && course.timeCompletion !== "") {
+        return Number(course.timeCompletion) || 0;
+      }
+      const lengthStr = (course.length || "").toString().toLowerCase();
+      const match = lengthStr.match(/(\d+)\s*(months?|mo)/i);
+      return match ? parseInt(match[1], 10) : 0;
+    }
+
+    function updateSummaryTotals() {
       let totalUnits = 0;
       let totalCost = 0;
       let totalMonths = 0;
 
-      courses.forEach((course) => {
-        totalUnits += Number(course.unitsdone) || 0;
+      activeCostButtons.forEach((index) => {
+        const course = pendingCourses[index];
+        if (!course || course.completed) return;
         totalCost += getCourseCost(course);
-        totalMonths += Number(course.timeCompletion) || 0;
+        totalUnits += Number(course.unitsdone) || 0;
+      });
+
+      activeLengthButtons.forEach((index) => {
+        const course = pendingCourses[index];
+        if (!course) return;
+        totalMonths += parseCourseMonths(course);
       });
 
       document.getElementById("total-units").textContent = totalUnits;
@@ -407,6 +423,8 @@
       const ul = document.getElementById("course-list");
       ul.innerHTML = "";
       pendingCourses = courses;
+      activeCostButtons.clear();
+      activeLengthButtons.clear();
 
       courses.forEach((course, index) => {
         const li = document.createElement("li");
@@ -480,7 +498,7 @@
       });
 
       attachSplitButtonListeners();
-      updateProgramTotals(courses);
+      updateSummaryTotals();
     }
 
     function handleSplitButtonClick(e) {
@@ -502,6 +520,7 @@
           btn.classList.add("active");
           activeCostButtons.add(index);
         }
+        updateSummaryTotals();
       } else if (type === "length") {
         if (btn.classList.contains("active")) {
           btn.textContent = "Length";
@@ -513,6 +532,7 @@
           btn.classList.add("active");
           activeLengthButtons.add(index);
         }
+        updateSummaryTotals();
       }
     }
 
