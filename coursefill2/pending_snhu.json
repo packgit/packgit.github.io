@@ -11,7 +11,7 @@
     "coursename": "MAT142 - Precalculus with Limits (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 200,
+    "cost": 100,
     "length": "2 months",
     "transferoption": "sophia"
   },
@@ -19,7 +19,7 @@
     "coursename": "MAT225 - Calculus I: Single-Variable Calculus (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 200,
+    "cost": 100,
     "length": "2 months",
     "transferoption": "sophia"
   },
@@ -52,9 +52,9 @@
     "coursename": "CS231 - Database Systems (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 100,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "sophia"
   },
   {
     "coursename": "CS230 - Operating Platforms (3)",
@@ -68,17 +68,17 @@
     "coursename": "CS250 - Software Development Lifecycle (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 235,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "study.com"
   },
   {
     "coursename": "CS255 - System Analysis and Design (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 235,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "study.com"
   },
   {
     "coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)",
@@ -92,25 +92,25 @@
     "coursename": "IT145 - Foundation in Application Development (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 100,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "sophia"
   },
   {
     "coursename": "MAT230 - Discrete Mathematics (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 235,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "study.com"
   },
   {
     "coursename": "PHY150 - Introductory Physics: Mechanics (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 235,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "study.com"
   },
   {
     "coursename": "Elective 1",
