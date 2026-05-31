@@ -476,6 +476,15 @@
     let activeCostButtons = new Set();
     let activeLengthButtons = new Set();
 
+    function formatCourseMeta(units, course) {
+      const college = course.college || "n/a";
+      const transferoption = course.transferoption;
+      const transferText = transferoption && transferoption !== "none"
+        ? ` with ${transferoption}`
+        : "";
+      return `Units: ${units} · College: ${college}${transferText}`;
+    }
+
     // ✅ FIXED: renderCourses only updates its own list and total
     function renderCourses(courses, listElementId) {
       const ul = document.getElementById(listElementId);
@@ -504,8 +513,7 @@
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
         const units = course.unitsdone != null ? course.unitsdone : 0;
-        const college = course.college || "n/a";
-        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+        metaDiv.textContent = formatCourseMeta(units, course);
 
         li.appendChild(nameSpan);
         li.appendChild(metaDiv);
@@ -556,8 +564,7 @@
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
         const units = course.unitsdone != null ? course.unitsdone : "?";
-        const college = course.college || "n/a";
-        metaDiv.textContent = `Units: ${units} · College: ${college}`;
+        metaDiv.textContent = formatCourseMeta(units, course);
 
         mainDiv.appendChild(nameSpan);
         mainDiv.appendChild(metaDiv);
