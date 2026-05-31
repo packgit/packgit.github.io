@@ -215,6 +215,16 @@
       text-align: center;
     }
 
+
+    .progress-summary-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-align: center;
+    }
+
     .progress-summary {
       margin-top: 16px;
       display: grid;
@@ -244,7 +254,17 @@
     }
 
     @media (max-width: 700px) {
-      .progress-summary {
+  
+    .progress-summary-title {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      text-align: center;
+    }
+
+    .progress-summary {
         grid-template-columns: 1fr;
       }
     }
@@ -303,6 +323,7 @@
 
     <ul id="course-list" class="course-list"></ul>
 
+    <h2 class="progress-summary-title">Overall Progress Summary</h2>
     <div class="progress-summary">
       <div class="summary-item">
         <div class="summary-label">Total Units</div>
