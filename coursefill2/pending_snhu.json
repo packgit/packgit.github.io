@@ -85,7 +85,7 @@
     "cost": 100,
     "length": "2 months",
     "transferoption": "sophia",
-    "amountComplete": null,
+    "amountComplete": 30,
     "processed": "None",
     "date": "",
     "courseSite": "",
