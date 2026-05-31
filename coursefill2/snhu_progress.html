@@ -27,6 +27,14 @@
     .subtitle {
       text-align: center;
       color: #555;
+      margin-bottom: 6px;
+    }
+
+    .units-line {
+      text-align: center;
+      color: #1e3a8a;
+      font-size: 1.1rem;
+      font-weight: 700;
       margin-bottom: 20px;
     }
 
@@ -304,8 +312,9 @@
 </head>
 <body>
   <a class="back-link" href="index.html">← Back to Course Dashboard</a>
-  <h1>Computer Science A.S. - SNHU Progress</h1>
-  <p class="subtitle">All courses for the A.S. SNHU program</p>
+  <h1>Computer Science A.S.</h1>
+  <p class="subtitle">SNHU Progress</p>
+  <p class="units-line">60 Units</p>
 
   <div class="progress-table">
     <div class="progress-header">
@@ -356,8 +365,13 @@
       return `Units: ${units} · College: ${college}${transferText}`;
     }
 
+    function isCourseFullyComplete(course) {
+      return course.completed === true || course.amountComplete === 100;
+    }
+
     function getCourseCost(course) {
-      if (!course || course.cost == null) return 0;
+      if (!course || isCourseFullyComplete(course)) return 0;
+      if (course.cost == null) return 0;
       const cost = Number(course.cost);
       const transferoption = course.transferoption;
       if (transferoption && transferoption !== "none") {
@@ -409,7 +423,7 @@
 
       activeCostButtons.forEach((index) => {
         const course = pendingCourses[index];
-        if (!course || course.completed) return;
+        if (!course) return;
         totalCost += getCourseCost(course);
         totalUnits += Number(course.unitsdone) || 0;
       });
@@ -492,6 +506,18 @@
 
         actionDiv.appendChild(costBtn);
         actionDiv.appendChild(lengthBtn);
+
+        if (isCourseFullyComplete(course)) {
+          costBtn.textContent = `$${getCourseCost(course).toLocaleString()}`;
+          costBtn.classList.add("active");
+          activeCostButtons.add(index);
+
+          const lengthText = course.length || course.duration || course.hours || "TBD";
+          lengthBtn.textContent = lengthText;
+          lengthBtn.classList.add("active");
+          activeLengthButtons.add(index);
+        }
+
         cardRow.appendChild(mainDiv);
         cardRow.appendChild(actionDiv);
         infoCol.appendChild(cardRow);
@@ -508,7 +534,7 @@
         entry.appendChild(renderValuesRow(course));
         li.appendChild(entry);
 
-        if (course.completed) {
+        if (isCourseFullyComplete(course)) {
           const completeBar = document.createElement("div");
           completeBar.className = "pending-complete-bar";
           completeBar.textContent = "Complete";
@@ -536,7 +562,7 @@
           btn.classList.remove("active");
           activeCostButtons.delete(index);
         } else {
-          const cost = course.cost ? `$${getCourseCost(course).toLocaleString()}` : "$TBD";
+          const cost = `$${getCourseCost(course).toLocaleString()}`;
           btn.textContent = cost;
           btn.classList.add("active");
           activeCostButtons.add(index);
