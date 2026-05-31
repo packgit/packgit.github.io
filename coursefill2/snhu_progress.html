@@ -51,6 +51,51 @@
     }
 
 
+
+    #chart-section {
+      margin: 0 auto 16px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 10px;
+    }
+
+    .chart-label {
+      text-align: center;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
+      color: #333;
+    }
+
+    .chart-label strong {
+      display: block;
+    }
+
+    #classesChart {
+      max-width: 100%;
+      width: 260px;
+      height: 260px;
+      display: block;
+    }
+
+    .percent-legend {
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      color: #444;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .percent-item strong {
+      color: #222;
+    }
+
     .overall-button-row {
       display: flex;
       flex-direction: column;
@@ -361,6 +406,20 @@
   <p class="subtitle">SNHU Progress</p>
   <p class="units-line">60 Units</p>
 
+  <section id="chart-section">
+    <div class="chart-wrapper">
+      <div class="chart-label">
+        <strong>Classes Overview</strong>
+        <div>Share of finished vs pending courses</div>
+      </div>
+      <canvas id="classesChart" width="280" height="280"></canvas>
+      <div class="percent-legend">
+        <span class="percent-item">🟧 Classes Completed <strong id="completed-percent">0%</strong></span>
+        <span class="percent-item">🟦 Classes Pending <strong id="pending-percent">0%</strong></span>
+      </div>
+    </div>
+  </section>
+
   <div class="overall-button-row">
     <button id="overall-cost-btn" class="overall-cost-btn" type="button">Overall Cost View</button>
     <button id="overall-time-btn" class="overall-time-btn" type="button">Overall Time View</button>
@@ -407,6 +466,9 @@
     let activeLengthButtons = new Set();
     let overallCostViewActive = false;
     let overallTimeViewActive = false;
+    let completedCount = 0;
+    let pendingCount = 0;
+    let programTotalUnits = 60;
 
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
@@ -459,6 +521,95 @@
     }
 
 
+
+    function updateChartCounts(courses) {
+      completedCount = courses.filter((course) => isCourseFullyComplete(course)).length;
+      pendingCount = courses.length - completedCount;
+      programTotalUnits = courses.reduce((sum, course) => sum + (Number(course.unitsdone) || 0), 0);
+    }
+
+    function updatePercentages() {
+      const total = completedCount + pendingCount;
+      const completedEl = document.getElementById("completed-percent");
+      const pendingEl = document.getElementById("pending-percent");
+      if (completedEl) {
+        completedEl.textContent = total > 0 ? ((completedCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+      if (pendingEl) {
+        pendingEl.textContent = total > 0 ? ((pendingCount / total) * 100).toFixed(0) + "%" : "0%";
+      }
+    }
+
+    function drawPie() {
+      const total = completedCount + pendingCount;
+      if (total === 0) return;
+
+      const canvas = document.getElementById("classesChart");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 10;
+
+      const data = [
+        { value: completedCount, color: "#ffe8cc" },
+        { value: pendingCount, color: "#e0f0ff" }
+      ];
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(-Math.PI);
+      ctx.translate(-centerX, -centerY);
+
+      let startAngle = -Math.PI / 2;
+      data.forEach((slice) => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = slice.color;
+        ctx.fill();
+        startAngle = endAngle;
+      });
+      ctx.restore();
+
+      startAngle = -Math.PI / 2 + Math.PI;
+      data.forEach((slice) => {
+        if (slice.value <= 0) return;
+        const sliceAngle = (slice.value / total) * Math.PI * 2;
+        const midAngle = startAngle + sliceAngle / 2;
+        const labelRadius = radius * 0.7;
+        const labelX = centerX + labelRadius * Math.cos(midAngle);
+        const labelY = centerY + labelRadius * Math.sin(midAngle);
+
+        const percentage = ((slice.value / total) * 100).toFixed(0) + "%";
+        ctx.fillStyle = "#222";
+        ctx.font = `bold ${Math.min(16, canvas.width * 0.06)}px Arial`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(percentage, labelX, labelY);
+
+        startAngle += sliceAngle;
+      });
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
     function parseCourseMonths(course) {
       if (course.timeCompletion != null && course.timeCompletion !== "") {
         return Number(course.timeCompletion) || 0;
@@ -486,7 +637,7 @@
         totalMonths += parseCourseMonths(course);
       });
 
-      document.getElementById("total-units").textContent = totalUnits;
+      document.getElementById("total-units").textContent = `${totalUnits} of ${programTotalUnits}`;
       document.getElementById("total-cost").textContent = `$${totalCost.toLocaleString()}`;
       document.getElementById("total-time").textContent = formatTimeCompletion(totalMonths) || "0 months";
     }
@@ -597,6 +748,9 @@
       });
 
       attachSplitButtonListeners();
+      updateChartCounts(courses);
+      updatePercentages();
+      drawPie();
       updateSummaryTotals();
     }
 
@@ -643,7 +797,6 @@
       overallCostViewActive = !overallCostViewActive;
 
       if (overallCostViewActive) {
-        btn.textContent = "Overall Cost View - Toggle";
         btn.classList.add("active");
         costButtons.forEach((costBtn) => {
           if (!costBtn.classList.contains("active")) costBtn.click();
@@ -664,7 +817,6 @@
       overallTimeViewActive = !overallTimeViewActive;
 
       if (overallTimeViewActive) {
-        btn.textContent = "Overall Time View - Toggle";
         btn.classList.add("active");
         timeButtons.forEach((timeBtn) => {
           if (!timeBtn.classList.contains("active")) timeBtn.click();
