@@ -471,7 +471,7 @@
         <div class="button-row">
           <button id="overall-cost-btn" class="overall-cost-btn">Overall Cost View</button>
           <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
-          <button id="overall-progress-btn" class="overall-progress-btn" disabled>Overall Progress View</button>
+          <button id="overall-progress-btn" class="overall-progress-btn" disabled type="button" onclick="openOverallProgressView()">Overall Progress View</button>
         </div>
         <ul id="pending-list"></ul>
         <div class="pending-spacer"></div>
@@ -1090,21 +1090,26 @@ function setActiveProgramButton(activeId) {
 // Button event listeners
 document.getElementById("bachelors-btn").addEventListener("click", function () {
   setActiveProgramButton("bachelors-btn");
-updateOverallProgressButton("bachelors");
+  updateOverallProgressButton("bachelors");
   loadPendingSet("pending.json");
 });
 
 document.getElementById("as-btn").addEventListener("click", function () {
   setActiveProgramButton("as-btn");
+  updateOverallProgressButton("as");
   loadPendingSet("pendingcas.json");
 });
 
 document.getElementById("snhu-btn").addEventListener("click", function () {
   setActiveProgramButton("snhu-btn");
+  updateOverallProgressButton("snhu");
   loadPendingSet("pending_snhu.json");
 });
 
+document.getElementById("overall-progress-btn").addEventListener("click", openOverallProgressView);
+
 setActiveProgramButton("bachelors-btn");
+updateOverallProgressButton("bachelors");
 
 
   </script>
