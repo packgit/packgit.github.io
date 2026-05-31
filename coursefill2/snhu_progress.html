@@ -46,7 +46,35 @@
       list-style: none;
       padding: 0;
       margin: 0 auto;
-      max-width: 900px;
+      max-width: 1200px;
+    }
+
+    .progress-table-header,
+    .progress-fields {
+      display: grid;
+      grid-template-columns: 2fr 0.6fr 1fr 0.9fr 1fr 0.8fr 1fr;
+      gap: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+
+    .progress-table-header {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 6px 6px 0 0;
+      margin-bottom: 0;
+    }
+
+    .progress-fields {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-top: none;
+      color: #222;
+    }
+
+    .progress-fields .field-label {
+      display: none;
     }
 
     #course-list .pending-item {
@@ -150,12 +178,39 @@
       color: #b00020;
       text-align: center;
     }
+
+    @media (max-width: 768px) {
+      .progress-table-header {
+        display: none;
+      }
+
+      .progress-fields {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .progress-fields .field-label {
+        display: inline;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+    }
   </style>
 </head>
 <body>
   <a class="back-link" href="index.html">← Back to Course Dashboard</a>
   <h1>A.S. SNHU Progress</h1>
   <p class="subtitle">All courses for the A.S. SNHU program</p>
+
+  <div class="progress-table-header">
+    <div>Course</div>
+    <div>Units</div>
+    <div>Amount Complete</div>
+    <div>Date</div>
+    <div>CourseSite</div>
+    <div>Processed</div>
+    <div>TimeCompletion</div>
+  </div>
 
   <ul id="course-list" class="course-list"></ul>
   <div class="error" id="load-error"></div>
@@ -183,6 +238,52 @@
         return cost * units;
       }
       return cost;
+    }
+
+    function formatAmountComplete(value) {
+      if (value == null || value === "") return "";
+      return `${Number(value)}%`;
+    }
+
+    function formatTimeCompletion(months) {
+      if (months == null || months === "") return "";
+      const n = Number(months);
+      if (Number.isNaN(n)) return "";
+      return n === 1 ? "1 month" : `${n} months`;
+    }
+
+    function formatProcessed(value) {
+      if (!value || value === "None") return "";
+      return value;
+    }
+
+    function formatFieldCell(label, value) {
+      const cell = document.createElement("div");
+      cell.innerHTML = `<span class="field-label">${label}:</span>${value || ""}`;
+      return cell;
+    }
+
+    function renderProgressFields(course) {
+      const row = document.createElement("div");
+      row.className = "progress-fields";
+
+      const courseName = course.coursename || "Untitled course";
+      const units = course.unitsdone != null ? course.unitsdone : "";
+      const amountComplete = formatAmountComplete(course.amountComplete);
+      const date = course.date || "";
+      const courseSite = course.courseSite || "";
+      const processed = formatProcessed(course.processed);
+      const timeCompletion = formatTimeCompletion(course.timeCompletion);
+
+      row.appendChild(formatFieldCell("Course", courseName));
+      row.appendChild(formatFieldCell("Units", units));
+      row.appendChild(formatFieldCell("Amount Complete", amountComplete));
+      row.appendChild(formatFieldCell("Date", date));
+      row.appendChild(formatFieldCell("CourseSite", courseSite));
+      row.appendChild(formatFieldCell("Processed", processed));
+      row.appendChild(formatFieldCell("TimeCompletion", timeCompletion));
+
+      return row;
     }
 
     function renderCourses(courses) {
@@ -244,6 +345,7 @@
 
         li.appendChild(mainRow);
         li.appendChild(expandDiv);
+        li.appendChild(renderProgressFields(course));
 
         if (course.completed) {
           const completeBar = document.createElement("div");

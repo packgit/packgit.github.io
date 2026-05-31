@@ -5,7 +5,12 @@
     "college": "SNHU",
     "cost": 1026,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "MAT142 - Precalculus with Limits (3)",
@@ -13,7 +18,12 @@
     "college": "SNHU",
     "cost": 100,
     "length": "2 months",
-    "transferoption": "sophia"
+    "transferoption": "sophia",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "MAT225 - Calculus I: Single-Variable Calculus (3)",
@@ -21,7 +31,12 @@
     "college": "SNHU",
     "cost": 100,
     "length": "2 months",
-    "transferoption": "sophia"
+    "transferoption": "sophia",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS110 - Fundamentals of Programming (3) or IT40",
@@ -29,7 +44,12 @@
     "college": "SNHU",
     "cost": 1026,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS217 - Object Oriented Programming (3)",
@@ -37,7 +57,12 @@
     "college": "SNHU",
     "cost": 1026,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS218 - Data Structure and Algorithms (3)",
@@ -46,7 +71,12 @@
     "cost": 1026,
     "length": "2 months",
     "completed": true,
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS231 - Database Systems (3)",
@@ -54,7 +84,12 @@
     "college": "SNHU",
     "cost": 100,
     "length": "2 months",
-    "transferoption": "sophia"
+    "transferoption": "sophia",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS230 - Operating Platforms (3)",
@@ -62,7 +97,12 @@
     "college": "SNHU",
     "cost": 1026,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS250 - Software Development Lifecycle (3)",
@@ -70,7 +110,12 @@
     "college": "SNHU",
     "cost": 235,
     "length": "2 months",
-    "transferoption": "study.com"
+    "transferoption": "study.com",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS255 - System Analysis and Design (3)",
@@ -78,7 +123,12 @@
     "college": "SNHU",
     "cost": 235,
     "length": "2 months",
-    "transferoption": "study.com"
+    "transferoption": "study.com",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)",
@@ -86,7 +136,12 @@
     "college": "SNHU",
     "cost": 1026,
     "length": "2 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "IT145 - Foundation in Application Development (3)",
@@ -94,7 +149,12 @@
     "college": "SNHU",
     "cost": 100,
     "length": "2 months",
-    "transferoption": "sophia"
+    "transferoption": "sophia",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "MAT230 - Discrete Mathematics (3)",
@@ -102,7 +162,12 @@
     "college": "SNHU",
     "cost": 235,
     "length": "2 months",
-    "transferoption": "study.com"
+    "transferoption": "study.com",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "PHY150 - Introductory Physics: Mechanics (3)",
@@ -110,7 +175,12 @@
     "college": "SNHU",
     "cost": 235,
     "length": "2 months",
-    "transferoption": "study.com"
+    "transferoption": "study.com",
+    "amountComplete": null,
+    "processed": "None",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "Elective 1",
@@ -119,7 +189,12 @@
     "cost": 1026,
     "length": "2 months",
     "completed": true,
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   },
   {
     "coursename": "Elective 2",
@@ -128,6 +203,11 @@
     "cost": 1026,
     "length": "2 months",
     "completed": true,
-    "transferoption": "none"
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2
   }
 ]
