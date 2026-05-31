@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A.S. SNHU Progress</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: center;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .course-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+
+    .course-item {
+      background: #e0f0ff;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .course-main {
+      padding: 12px 14px;
+    }
+
+    .course-name {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .course-meta {
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    .pending-complete-bar {
+      background: #1e3a8a;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+
+    .error {
+      color: #b00020;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="index.html">← Back to Course Dashboard</a>
+  <h1>A.S. SNHU Progress</h1>
+  <p class="subtitle">CS courses for the A.S. SNHU program</p>
+
+  <ul id="cs-course-list" class="course-list"></ul>
+  <div class="error" id="load-error"></div>
+
+  <script>
+    function formatCourseMeta(units, course) {
+      const college = course.college || "n/a";
+      const transferoption = course.transferoption;
+      const transferText = transferoption && transferoption !== "none"
+        ? ` with ${transferoption}`
+        : "";
+      return `Units: ${units} · College: ${college}${transferText}`;
+    }
+
+    function isCsCourse(course) {
+      return /^CS\d/.test(course.coursename || "");
+    }
+
+    fetch("pending_snhu.json")
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((courses) => {
+        const ul = document.getElementById("cs-course-list");
+        const csCourses = courses.filter(isCsCourse);
+
+        csCourses.forEach((course) => {
+          const li = document.createElement("li");
+          li.className = "course-item";
+
+          const main = document.createElement("div");
+          main.className = "course-main";
+
+          const nameSpan = document.createElement("span");
+          nameSpan.className = "course-name";
+          nameSpan.textContent = course.coursename || "Untitled course";
+
+          const metaDiv = document.createElement("div");
+          metaDiv.className = "course-meta";
+          const units = course.unitsdone != null ? course.unitsdone : "?";
+          metaDiv.textContent = formatCourseMeta(units, course);
+
+          main.appendChild(nameSpan);
+          main.appendChild(metaDiv);
+          li.appendChild(main);
+
+          if (course.completed) {
+            const completeBar = document.createElement("div");
+            completeBar.className = "pending-complete-bar";
+            completeBar.textContent = "Complete";
+            li.appendChild(completeBar);
+          }
+
+          ul.appendChild(li);
+        });
+      })
+      .catch((err) => {
+        document.getElementById("load-error").textContent =
+          `Could not load SNHU course data (${err.message})`;
+      });
+  </script>
+</body>
+</html>

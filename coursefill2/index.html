@@ -332,7 +332,7 @@
       }
     }
 
-.overall-cost-btn, .overall-time-btn {
+.overall-cost-btn, .overall-time-btn, .overall-progress-btn {
   margin: 12px 0 10px auto !important;  /* Same as .total-units */
   padding: 6px 12px !important;        /* Same as .total-units */
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
@@ -348,6 +348,23 @@
   width: auto;                         /* Let it size naturally */
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+
+.overall-progress-btn {
+  background: linear-gradient(135deg, #6366f1, #4338ca);
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+}
+
+.overall-progress-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4f46e5, #3730a3);
+  transform: translateY(-1px);
+}
+
+.overall-progress-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .overall-time-btn {
@@ -454,6 +471,7 @@
         <div class="button-row">
           <button id="overall-cost-btn" class="overall-cost-btn">Overall Cost View</button>
           <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
+          <button id="overall-progress-btn" class="overall-progress-btn" disabled>Overall Progress View</button>
         </div>
         <ul id="pending-list"></ul>
         <div class="pending-spacer"></div>
@@ -939,6 +957,39 @@ function updateTimeSummary() {
     }, "pending-error");
       
 
+
+let activeProgramKey = "bachelors";
+
+const progressViewConfig = {
+  bachelors: {
+    enabled: false,
+    url: null // Placeholder for Bachelor's SFSU progress page
+  },
+  as: {
+    enabled: false,
+    url: null // Placeholder for A.S. SFSU progress page
+  },
+  snhu: {
+    enabled: true,
+    url: "snhu_progress.html"
+  }
+};
+
+function updateOverallProgressButton(programKey) {
+  activeProgramKey = programKey;
+  const btn = document.getElementById("overall-progress-btn");
+  if (!btn) return;
+
+  const config = progressViewConfig[programKey];
+  btn.disabled = !(config && config.enabled);
+}
+
+function openOverallProgressView() {
+  const config = progressViewConfig[activeProgramKey];
+  if (!config || !config.enabled || !config.url) return;
+  window.location.href = config.url;
+}
+
 let overallCostViewActive = false;
 let overallTimeViewActive = false;
 
@@ -1012,10 +1063,16 @@ function loadPendingSet(jsonFile) {
     updatePercentages();
     drawPie();
 
-    if (jsonFile === "pending.json" || jsonFile === "pendingcas.json") {
+    if (jsonFile === "pending.json") {
+      updateOverallProgressButton("bachelors");
       updateProgramCostTotal();
       document.getElementById("time-summary").classList.remove("show");
-    } else {
+    } else if (jsonFile === "pendingcas.json") {
+      updateOverallProgressButton("as");
+      updateProgramCostTotal();
+      document.getElementById("time-summary").classList.remove("show");
+    } else if (jsonFile === "pending_snhu.json") {
+      updateOverallProgressButton("snhu");
       document.getElementById("cost-summary").classList.remove("show");
       document.getElementById("time-summary").classList.remove("show");
     }
@@ -1033,6 +1090,7 @@ function setActiveProgramButton(activeId) {
 // Button event listeners
 document.getElementById("bachelors-btn").addEventListener("click", function () {
   setActiveProgramButton("bachelors-btn");
+updateOverallProgressButton("bachelors");
   loadPendingSet("pending.json");
 });
 
