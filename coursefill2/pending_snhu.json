@@ -73,7 +73,7 @@
     "completed": true,
     "transferoption": "none",
     "amountComplete": 100,
-    "processed": "Yes",
+    "processed": "None",
     "date": "",
     "courseSite": "",
     "timeCompletion": 2
@@ -191,7 +191,7 @@
     "completed": true,
     "transferoption": "none",
     "amountComplete": 100,
-    "processed": "Yes",
+    "processed": "None",
     "date": "",
     "courseSite": "",
     "timeCompletion": 2
@@ -205,7 +205,7 @@
     "completed": true,
     "transferoption": "none",
     "amountComplete": 100,
-    "processed": "Yes",
+    "processed": "None",
     "date": "",
     "courseSite": "",
     "timeCompletion": 2
