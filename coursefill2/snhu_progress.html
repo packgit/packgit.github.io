@@ -215,6 +215,42 @@
       text-align: center;
     }
 
+    .progress-summary {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .summary-item {
+      border: 2px solid #1e3a8a;
+      border-radius: 12px;
+      background: #ffffff;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .summary-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      margin-bottom: 6px;
+    }
+
+    .summary-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #222;
+    }
+
+    @media (max-width: 700px) {
+      .progress-summary {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
     @media (max-width: 900px) {
       .progress-header {
         display: none;
@@ -266,6 +302,21 @@
     </div>
 
     <ul id="course-list" class="course-list"></ul>
+
+    <div class="progress-summary">
+      <div class="summary-item">
+        <div class="summary-label">Total Units</div>
+        <div class="summary-value" id="total-units">0</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Cost</div>
+        <div class="summary-value" id="total-cost">$0</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">Total Time</div>
+        <div class="summary-value" id="total-time">0 months</div>
+      </div>
+    </div>
   </div>
 
   <div class="error" id="load-error"></div>
@@ -318,6 +369,23 @@
       box.dataset.label = label;
       box.textContent = value || "";
       return box;
+    }
+
+
+    function updateProgramTotals(courses) {
+      let totalUnits = 0;
+      let totalCost = 0;
+      let totalMonths = 0;
+
+      courses.forEach((course) => {
+        totalUnits += Number(course.unitsdone) || 0;
+        totalCost += getCourseCost(course);
+        totalMonths += Number(course.timeCompletion) || 0;
+      });
+
+      document.getElementById("total-units").textContent = totalUnits;
+      document.getElementById("total-cost").textContent = `$${totalCost.toLocaleString()}`;
+      document.getElementById("total-time").textContent = formatTimeCompletion(totalMonths) || "0 months";
     }
 
     function renderValuesRow(course) {
@@ -412,6 +480,7 @@
       });
 
       attachSplitButtonListeners();
+      updateProgramTotals(courses);
     }
 
     function handleSplitButtonClick(e) {
