@@ -49,27 +49,92 @@
       max-width: 900px;
     }
 
-    .course-item {
-      background: #e0f0ff;
-      border-radius: 8px;
-      margin-bottom: 8px;
+    #course-list .pending-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background-color: #e0f0ff;
+      margin-bottom: 6px;
+      border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     }
 
-    .course-main {
-      padding: 12px 14px;
+    .pending-main-row {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .pending-main {
+      flex: 1;
+      padding: 8px 12px;
+    }
+
+    .pending-action {
+      flex: 0 0 20%;
+      background-color: #22c55e;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .action-top, .action-bottom {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .action-top {
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .action-top.active, .action-bottom.active {
+      background: rgba(255,255,255,0.15);
+      font-size: 0.65rem;
+    }
+
+    .pending-expand {
+      max-height: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-top: 2px solid #f59e0b;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+      width: 100%;
+    }
+
+    .pending-expand.open {
+      max-height: 50px;
+    }
+
+    .pending-expand-content {
+      font-size: 0.8rem;
+      color: #92400e;
+      line-height: 1.2;
+      padding: 6px 12px;
+      font-weight: 500;
+      box-sizing: border-box;
     }
 
     .course-name {
-      font-weight: 700;
+      font-weight: bold;
       display: block;
-      margin-bottom: 4px;
+      font-size: 0.95rem;
     }
 
     .course-meta {
       color: #444;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      margin-top: 2px;
     }
 
     .pending-complete-bar {
@@ -90,12 +155,16 @@
 <body>
   <a class="back-link" href="index.html">← Back to Course Dashboard</a>
   <h1>A.S. SNHU Progress</h1>
-  <p class="subtitle">CS courses for the A.S. SNHU program</p>
+  <p class="subtitle">All courses for the A.S. SNHU program</p>
 
-  <ul id="cs-course-list" class="course-list"></ul>
+  <ul id="course-list" class="course-list"></ul>
   <div class="error" id="load-error"></div>
 
   <script>
+    let pendingCourses = [];
+    let activeCostButtons = new Set();
+    let activeLengthButtons = new Set();
+
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
       const transferoption = course.transferoption;
@@ -105,8 +174,130 @@
       return `Units: ${units} · College: ${college}${transferText}`;
     }
 
-    function isCsCourse(course) {
-      return /^CS\d/.test(course.coursename || "");
+    function getCourseCost(course) {
+      if (!course || course.cost == null) return 0;
+      const cost = Number(course.cost);
+      const transferoption = course.transferoption;
+      if (transferoption && transferoption !== "none") {
+        const units = Number(course.unitsdone) || 0;
+        return cost * units;
+      }
+      return cost;
+    }
+
+    function renderCourses(courses) {
+      const ul = document.getElementById("course-list");
+      ul.innerHTML = "";
+      pendingCourses = courses;
+
+      courses.forEach((course, index) => {
+        const li = document.createElement("li");
+        li.className = "pending-item";
+
+        const mainRow = document.createElement("div");
+        mainRow.className = "pending-main-row";
+
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "pending-main";
+
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "course-name";
+        nameSpan.textContent = course.coursename || "Untitled course";
+
+        const metaDiv = document.createElement("div");
+        metaDiv.className = "course-meta";
+        const units = course.unitsdone != null ? course.unitsdone : "?";
+        metaDiv.textContent = formatCourseMeta(units, course);
+
+        mainDiv.appendChild(nameSpan);
+        mainDiv.appendChild(metaDiv);
+        mainRow.appendChild(mainDiv);
+
+        const actionDiv = document.createElement("div");
+        actionDiv.className = "pending-action";
+
+        const costBtn = document.createElement("button");
+        costBtn.className = "action-top";
+        costBtn.textContent = "Cost";
+        costBtn.dataset.courseIndex = index;
+        costBtn.dataset.type = "cost";
+
+        const lengthBtn = document.createElement("button");
+        lengthBtn.className = "action-bottom";
+        lengthBtn.textContent = "Length";
+        lengthBtn.dataset.courseIndex = index;
+        lengthBtn.dataset.type = "length";
+
+        actionDiv.appendChild(costBtn);
+        actionDiv.appendChild(lengthBtn);
+        mainRow.appendChild(actionDiv);
+
+        const expandDiv = document.createElement("div");
+        expandDiv.id = "expand-" + index;
+        expandDiv.className = "pending-expand open";
+
+        const expandContent = document.createElement("div");
+        expandContent.className = "pending-expand-content";
+        expandContent.textContent = `More info: ${course.coursename || "Pending course"} - ${course.college || "N/A"} • Units: ${course.unitsdone || "?"}`;
+
+        expandDiv.appendChild(expandContent);
+
+        li.appendChild(mainRow);
+        li.appendChild(expandDiv);
+
+        if (course.completed) {
+          const completeBar = document.createElement("div");
+          completeBar.className = "pending-complete-bar";
+          completeBar.textContent = "Complete";
+          li.appendChild(completeBar);
+        }
+
+        ul.appendChild(li);
+      });
+
+      attachSplitButtonListeners();
+    }
+
+    function handleSplitButtonClick(e) {
+      const btn = e.currentTarget;
+      const index = parseInt(btn.dataset.courseIndex, 10);
+      const type = btn.dataset.type;
+      const course = pendingCourses[index];
+
+      if (!course) return;
+
+      if (type === "cost") {
+        if (btn.classList.contains("active")) {
+          btn.textContent = "Cost";
+          btn.classList.remove("active");
+          activeCostButtons.delete(index);
+        } else {
+          const cost = course.cost ? `$${getCourseCost(course).toLocaleString()}` : "$TBD";
+          btn.textContent = cost;
+          btn.classList.add("active");
+          activeCostButtons.add(index);
+        }
+      } else if (type === "length") {
+        if (btn.classList.contains("active")) {
+          btn.textContent = "Length";
+          btn.classList.remove("active");
+          activeLengthButtons.delete(index);
+        } else {
+          const length = course.length || course.duration || course.hours || "TBD";
+          btn.textContent = length;
+          btn.classList.add("active");
+          activeLengthButtons.add(index);
+        }
+      }
+    }
+
+    function attachSplitButtonListeners() {
+      document.querySelectorAll(".action-top").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
+      });
+      document.querySelectorAll(".action-bottom").forEach((btn) => {
+        btn.addEventListener("click", handleSplitButtonClick);
+      });
     }
 
     fetch("pending_snhu.json")
@@ -115,38 +306,7 @@
         return response.json();
       })
       .then((courses) => {
-        const ul = document.getElementById("cs-course-list");
-        const csCourses = courses.filter(isCsCourse);
-
-        csCourses.forEach((course) => {
-          const li = document.createElement("li");
-          li.className = "course-item";
-
-          const main = document.createElement("div");
-          main.className = "course-main";
-
-          const nameSpan = document.createElement("span");
-          nameSpan.className = "course-name";
-          nameSpan.textContent = course.coursename || "Untitled course";
-
-          const metaDiv = document.createElement("div");
-          metaDiv.className = "course-meta";
-          const units = course.unitsdone != null ? course.unitsdone : "?";
-          metaDiv.textContent = formatCourseMeta(units, course);
-
-          main.appendChild(nameSpan);
-          main.appendChild(metaDiv);
-          li.appendChild(main);
-
-          if (course.completed) {
-            const completeBar = document.createElement("div");
-            completeBar.className = "pending-complete-bar";
-            completeBar.textContent = "Complete";
-            li.appendChild(completeBar);
-          }
-
-          ul.appendChild(li);
-        });
+        renderCourses(courses);
       })
       .catch((err) => {
         document.getElementById("load-error").textContent =
