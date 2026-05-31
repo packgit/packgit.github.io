@@ -10,7 +10,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "MAT142 - Precalculus with Limits (3)",
@@ -23,7 +24,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "MAT225 - Calculus I: Single-Variable Calculus (3)",
@@ -36,7 +38,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS110 - Fundamentals of Programming (3) or IT40",
@@ -49,7 +52,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS217 - Object Oriented Programming (3)",
@@ -62,7 +66,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS218 - Data Structure and Algorithms (3)",
@@ -76,7 +81,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS231 - Database Systems (3)",
@@ -89,7 +95,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS230 - Operating Platforms (3)",
@@ -102,7 +109,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS250 - Software Development Lifecycle (3)",
@@ -115,7 +123,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS255 - System Analysis and Design (3)",
@@ -128,7 +137,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)",
@@ -141,7 +151,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "IT145 - Foundation in Application Development (3)",
@@ -154,7 +165,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "MAT230 - Discrete Mathematics (3)",
@@ -167,7 +179,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "PHY150 - Introductory Physics: Mechanics (3)",
@@ -180,7 +193,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "Elective 1",
@@ -194,7 +208,8 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   },
   {
     "coursename": "Elective 2",
@@ -208,6 +223,7 @@
     "processed": "None",
     "date": "",
     "courseSite": "",
-    "timeCompletion": 2
+    "timeCompletion": 2,
+    "transferCourseName": ""
   }
 ]

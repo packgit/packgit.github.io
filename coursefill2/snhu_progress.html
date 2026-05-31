@@ -69,7 +69,7 @@
     .header-values,
     .values-row {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(7, minmax(0, 1fr));
       gap: 8px;
     }
 
@@ -240,6 +240,7 @@
       .field-box[data-label="Amount Complete"]::before { content: "Amount Complete"; }
       .field-box[data-label="Date"]::before { content: "Date"; }
       .field-box[data-label="CourseSite"]::before { content: "CourseSite"; }
+      .field-box[data-label="TransferCourseName"]::before { content: "TransferCourseName"; }
       .field-box[data-label="Processed"]::before { content: "Processed"; }
       .field-box[data-label="TimeCompletion"]::before { content: "TimeCompletion"; }
     }
@@ -258,6 +259,7 @@
         <div class="header-field-box">Amount Complete</div>
         <div class="header-field-box">Date</div>
         <div class="header-field-box">CourseSite</div>
+        <div class="header-field-box">TransferCourseName</div>
         <div class="header-field-box">Processed</div>
         <div class="header-field-box">TimeCompletion</div>
       </div>
@@ -326,6 +328,7 @@
       row.appendChild(createFieldBox("Amount Complete", formatAmountComplete(course.amountComplete)));
       row.appendChild(createFieldBox("Date", course.date || ""));
       row.appendChild(createFieldBox("CourseSite", course.courseSite || ""));
+      row.appendChild(createFieldBox("TransferCourseName", course.transferCourseName || ""));
       row.appendChild(createFieldBox("Processed", formatProcessed(course.processed)));
       row.appendChild(createFieldBox("TimeCompletion", formatTimeCompletion(course.timeCompletion)));
 
