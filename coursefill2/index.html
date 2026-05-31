@@ -476,6 +476,40 @@
     let activeCostButtons = new Set();
     let activeLengthButtons = new Set();
 
+    function getCourseCost(course) {
+      if (!course || course.cost == null) return 0;
+      const cost = Number(course.cost);
+      const transferoption = course.transferoption;
+      if (transferoption && transferoption !== "none") {
+        const units = Number(course.unitsdone) || 0;
+        return cost * units;
+      }
+      return cost;
+    }
+
+    function updateProgramCostTotal() {
+      let total = 0;
+      let totalUnits = 0;
+
+      pendingCourses.forEach((course) => {
+        if (course.completed) return;
+        total += getCourseCost(course);
+        totalUnits += Number(course.unitsdone) || 0;
+      });
+
+      const summaryEl = document.getElementById("cost-summary");
+      summaryEl.innerHTML = `
+        <strong>Estimated Program Cost for ${totalUnits} Pending Units:</strong>
+        <span id="total-cost">$${total.toLocaleString()}</span>
+      `;
+
+      if (total > 0) {
+        summaryEl.classList.add("show");
+      } else {
+        summaryEl.classList.remove("show");
+      }
+    }
+
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
       const transferoption = course.transferoption;
@@ -629,7 +663,7 @@
       activeCostButtons.forEach(index => {
         const course = pendingCourses[index];
         if (course && course.cost && !course.completed) {
-          total += Number(course.cost);
+          total += getCourseCost(course);
         }
       });
       return total;
@@ -748,7 +782,7 @@ function updateTimeSummary() {
           btn.classList.remove("active");
           activeCostButtons.delete(index);
         } else {
-          const cost = course.cost ? `$${Number(course.cost).toLocaleString()}` : "$TBD";
+          const cost = course.cost ? `$${getCourseCost(course).toLocaleString()}` : "$TBD";
           btn.textContent = cost;
           btn.classList.add("active");
           activeCostButtons.add(index);
@@ -901,6 +935,7 @@ function updateTimeSummary() {
       renderPendingCourses(data);
       updatePercentages();
       drawPie();
+      updateProgramCostTotal();
     }, "pending-error");
       
 
@@ -968,10 +1003,22 @@ function attachSplitButtonListeners() {
 function loadPendingSet(jsonFile) {
   loadJson(jsonFile, function (data) {
     pendingCourses = data;
+    activeCostButtons.clear();
+    activeLengthButtons.clear();
+    overallCostViewActive = false;
+    overallTimeViewActive = false;
     renderPendingCourses(data);
     pendingCount = Array.isArray(data) ? data.length : 0;
     updatePercentages();
     drawPie();
+
+    if (jsonFile === "pending.json" || jsonFile === "pendingcas.json") {
+      updateProgramCostTotal();
+      document.getElementById("time-summary").classList.remove("show");
+    } else {
+      document.getElementById("cost-summary").classList.remove("show");
+      document.getElementById("time-summary").classList.remove("show");
+    }
   }, "pending-error");
 }
 
