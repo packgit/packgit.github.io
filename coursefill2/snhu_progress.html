@@ -50,6 +50,51 @@
       text-decoration: underline;
     }
 
+
+    .overall-button-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      margin: 0 auto 20px;
+      max-width: 1200px;
+    }
+
+    .overall-cost-btn, .overall-time-btn {
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 220px;
+    }
+
+    .overall-time-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+    }
+
+    .overall-cost-btn:hover {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      transform: translateY(-1px);
+    }
+
+    .overall-time-btn:hover {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      transform: translateY(-1px);
+    }
+
+    .overall-cost-btn.active, .overall-time-btn.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
+
     .progress-table {
       max-width: 1200px;
       margin: 0 auto;
@@ -316,6 +361,11 @@
   <p class="subtitle">SNHU Progress</p>
   <p class="units-line">60 Units</p>
 
+  <div class="overall-button-row">
+    <button id="overall-cost-btn" class="overall-cost-btn" type="button">Overall Cost View</button>
+    <button id="overall-time-btn" class="overall-time-btn" type="button">Overall Time View</button>
+  </div>
+
   <div class="progress-table">
     <div class="progress-header">
       <div class="header-course-title">Course</div>
@@ -355,6 +405,8 @@
     let pendingCourses = [];
     let activeCostButtons = new Set();
     let activeLengthButtons = new Set();
+    let overallCostViewActive = false;
+    let overallTimeViewActive = false;
 
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
@@ -583,6 +635,49 @@
       }
     }
 
+
+    function toggleOverallCostView() {
+      const btn = document.getElementById("overall-cost-btn");
+      const costButtons = document.querySelectorAll(".action-top");
+
+      overallCostViewActive = !overallCostViewActive;
+
+      if (overallCostViewActive) {
+        btn.textContent = "Overall Cost View - Toggle";
+        btn.classList.add("active");
+        costButtons.forEach((costBtn) => {
+          if (!costBtn.classList.contains("active")) costBtn.click();
+        });
+      } else {
+        btn.textContent = "Overall Cost View";
+        btn.classList.remove("active");
+        costButtons.forEach((costBtn) => {
+          if (costBtn.classList.contains("active")) costBtn.click();
+        });
+      }
+    }
+
+    function toggleOverallTimeView() {
+      const btn = document.getElementById("overall-time-btn");
+      const timeButtons = document.querySelectorAll(".action-bottom");
+
+      overallTimeViewActive = !overallTimeViewActive;
+
+      if (overallTimeViewActive) {
+        btn.textContent = "Overall Time View - Toggle";
+        btn.classList.add("active");
+        timeButtons.forEach((timeBtn) => {
+          if (!timeBtn.classList.contains("active")) timeBtn.click();
+        });
+      } else {
+        btn.textContent = "Overall Time View";
+        btn.classList.remove("active");
+        timeButtons.forEach((timeBtn) => {
+          if (timeBtn.classList.contains("active")) timeBtn.click();
+        });
+      }
+    }
+
     function attachSplitButtonListeners() {
       document.querySelectorAll(".action-top").forEach((btn) => {
         btn.addEventListener("click", handleSplitButtonClick);
@@ -591,6 +686,9 @@
         btn.addEventListener("click", handleSplitButtonClick);
       });
     }
+
+    document.getElementById("overall-cost-btn").addEventListener("click", toggleOverallCostView);
+    document.getElementById("overall-time-btn").addEventListener("click", toggleOverallTimeView);
 
     fetch("pending_snhu.json")
       .then((response) => {
