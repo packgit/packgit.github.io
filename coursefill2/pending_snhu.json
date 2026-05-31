@@ -1,18 +1,117 @@
 [
-  {"coursename": "MAT241 - Modern Statistics with Software (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "MAT142 - Precalculus with Limits (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "MAT225 - Calculus I: Single-Variable Calculus (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS110 - Fundamentals of Programming (3) or IT40", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS217 - Object Oriented Programming (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS218 - Data Structure and Algorithms (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS231 - Database Systems (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS230 - Operating Platforms (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS250 - Software Development Lifecycle (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS255 - System Analysis and Design (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "IT145 - Foundation in Application Development (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "MAT230 - Discrete Mathematics (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "PHY150 - Introductory Physics: Mechanics (3)", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "Elective 1", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"},
-  {"coursename": "Elective 2", "unitsdone": 3, "college": "SNHU", "cost": 1026, "length": "2 months"}
+  {
+    "coursename": "MAT241 - Modern Statistics with Software (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "MAT142 - Precalculus with Limits (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "MAT225 - Calculus I: Single-Variable Calculus (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS110 - Fundamentals of Programming (3) or IT40",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS217 - Object Oriented Programming (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS218 - Data Structure and Algorithms (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months",
+    "completed": true
+  },
+  {
+    "coursename": "CS231 - Database Systems (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS230 - Operating Platforms (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS250 - Software Development Lifecycle (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS255 - System Analysis and Design (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "IT145 - Foundation in Application Development (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "MAT230 - Discrete Mathematics (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "PHY150 - Introductory Physics: Mechanics (3)",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months"
+  },
+  {
+    "coursename": "Elective 1",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months",
+    "completed": true
+  },
+  {
+    "coursename": "Elective 2",
+    "unitsdone": 3,
+    "college": "SNHU",
+    "cost": 1026,
+    "length": "2 months",
+    "completed": true
+  }
 ]
