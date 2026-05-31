@@ -285,17 +285,6 @@
       margin-top: 8px;
     }
 
-    /* Debug info */
-    #debug {
-      background: #fff3cd;
-      border: 1px solid #ffeaa7;
-      border-radius: 4px;
-      padding: 10px;
-      margin: 10px 0;
-      font-family: monospace;
-      font-size: 0.8rem;
-    }
-
     /* Mobile responsive */
     @media (max-width: 768px) {
       .dashboard {
@@ -397,13 +386,6 @@
 <body>
   <h1>Course Dashboard</h1>
 
-  <!-- Debug section -->
-  <div id="debug">
-    <strong>Debug Info:</strong> 
-    <span id="debug-completed">completed.json: loading...</span> | 
-    <span id="debug-pending">pending.json: loading...</span>
-  </div>
-
   <!-- Chart section -->
   <section id="chart-section">
     <div class="chart-wrapper">
@@ -488,7 +470,6 @@
       
       if (!courses || !Array.isArray(courses)) {
         console.warn("Expected array for", listElementId, "got:", courses);
-        document.getElementById(`debug-${listElementId.includes('completed') ? 'completed' : 'pending'}`).textContent += " (not array)";
         return;
       }
 
@@ -755,7 +736,7 @@ function updateTimeSummary() {
       }
     }
 
-    function loadJson(url, onSuccess, onErrorElementId, debugId) {
+    function loadJson(url, onSuccess, onErrorElementId) {
       // ✅ Try fetch first, fallback to embedded sample data
       fetch(url)
         .then(response => {
@@ -764,13 +745,10 @@ function updateTimeSummary() {
         })
         .then(data => {
           console.log(`✅ Loaded ${url}:`, data);
-          document.getElementById(debugId).textContent = `${url}: ${Array.isArray(data) ? data.length : 'object'} items OK`;
           onSuccess(data);
         })
         .catch(err => {
           console.warn(`❌ ${url} failed (${err.message}), using sample data`);
-          document.getElementById(debugId).textContent = `${url}: failed, using sample (${err.message})`;
-          
           // ✅ FALLBACK: Sample data so you can test immediately
           const sampleData = [
             {
@@ -882,7 +860,7 @@ function updateTimeSummary() {
       renderCourses(data, "right-completed-list");
       updatePercentages();
       drawPie();
-    }, "completed-error", "debug-completed");
+    }, "completed-error");
 
     loadJson("pending.json", function(data) {
       pendingCount = Array.isArray(data) ? data.length : 0;
@@ -890,7 +868,7 @@ function updateTimeSummary() {
       renderPendingCourses(data);
       updatePercentages();
       drawPie();
-    }, "pending-error", "debug-pending");
+    }, "pending-error");
       
 
 let overallCostViewActive = false;
@@ -961,7 +939,7 @@ function loadPendingSet(jsonFile) {
     pendingCount = Array.isArray(data) ? data.length : 0;
     updatePercentages();
     drawPie();
-  }, "pending-error", "debug-pending");
+  }, "pending-error");
 }
 
 // Button event listeners
