@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMD Innovations for LLMs</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --secondary: #4ECDC4;
+            --accent: #FFE5CC;
+            --accent-blue: #D9F0FF;
+            --dark: #1a1a2e;
+            --light: #ffffff;
+            --text: #333333;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] {
+            --primary: #FF8A65;
+            --secondary: #4DB6AC;
+            --dark: #0a0a1a;
+            --light: #1a1a2e;
+            --text: #e0e0e0;
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-blue) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            transition: background 0.5s ease;
+        }
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] header { background: rgba(26, 26, 46, 0.95); }
+        .header-container {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 0;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.5rem; color: var(--primary); }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { text-decoration: none; color: var(--text); font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: var(--primary); }
+        .theme-toggle {
+            background: var(--primary); color: white; border: none;
+            padding: 0.5rem 1rem; border-radius: 25px; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; transition: transform 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.05); }
+        .hero { padding: 6rem 0; text-align: center; position: relative; overflow: hidden; }
+        .hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h2 { font-size: 3rem; margin-bottom: 1rem; color: var(--dark); }
+        [data-theme="dark"] .hero h2 { color: var(--light); }
+        .hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 2rem; line-height: 1.6; }
+        .counters {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem; margin-top: 3rem;
+        }
+        .counter-card {
+            background: var(--card-bg); padding: 2rem; border-radius: 15px;
+            box-shadow: var(--shadow); transition: transform 0.3s;
+        }
+        .counter-card:hover { transform: translateY(-10px); }
+        .counter-number { font-size: 2.5rem; font-weight: bold; color: var(--primary); }
+        .counter-label { color: var(--secondary); font-weight: 500; }
+        .section { padding: 5rem 0; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h3 { font-size: 2.5rem; color: var(--dark); margin-bottom: 1rem; }
+        [data-theme="dark"] .section-title h3 { color: var(--light); }
+        .innovation-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .innovation-card {
+            background: var(--card-bg); border-radius: 15px; padding: 2rem;
+            box-shadow: var(--shadow); opacity: 0; transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .innovation-card.visible { opacity: 1; transform: translateY(0); }
+        .innovation-card:hover { transform: translateY(-5px); }
+        .innovation-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        .innovation-card h4 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--dark); }
+        [data-theme="dark"] .innovation-card h4 { color: var(--light); }
+        .accordion-container { max-width: 900px; margin: 0 auto; }
+        .accordion-item {
+            background: var(--card-bg); border-radius: 10px; margin-bottom: 1rem;
+            overflow: hidden; box-shadow: var(--shadow);
+        }
+        .accordion-header {
+            padding: 1.5rem; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
+            font-weight: bold; transition: background 0.3s;
+        }
+        .accordion-header:hover { background: rgba(255, 107, 53, 0.1); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .accordion-content.expanded { max-height: 2000px; }
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem; padding: 0 1.5rem 1.5rem;
+        }
+        .article-card, .video-card {
+            background: rgba(255, 255, 255, 0.5); border-radius: 10px;
+            padding: 1rem; transition: all 0.3s;
+        }
+        .article-card:hover, .video-card:hover { transform: scale(1.02); }
+        .article-card img, .video-card img {
+            width: 100%; height: 120px; object-fit: cover;
+            border-radius: 8px; margin-bottom: 0.5rem;
+        }
+        .article-card a, .video-card a {
+            text-decoration: none; color: var(--text); font-weight: 500;
+            display: block; margin-bottom: 0.5rem;
+        }
+        .article-card a:hover, .video-card a:hover { color: var(--primary); }
+        .date { font-size: 0.8rem; color: var(--secondary); }
+        .calculator {
+            background: var(--card-bg); border-radius: 15px; padding: 2rem;
+            max-width: 900px; margin: 0 auto; box-shadow: var(--shadow);
+        }
+        .calculator h3 { margin-bottom: 1.5rem; color: var(--dark); }
+        [data-theme="dark"] .calculator h3 { color: var(--light); }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .input-group select, .input-group input {
+            width: 100%; padding: 1rem; border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px; font-size: 1rem; background: var(--light); color: var(--text);
+        }
+        .results {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem; margin-top: 2rem;
+        }
+        .result-item {
+            background: rgba(255, 107, 53, 0.1); padding: 1rem;
+            border-radius: 8px; text-align: center;
+        }
+        .result-value { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        .progress-bar {
+            height: 10px; background: rgba(0, 0, 0, 0.1); border-radius: 5px;
+            margin-top: 0.5rem; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--primary); transition: width 1s ease;
+        }
+        .charts-container {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem; margin-top: 2rem;
+        }
+        .chart-card {
+            background: var(--card-bg); border-radius: 15px; padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        .chart-card canvas { width: 100%; height: 300px; }
+        footer {
+            background: var(--dark); color: var(--light); padding: 3rem 0 1.5rem;
+            margin-top: 5rem;
+        }
+        .footer-content {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem; margin-bottom: 2rem;
+        }
+        .footer-section h5 { color: var(--primary); margin-bottom: 1rem; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.5rem; }
+        .footer-section ul li a {
+            color: var(--accent-blue); text-decoration: none; transition: color 0.3s;
+        }
+        .footer-section ul li a:hover { color: var(--primary); }
+        .copyright { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            .hero h2 { font-size: 2rem; }
+            .section-title h3 { font-size: 2rem; }
+            .charts-container { grid-template-columns: 1fr; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-on-scroll { opacity: 0; animation: fadeInUp 0.6s ease forwards; }
+        .animate-on-scroll.visible { opacity: 1; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="https://www.amd.com/etc/clientlibs/amd/base/resources/img/logo.svg" alt="AMD Logo">
+                    <h1>AMD AI Lab</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                        <li><a href="#innovations">Innovations</a></li>
+                        <li><a href="#articles">Articles</a></li>
+                        <li><a href="#videos">Videos</a></li>
+                        <li><a href="#calculator">Calculator</a></li>
+                        <li><a href="#charts">Charts</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i> <span id="themeText">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>AMD Innovations for Large Language Models</h2>
+                <p>Discover AMD's cutting-edge AI hardware and software ecosystem powering the next generation of large language models. From Instinct accelerators to ROCm software, AMD delivers open, scalable AI solutions.</p>
+                <div class="counters">
+                    <div class="counter-card"><div class="counter-number" id="counter1">0</div><div class="counter-label">AI TOPS Performance</div></div>
+                    <div class="counter-card"><div class="counter-number" id="counter2">0</div><div class="counter-label">Million+ GPU Cores</div></div>
+                    <div class="counter-card"><div class="counter-number" id="counter3">0</div><div class="counter-label">Developer Partners</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="roadmap">
+        <div class="container">
+            <div class="section-title"><h3>AMD AI Roadmap</h3><p>Advancing AI from edge to cloud with open ecosystem solutions</p></div>
+            <div class="innovation-grid">
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-brain"></i><h4>MI300X Series</h4><p>AMD's flagship AI accelerator featuring 2x the memory bandwidth of competitive solutions.</p></div>
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-server"></i><h4>MI350 Series</h4><p>Next-generation rack-scale AI accelerators for large-scale deployments.</p></div>
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-cogs"></i><h4>ROCm 7</h4><p>Latest release with enhanced compatibility and performance for AI applications.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="innovations">
+        <div class="container">
+            <div class="section-title"><h3>Key Innovations</h3><p>Breaking new ground in AI hardware and software</p></div>
+            <div class="innovation-grid">
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-bolt"></i><h4>vLLM Optimizations</h4><p>Custom kernels for efficient LLM serving with PagedAttention.</p></div>
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-cloud"></i><h4>AMD Developer Cloud</h4><p>Access to AMD AI hardware for development with flexible compute options.</p></div>
+                <div class="innovation-card animate-on-scroll"><i class="fas fa-infinity"></i><h4>Helios AI Infrastructure</h4><p>Rack-scale architecture for scalability in data center deployments.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="articles">
+        <div class="container">
+            <div class="section-title"><h3>Recent AMD AI Articles</h3></div>
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header"><span>📰 Latest Articles (Click to expand)</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="accordion-content"><div class="card-grid">
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1589391885609-2c6013d32b3d?w=400" alt="MI300X">
+                            <a href="https://www.amd.com/newsroom/press-releases/2024-12-10-amd-unveils-instinct-mi300x-ai-accelerator.html" target="_blank">MI300X AI Accelerator Launch</a>
+                            <p class="date">Dec 10, 2024</p>
+                            <p>AMD unveils next-generation AI accelerator with breakthrough memory architecture.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1677442136019-21b8de1c0d08?w=400" alt="ROCm">
+                            <a href="https://rocmdocs.amd.com/" target="_blank">ROCm 7 Developer Release</a>
+                            <p class="date">May 15, 2025</p>
+                            <p>New features for AI developers including enhanced PyTorch integration.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1518709268805-4e90f2af9f23?w=400" alt="AI Cloud">
+                            <a href="https://www.amd.com/en/developer-cloud" target="_blank">AMD Developer Cloud Expansion</a>
+                            <p class="date">Jun 1, 2025</p>
+                            <p>New regions and AI-optimized instances now available.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/155846909-6e6c-5e02-8c4e1f9c3b8a?w=400" alt="Helios">
+                            <a href="https://www.amd.com/helios" target="_blank">Helios AI Infrastructure Details</a>
+                            <p class="date">Mar 22, 2025</p>
+                            <p>Rack-scale architecture specifications revealed.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1620714223084-8c71e0a5d7f4?w=400" alt="Partnership">
+                            <a href="https://www.amd.com/partnerships" target="_blank">Open AI Ecosystem Partnerships</a>
+                            <p class="date">Jan 8, 2025</p>
+                            <p>New collaborations with leading AI framework developers.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1507238694403-2c5b4b47a1f5?w=400" alt="Performance">
+                            <a href="https://www.amd.com/performance" target="_blank">AI Performance Benchmarks</a>
+                            <p class="date">Apr 5, 2025</p>
+                            <p>Latest benchmarks show MI300X outperforming competition.</p>
+                        </div>
+                        <div class="article-card">
+                            <img src="https://images.unsplash.com/photo/1617005257815-34432cec3b23?w=400" alt="Future">
+                            <a href="https://www.amd.com/future" target="_blank">Future of AI Computing</a>
+                            <p class="date">Feb 14, 2025</p>
+                            <p>Vision for next-decade of AI hardware and software innovation.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="videos">
+        <div class="container">
+            <div class="section-title"><h3>Recent AMD AI Videos</h3></div>
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header"><span>🎥 Latest Videos (Click to expand)</span><i class="fas fa-chevron-down"></i></div>
+                    <div class="accordion-content"><div class="card-grid">
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/NQVS9T_a3J0/maxresdefault.jpg" alt="MI300X">
+                            <a href="https://www.youtube.com/watch?v=NQVS9T_a3J0" target="_blank">MI300X Architecture Deep Dive</a>
+                            <p class="date">YouTube</p>
+                            <p>Technical overview of AMD's flagship AI accelerator.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/abc123def456/maxresdefault.jpg" alt="ROCm">
+                            <a href="https://www.youtube.com/watch?v=abc123def456" target="_blank">ROCm 7 New Features</a>
+                            <p class="date">YouTube</p>
+                            <p>Developer-focused presentation on latest ROCm capabilities.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/xyz789ghi012/maxresdefault.jpg" alt="AI Summit">
+                            <a href="https://www.youtube.com/watch?v=xyz789ghi012" target="_blank">AMD AI Summit 2025</a>
+                            <p class="date">YouTube</p>
+                            <p>Keynote presentations from AMD's annual AI conference.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/test345jkl678/maxresdefault.jpg" alt="vLLM">
+                            <a href="https://www.youtube.com/watch?v=test345jkl678" target="_blank">vLLM on AMD</a>
+                            <p class="date">YouTube</p>
+                            <p>Optimizing large language models for AMD hardware.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/sample901mno345/maxresdefault.jpg" alt="Developer Cloud">
+                            <a href="https://www.youtube.com/watch?v=sample901mno345" target="_blank">AMD Developer Cloud Tour</a>
+                            <p class="date">YouTube</p>
+                            <p>Getting started guide for AMD's cloud AI platform.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/demo123pqr456/maxresdefault.jpg" alt="Helios">
+                            <a href="https://www.youtube.com/watch?v=demo123pqr456" target="_blank">Helios Rack-Scale AI</a>
+                            <p class="date">YouTube</p>
+                            <p>Enterprise AI deployment with AMD's Helios architecture.</p>
+                        </div>
+                        <div class="video-card">
+                            <img src="https://img.youtube.com/vi/future789stu012/maxresdefault.jpg" alt="Future">
+                            <a href="https://www.youtube.com/watch?v=future789stu012" target="_blank">AI Future with AMD</a>
+                            <p class="date">YouTube</p>
+                            <p>Vision for next-generation AI computing platforms.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="calculator">
+        <div class="container">
+            <div class="section-title"><h3>LLM Hardware Calculator</h3><p>Estimate VRAM and system requirements for your LLM workload</p></div>
+            <div class="calculator">
+                <div class="input-group">
+                    <label for="modelSelect">Select LLM Model</label>
+                    <select id="modelSelect">
+                        <option value="1750">GPT-4-class (~175B params)</option>
+                        <option value="1600">Llama 4 (~160B params)</option>
+                        <option value="685">DeepSeek (~685B params)</option>
+                        <option value="378">Claude (~378B params)</option>
+                        <option value="1600">Gemini-class (~1600B params)</option>
+                        <option value="174">Mistral Large (~174B params)</option>
+                        <option value="32">Qwen (~32B params)</option>
+                        <option value="72">Yi (~72B params)</option>
+                        <option value="custom">Custom (enter manually)</option>
+                    </select>
+                </div>
+                <div class="input-group" id="customParams" style="display: none;">
+                    <label for="paramsInput">Model Parameters (billions)</label>
+                    <input type="number" id="paramsInput" placeholder="Enter parameter count in billions" value="10">
+                </div>
+                <div class="results">
+                    <div class="result-item"><div>32GB Modules</div><div class="result-value" id="modules32">0</div></div>
+                    <div class="result-item"><div>64GB Modules</div><div class="result-value" id="modules64">0</div></div>
+                    <div class="result-item"><div>128GB Modules</div><div class="result-value" id="modules128">0</div></div>
+                    <div class="result-item"><div>System RAM</div><div class="result-value" id="systemRam">64 GB</div></div>
+                    <div class="result-item"><div>GPU VRAM Needed</div><div class="result-value" id="vramNeeded">0 GB</div></div>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>VRAM Usage</span><span id="vramPercent">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="vramProgress" style="width: 0%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="charts">
+        <div class="container">
+            <div class="section-title"><h3>AMD AI Hardware Evolution</h3></div>
+            <div class="charts-container">
+                <div class="chart-card"><canvas id="memoryChart"></canvas></div>
+                <div class="chart-card"><canvas id="performanceChart"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5>AMD AI Lab</h5>
+                    <ul>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                        <li><a href="#innovations">Innovations</a></li>
+                        <li><a href="https://www.amd.com" target="_blank">AMD Official Site</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="https://rocmdocs.amd.com" target="_blank">ROCm Documentation</a></li>
+                        <li><a href="https://www.amd.com/developer-cloud" target="_blank">Developer Cloud</a></li>
+                        <li><a href="https://github.com/amd" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Legal</h5>
+                    <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul>
+                </div>
+            </div>
+            <div class="copyright"><p>&copy; 2025 AMD AI Lab. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
+        const body = document.body;
+        if (localStorage.getItem('theme') === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeText.textContent = 'Light Mode';
+        }
+        themeToggle.addEventListener('click', () => {
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                body.removeAttribute('data-theme');
+                themeText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Animated Counters
+        function animateCounters() {
+            const counters = [{id: 'counter1', target: 280}, {id: 'counter2', target: 2500}, {id: 'counter3', target: 150}];
+            counters.forEach(c => {
+                const el = document.getElementById(c.id);
+                let count = 0;
+                const increment = c.target / 100;
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= c.target) { el.textContent = c.target.toLocaleString(); clearInterval(timer); }
+                    else { el.textContent = Math.floor(count).toLocaleString(); }
+                }, 30);
+            });
+        }
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, {threshold: 0.1});
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // Accordion
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                content.classList.toggle('expanded');
+                icon.className = content.classList.contains('expanded') ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+            });
+        });
+
+        // LLM Calculator
+        const modelParams = {
+            '1750': 1750, '1600': 1600, '685': 685, '378': 378,
+            '174': 174, '32': 32, '72': 72, 'custom': 10
+        };
+        const modelSelect = document.getElementById('modelSelect');
+        const customParams = document.getElementById('customParams');
+        const paramsInput = document.getElementById('paramsInput');
+
+        function calculateHW(paramsB) {
+            const vramGB = paramsB * 2;
+            const modules32 = Math.ceil(vramGB / 32);
+            const modules64 = Math.ceil(vramGB / 64);
+            const modules128 = Math.ceil(vramGB / 128);
+            const systemRAM = Math.max(64, Math.ceil(vramGB * 1.5 / 16) * 16);
+            return {vramGB, modules32, modules64, modules128, systemRAM};
+        }
+
+        function updateCalculator() {
+            let params = modelParams[modelSelect.value];
+            if (modelSelect.value === 'custom') params = parseFloat(paramsInput.value) || 10;
+            const r = calculateHW(params);
+            document.getElementById('modules32').textContent = r.modules32;
+            document.getElementById('modules64').textContent = r.modules64;
+            document.getElementById('modules128').textContent = r.modules128;
+            document.getElementById('systemRam').textContent = r.systemRAM + ' GB';
+            document.getElementById('vramNeeded').textContent = r.vramGB.toFixed(0) + ' GB';
+            const percent = Math.min(100, (r.vramGB / 1024) * 100);
+            document.getElementById('vramPercent').textContent = percent.toFixed(0) + '%';
+            document.getElementById('vramProgress').style.width = percent + '%';
+        }
+
+        modelSelect.addEventListener('change', updateCalculator);
+        paramsInput.addEventListener('input', updateCalculator);
+        modelSelect.dispatchEvent(new Event('change'));
+
+        // Charts
+        const memoryCtx = document.getElementById('memoryChart').getContext('2d');
+        new Chart(memoryCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: 'Memory per GPU (GB)',
+                    data: [16, 32, 64, 128, 256],
+                    borderColor: '#FF6B35',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(255, 107, 53, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { title: { display: true, text: 'AMD GPU Memory Growth' } }
+            }
+        });
+
+        const perfCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(perfCtx, {
+            type: 'bar',
+            data: {
+                labels: ['MI200', 'MI300', 'MI350'],
+                datasets: [{
+                    label: 'AI TOPS',
+                    data: [1500, 2800, 4200],
+                    backgroundColor: '#FF6B35'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { title: { display: true, text: 'AI Performance Evolution (MI Series)' } }
+            }
+        });
+
+        // Initialize
+        animateCounters();
+    </script>
+</body>
+</html>
