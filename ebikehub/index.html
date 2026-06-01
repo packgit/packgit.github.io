@@ -1,1 +1,281 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBikeHub - Top Electric Bikes 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #0f3460;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #e94560;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .bike-list {
+            display: grid;
+            gap: 30px;
+        }
+        
+        .bike-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(233, 69, 96, 0.2);
+        }
+        
+        .bike-rank {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .bike-name {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .bike-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spec-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .spec-label {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        
+        .spec-value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .bike-description {
+            line-height: 1.6;
+            color: #bdc3c7;
+            margin-top: 15px;
+        }
+        
+        .price-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #e94560;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #e94560;
+            padding: 10px 25px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .price-link:hover {
+            background: rgba(233, 69, 96, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚴‍♂️ eBikeHub</h1>
+            <p class="subtitle">Top 5 Electric Bikes of 2025</p>
+        </header>
+        
+        <div class="bike-list">
+            <!-- Video 1: Momentum Vida E+ -->
+            <div class="bike-card">
+                <span class="bike-rank">#1 - Momentum Vida E+</span>
+                <h2 class="bike-name">Momentum Vida E+</h2>
+                <p class="bike-description">The smooth assist, long-lasting battery, and relaxed geometry made it the bike that encouraged more riding without overthinking. Quick spins after work, casual weekend loops, cruising with friends — the Vida E+ made all of it feel effortless.</p>
+                <div class="bike-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Range</div>
+                        <div class="spec-value">55 miles</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Motor</div>
+                        <div class="spec-value">500w - 60Nm</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Battery</div>
+                        <div class="spec-value">690Wh</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Class</div>
+                        <div class="spec-value">Class 3</div>
+                    </div>
+                </div>
+                <a href="https://www.momentum-biking.com/us/vida-eplus-2026" class="price-link" target="_blank">View at Momentum</a>
+            </div>
+            
+            <!-- Video 2: Aventon Abound LR -->
+            <div class="bike-card">
+                <span class="bike-rank">#2 - Aventon Abound LR</span>
+                <h2 class="bike-name">Aventon Abound LR</h2>
+                <p class="bike-description">Aventon redefined what a sub-$2,500 cargo e-bike can be. The torque-sensor assist feels dialed, the rack is passenger-ready, and the new ACU connected system brings a level of tech trickle-down we usually see on much higher-priced options.</p>
+                <div class="bike-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Range</div>
+                        <div class="spec-value">60 miles</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Motor</div>
+                        <div class="spec-value">750w - 80Nm</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Battery</div>
+                        <div class="spec-value">733Wh</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Class</div>
+                        <div class="spec-value">Class 2</div>
+                    </div>
+                </div>
+                <a href="https://alnk.to/hsykqVJ" class="price-link" target="_blank">View at Aventon</a>
+            </div>
+            
+            <!-- Video 3: Trek FX+1 -->
+            <div class="bike-card">
+                <span class="bike-rank">#3 - Trek FX+1</span>
+                <h2 class="bike-name">Trek FX+1</h2>
+                <p class="bike-description">Simple, reliable, and refreshingly fun. Punching way above its class. With the addition of a throttle, it shows that Trek is thinking generously about the future of ebikes for recreational riders.</p>
+                <div class="bike-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Range</div>
+                        <div class="spec-value">50 miles</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Motor</div>
+                        <div class="spec-value">500w - 60Nm</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Battery</div>
+                        <div class="spec-value">540Wh</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Class</div>
+                        <div class="spec-value">Class 2</div>
+                    </div>
+                </div>
+                <a href="https://alnk.to/882cCfH" class="price-link" target="_blank">View at Trek</a>
+            </div>
+            
+            <!-- Video 4: Aventon Level.3 -->
+            <div class="bike-card">
+                <span class="bike-rank">#4 - Aventon Level.3</span>
+                <h2 class="bike-name">Aventon Level.3</h2>
+                <p class="bike-description">Pedal-assist when we're lazy, throttle when we don't want to pedal, rack for hauling, suspension for comfort, and range for days. It doesn't demand attention. It just quietly outperforms nearly every other commuter on the block.</p>
+                <div class="bike-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Range</div>
+                        <div class="spec-value">70 miles</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Motor</div>
+                        <div class="spec-value">500w - 60Nm</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Battery</div>
+                        <div class="spec-value">733Wh</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Class</div>
+                        <div class="spec-value">Class 2</div>
+                    </div>
+                </div>
+                <a href="https://alnk.to/hDt7AtL" class="price-link" target="_blank">View at Aventon</a>
+            </div>
+            
+            <!-- Video 5: Ride1Up Vorsa -->
+            <div class="bike-card">
+                <span class="bike-rank">#5 - Ride1Up Vorsa</span>
+                <h2 class="bike-name">Ride1Up Vorsa</h2>
+                <p class="bike-description">Built for ambition — think cargo runs, passenger hauling, trail hunts, long weekend loops. The 440-lb payload capacity and modular rack system mean you can custom-build a bike to match your lifestyle.</p>
+                <div class="bike-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Range</div>
+                        <div class="spec-value">60 miles</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Motor</div>
+                        <div class="spec-value">750w - 95Nm</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Battery</div>
+                        <div class="spec-value">720Wh</div>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Class</div>
+                        <div class="spec-value">Class 1-3</div>
+                    </div>
+                </div>
+                <a href="https://alnk.to/6xNstY7" class="price-link" target="_blank">View at Ride1Up</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>eBikeHub - Your Guide to the Best Electric Bikes</p>
+            <p>Source: Electric Bike Journal - Top Electric Bikes of 2025</p>
+        </footer>
+    </div>
+</body>
+</html>
