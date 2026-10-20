@@ -161,6 +161,21 @@
     }
 
 
+
+    #snhu-course-options {
+      display: none;
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-size: calc(1.2rem - 1pt);
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+      font-weight: bold;
+    }
+
+    #snhu-course-options.show {
+      display: block;
+    }
+
     #snhu-breakdown {
       display: none;
       margin: 16px 0 12px;
@@ -538,6 +553,7 @@
           <button id="overall-time-btn" class="overall-time-btn">Overall Time View</button>
           <button id="overall-progress-btn" class="overall-progress-btn" disabled type="button" onclick="openOverallProgressView()">Overall Progress View</button>
         </div>
+        <h2 id="snhu-course-options">Course Options</h2>
         <ul id="pending-list"></ul>
         <div id="snhu-breakdown">
           <table class="snhu-breakdown-table">
@@ -1192,6 +1208,9 @@ function attachSplitButtonListeners() {
       // === Load Bachelor's or A.S. pending course data ===
 
 function updateSnhuBreakdownVisibility(show) {
+  const optionsEl = document.getElementById("snhu-course-options");
+  if (optionsEl) optionsEl.classList.toggle("show", !!show);
+
   const el = document.getElementById("snhu-breakdown");
   if (!el) return;
   el.classList.toggle("show", !!show);
