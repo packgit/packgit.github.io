@@ -298,6 +298,17 @@
       margin-top: 2px;
     }
 
+
+    .pending-transferred-bar {
+      background: #1e3a8a;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 700;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+
     .pending-complete-bar {
       background: #1e3a8a;
       color: #ffffff;
@@ -477,6 +488,13 @@
         ? ` with ${transferoption}`
         : "";
       return `Units: ${units} · College: ${college}${transferText}`;
+    }
+
+    function getCostButtonLabel(course) {
+      if (course.transferredFrom) {
+        return "Transferred - $0";
+      }
+      return `$${getCourseCost(course).toLocaleString()}`;
     }
 
     function isCourseFullyComplete(course) {
@@ -711,7 +729,7 @@
         actionDiv.appendChild(lengthBtn);
 
         if (isCourseFullyComplete(course)) {
-          costBtn.textContent = `$${getCourseCost(course).toLocaleString()}`;
+          costBtn.textContent = getCostButtonLabel(course);
           costBtn.classList.add("active");
           activeCostButtons.add(index);
 
@@ -744,6 +762,13 @@
           li.appendChild(completeBar);
         }
 
+        if (course.transferredFrom) {
+          const transferredBar = document.createElement("div");
+          transferredBar.className = "pending-transferred-bar";
+          transferredBar.textContent = `Transferred : ${course.transferredFrom}`;
+          li.appendChild(transferredBar);
+        }
+
         ul.appendChild(li);
       });
 
@@ -768,7 +793,7 @@
           btn.classList.remove("active");
           activeCostButtons.delete(index);
         } else {
-          const cost = `$${getCourseCost(course).toLocaleString()}`;
+          const cost = getCostButtonLabel(course);
           btn.textContent = cost;
           btn.classList.add("active");
           activeCostButtons.add(index);

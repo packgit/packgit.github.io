@@ -3,7 +3,7 @@
     "coursename": "Social Justice, Humanities : Com 212 Public Speaking",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "transferoption": "none",
     "amountComplete": 100,
@@ -11,7 +11,8 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "CCSF - SPCH1A Public Speaking"
   },
   {
     "coursename": "Social Justice, Humanities : IT 3ELE Info Tech Elective",
