@@ -18,7 +18,7 @@
     "coursename": "Social Justice, Humanities : IT 3ELE Info Tech Elective",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "transferoption": "none",
     "amountComplete": 100,
@@ -26,7 +26,8 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "SFSU - CSC317 Intro to Web Software Development"
   },
   {
     "coursename": "College Composition : Eng 122 English Composition",
