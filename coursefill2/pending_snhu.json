@@ -187,7 +187,8 @@
     "date": "",
     "courseSite": "Study.com",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "courseLink": "https://study.com/academy/course/computer-science-307-software-engineering.html"
   },
   {
     "coursename": "CS255 - System Analysis and Design (3)",
