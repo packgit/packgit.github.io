@@ -33,7 +33,7 @@
     "coursename": "College Composition : Eng 122 English Composition",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "transferoption": "none",
     "amountComplete": 100,
@@ -41,7 +41,8 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - ENGL101 English Composition"
   },
   {
     "coursename": "College Composition : General English - 2, 3 Units",
