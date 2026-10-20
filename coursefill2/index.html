@@ -503,6 +503,10 @@
     let activeCostButtons = new Set();
     let activeLengthButtons = new Set();
 
+    function isCourseFullyComplete(course) {
+      return course.completed === true || course.amountComplete === 100 || !!course.transferredFrom;
+    }
+
     function getCostButtonLabel(course) {
       if (course.transferredFrom) {
         return "Transferred - $0";
@@ -680,7 +684,7 @@
         li.appendChild(mainRow);
         li.appendChild(expandDiv);
 
-        if (course.completed) {
+        if (isCourseFullyComplete(course)) {
           const completeBar = document.createElement("div");
           completeBar.className = "pending-complete-bar";
           completeBar.textContent = "Complete";
