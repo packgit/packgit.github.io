@@ -258,10 +258,10 @@
     "transferCourseName": ""
   },
   {
-    "coursename": "Elective 1",
-    "unitsdone": 3,
+    "coursename": "GRA 1ELE Graphics Elective",
+    "unitsdone": 1,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "completed": true,
     "transferoption": "none",
@@ -270,7 +270,40 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "CCSF - GRPH56 Survey of Print Production"
+  },
+  {
+    "coursename": "IT 1ELE Information Tech Elective",
+    "unitsdone": 1,
+    "college": "SNHU",
+    "cost": 0,
+    "length": "2 months",
+    "completed": true,
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2,
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - CSC227 - Program Design+Dev"
+  },
+  {
+    "coursename": "IT 2ELE Information Tech Elective",
+    "unitsdone": 1,
+    "college": "SNHU",
+    "cost": 0,
+    "length": "2 months",
+    "completed": true,
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2,
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - CSC237 -Machine Organization"
   },
   {
     "coursename": "Elective 2",
