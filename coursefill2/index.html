@@ -160,6 +160,15 @@
       padding: 8px 12px;
     }
 
+    .pending-transferred-line {
+      color: #1e3a8a;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+
+
     /* Split action button - 50/50 top/bottom */
     .pending-action {
       flex: 0 0 20%;
@@ -494,8 +503,17 @@
     let activeCostButtons = new Set();
     let activeLengthButtons = new Set();
 
+    function getCostButtonLabel(course) {
+      if (course.transferredFrom) {
+        return "Transferred - $0";
+      }
+      if (course.cost == null) return "$TBD";
+      return `$${getCourseCost(course).toLocaleString()}`;
+    }
+
     function getCourseCost(course) {
       if (!course || course.cost == null) return 0;
+      if (course.transferredFrom) return 0;
       const cost = Number(course.cost);
       const transferoption = course.transferoption;
       if (transferoption && transferoption !== "none") {
@@ -620,6 +638,14 @@
 
         mainDiv.appendChild(nameSpan);
         mainDiv.appendChild(metaDiv);
+
+        if (course.transferredFrom) {
+          const transferredLine = document.createElement("div");
+          transferredLine.className = "pending-transferred-line";
+          transferredLine.textContent = `Transferred : ${course.transferredFrom}`;
+          mainDiv.appendChild(transferredLine);
+        }
+
         mainRow.appendChild(mainDiv);
 
         const actionDiv = document.createElement("div");
@@ -800,7 +826,7 @@ function updateTimeSummary() {
           btn.classList.remove("active");
           activeCostButtons.delete(index);
         } else {
-          const cost = course.cost ? `$${getCourseCost(course).toLocaleString()}` : "$TBD";
+          const cost = getCostButtonLabel(course);
           btn.textContent = cost;
           btn.classList.add("active");
           activeCostButtons.add(index);
