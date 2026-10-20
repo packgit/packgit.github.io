@@ -158,7 +158,8 @@
     "date": "",
     "courseSite": "Sophia",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "courseLink": "https://snhu.sophia.org/online-courses/introduction-to-relational-databases-2"
   },
   {
     "coursename": "CS230 - Operating Platforms (3)",
