@@ -306,10 +306,10 @@
     "transferredFrom": "UOFA - CSC237 -Machine Organization"
   },
   {
-    "coursename": "Elective 2",
-    "unitsdone": 3,
+    "coursename": "LFR 1ELE French Elective",
+    "unitsdone": 1,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "completed": true,
     "transferoption": "none",
@@ -318,6 +318,39 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - FREN101 Elementary French I"
+  },
+  {
+    "coursename": "LSP 1ELE Spanish Elective",
+    "unitsdone": 1,
+    "college": "SNHU",
+    "cost": 0,
+    "length": "2 months",
+    "completed": true,
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2,
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - SPAN201 Second Year Spanish"
+  },
+  {
+    "coursename": "LSP 2ELE Spanish Elective",
+    "unitsdone": 1,
+    "college": "SNHU",
+    "cost": 0,
+    "length": "2 months",
+    "completed": true,
+    "transferoption": "none",
+    "amountComplete": 100,
+    "processed": "Yes",
+    "date": "",
+    "courseSite": "",
+    "timeCompletion": 2,
+    "transferCourseName": "",
+    "transferredFrom": "UOFA - SPAN202 Second Year Spanish"
   }
 ]
