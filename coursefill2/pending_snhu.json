@@ -218,7 +218,7 @@
     "coursename": "IT145 - Foundation in Application Development (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 100,
+    "cost": 0,
     "length": "2 months",
     "transferoption": "sophia",
     "amountComplete": 100,
@@ -226,7 +226,8 @@
     "date": "",
     "courseSite": "Sophia",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "SFSU - CSC210 Intro to Computer Programming"
   },
   {
     "coursename": "MAT230 - Discrete Mathematics (3)",
