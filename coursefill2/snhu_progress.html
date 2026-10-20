@@ -298,6 +298,14 @@
       margin-top: 2px;
     }
 
+    .course-meta-link {
+      color: #1d4ed8;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+
+
 
     .pending-transferred-bar {
       background: #1e3a8a;
@@ -480,6 +488,21 @@
     let completedCount = 0;
     let pendingCount = 0;
     let programTotalUnits = 60;
+
+    function setCourseMetaContent(metaDiv, units, course) {
+      metaDiv.textContent = "";
+      metaDiv.appendChild(document.createTextNode(formatCourseMeta(units, course)));
+      if (course.courseLink) {
+        metaDiv.appendChild(document.createTextNode(" "));
+        const link = document.createElement("a");
+        link.href = course.courseLink;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "course";
+        link.className = "course-meta-link";
+        metaDiv.appendChild(link);
+      }
+    }
 
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
@@ -705,7 +728,7 @@
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
         const units = course.unitsdone != null ? course.unitsdone : "?";
-        metaDiv.textContent = formatCourseMeta(units, course);
+        setCourseMetaContent(metaDiv, units, course);
 
         mainDiv.appendChild(nameSpan);
         mainDiv.appendChild(metaDiv);

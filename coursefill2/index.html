@@ -288,6 +288,14 @@
       margin-top: 2px;
     }
 
+    .course-meta-link {
+      color: #1d4ed8;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+
+
     .error {
       color: #b00020;
       font-size: 0.9rem;
@@ -550,6 +558,21 @@
       }
     }
 
+    function setCourseMetaContent(metaDiv, units, course) {
+      metaDiv.textContent = "";
+      metaDiv.appendChild(document.createTextNode(formatCourseMeta(units, course)));
+      if (course.courseLink) {
+        metaDiv.appendChild(document.createTextNode(" "));
+        const link = document.createElement("a");
+        link.href = course.courseLink;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "course";
+        link.className = "course-meta-link";
+        metaDiv.appendChild(link);
+      }
+    }
+
     function formatCourseMeta(units, course) {
       const college = course.college || "n/a";
       const transferoption = course.transferoption;
@@ -587,7 +610,7 @@
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
         const units = course.unitsdone != null ? course.unitsdone : 0;
-        metaDiv.textContent = formatCourseMeta(units, course);
+        setCourseMetaContent(metaDiv, units, course);
 
         li.appendChild(nameSpan);
         li.appendChild(metaDiv);
@@ -638,7 +661,7 @@
         const metaDiv = document.createElement("div");
         metaDiv.className = "course-meta";
         const units = course.unitsdone != null ? course.unitsdone : "?";
-        metaDiv.textContent = formatCourseMeta(units, course);
+        setCourseMetaContent(metaDiv, units, course);
 
         mainDiv.appendChild(nameSpan);
         mainDiv.appendChild(metaDiv);

@@ -255,7 +255,8 @@
     "date": "",
     "courseSite": "Study.com",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "courseLink": "https://study.com/academy/course/physics-111-physics-i.html"
   },
   {
     "coursename": "GRA 1ELE Graphics Elective",
