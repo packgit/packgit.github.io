@@ -160,6 +160,54 @@
       padding: 8px 12px;
     }
 
+
+    #snhu-breakdown {
+      display: none;
+      margin: 16px 0 12px;
+      width: 100%;
+    }
+
+    #snhu-breakdown.show {
+      display: block;
+    }
+
+    .snhu-breakdown-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border: 2px solid #1e3a8a;
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .snhu-breakdown-table th,
+    .snhu-breakdown-table td {
+      padding: 8px 10px;
+      text-align: center;
+      border-bottom: 1px solid #cbd5e1;
+    }
+
+    .snhu-breakdown-table th {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .snhu-breakdown-table td.row-label {
+      text-align: left;
+      font-weight: 700;
+      color: #1e3a8a;
+      background: #f1f5f9;
+      width: 40%;
+    }
+
+    .snhu-breakdown-table tr.total-row td {
+      border-bottom: none;
+      font-weight: 700;
+      background: #e0f0ff;
+    }
+
     .pending-transferred-line {
       color: #1e3a8a;
       font-size: 0.85rem;
@@ -491,6 +539,44 @@
           <button id="overall-progress-btn" class="overall-progress-btn" disabled type="button" onclick="openOverallProgressView()">Overall Progress View</button>
         </div>
         <ul id="pending-list"></ul>
+        <div id="snhu-breakdown">
+          <table class="snhu-breakdown-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Classes</th>
+                <th>Units</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-label">study.com</td>
+                <td id="snhu-study-classes">4</td>
+                <td id="snhu-study-units">12</td>
+              </tr>
+              <tr>
+                <td class="row-label">sophia</td>
+                <td id="snhu-sophia-classes">3</td>
+                <td id="snhu-sophia-units">9</td>
+              </tr>
+              <tr>
+                <td class="row-label">Transferred</td>
+                <td id="snhu-transferred-classes">11</td>
+                <td id="snhu-transferred-units">21</td>
+              </tr>
+              <tr>
+                <td class="row-label">SNHU</td>
+                <td id="snhu-snhu-classes">6</td>
+                <td id="snhu-snhu-units">18</td>
+              </tr>
+              <tr class="total-row">
+                <td class="row-label"></td>
+                <td id="snhu-total-classes">24</td>
+                <td id="snhu-total-units">60</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="pending-spacer"></div>
       
       <div id="cost-summary">
@@ -1104,6 +1190,25 @@ function attachSplitButtonListeners() {
 }
       
       // === Load Bachelor's or A.S. pending course data ===
+
+function updateSnhuBreakdownVisibility(show) {
+  const el = document.getElementById("snhu-breakdown");
+  if (!el) return;
+  el.classList.toggle("show", !!show);
+  if (!show) return;
+
+  const rows = [
+    { classes: 4, units: 12 },
+    { classes: 3, units: 9 },
+    { classes: 11, units: 21 },
+    { classes: 6, units: 18 }
+  ];
+  const totalClasses = rows.reduce((sum, row) => sum + row.classes, 0);
+  const totalUnits = rows.reduce((sum, row) => sum + row.units, 0);
+  document.getElementById("snhu-total-classes").textContent = totalClasses;
+  document.getElementById("snhu-total-units").textContent = totalUnits;
+}
+
 function loadPendingSet(jsonFile) {
   loadJson(jsonFile, function (data) {
     pendingCourses = data;
@@ -1118,14 +1223,17 @@ function loadPendingSet(jsonFile) {
 
     if (jsonFile === "pending.json") {
       updateOverallProgressButton("bachelors");
+      updateSnhuBreakdownVisibility(false);
       updateProgramCostTotal();
       document.getElementById("time-summary").classList.remove("show");
     } else if (jsonFile === "pendingcas.json") {
       updateOverallProgressButton("as");
+      updateSnhuBreakdownVisibility(false);
       updateProgramCostTotal();
       document.getElementById("time-summary").classList.remove("show");
     } else if (jsonFile === "pending_snhu.json") {
       updateOverallProgressButton("snhu");
+      updateSnhuBreakdownVisibility(true);
       document.getElementById("cost-summary").classList.remove("show");
       document.getElementById("time-summary").classList.remove("show");
     }
