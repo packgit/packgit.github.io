@@ -132,7 +132,7 @@
     "coursename": "CS218 - Data Structure and Algorithms (3)",
     "unitsdone": 3,
     "college": "SNHU",
-    "cost": 1026,
+    "cost": 0,
     "length": "2 months",
     "completed": true,
     "transferoption": "none",
@@ -141,7 +141,8 @@
     "date": "",
     "courseSite": "",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "transferredFrom": "SFSU - CSC220 Data Structures"
   },
   {
     "coursename": "CS231 - Database Systems (3)",
