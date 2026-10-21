@@ -202,7 +202,8 @@
     "date": "",
     "courseSite": "Study.com",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "courseLink": "https://study.com/academy/course/computer-science-302-system-analysis-design.html"
   },
   {
     "coursename": "CS320 - Software Testing, Automation, and Quality Assurance (3)",
