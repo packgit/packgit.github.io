@@ -246,7 +246,8 @@
     "date": "",
     "courseSite": "Study.com",
     "timeCompletion": 2,
-    "transferCourseName": ""
+    "transferCourseName": "",
+    "courseLink": "https://study.com/academy/course/math-108-discrete-mathematics.html"
   },
   {
     "coursename": "PHY150 - Introductory Physics: Mechanics (3)",
