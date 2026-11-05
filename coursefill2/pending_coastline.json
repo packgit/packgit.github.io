@@ -62,5 +62,13 @@
     "cost": 150,
     "length": "5 months",
     "transferoption": "none"
+  },
+  {
+    "coursename": "Artificial Intelligence",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
   }
 ]
