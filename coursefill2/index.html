@@ -559,6 +559,9 @@
   <button id="snhu-btn" class="program-btn" style="background: linear-gradient(135deg, #818cf8, #6366f1); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
     A.S. SNHU
   </button>
+  <button id="coastline-btn" class="program-btn" style="background: linear-gradient(135deg, #34d399, #059669); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+    A.S. Coastline College
+  </button>
 </div>
 
         <div class="button-row">
@@ -1138,6 +1141,10 @@ const progressViewConfig = {
   snhu: {
     enabled: true,
     url: "snhu_progress.html"
+  },
+  coastline: {
+    enabled: false,
+    url: null // Placeholder for A.S. Coastline College progress page
   }
 };
 
@@ -1266,11 +1273,16 @@ function loadPendingSet(jsonFile) {
       updateSnhuBreakdownVisibility(true);
       document.getElementById("cost-summary").classList.remove("show");
       document.getElementById("time-summary").classList.remove("show");
+    } else if (jsonFile === "pending_coastline.json") {
+      updateOverallProgressButton("coastline");
+      updateSnhuBreakdownVisibility(false);
+      updateProgramCostTotal();
+      document.getElementById("time-summary").classList.remove("show");
     }
   }, "pending-error");
 }
 
-const programButtonIds = ["bachelors-btn", "as-btn", "snhu-btn"];
+const programButtonIds = ["bachelors-btn", "as-btn", "snhu-btn", "coastline-btn"];
 
 function setActiveProgramButton(activeId) {
   programButtonIds.forEach((id) => {
@@ -1295,6 +1307,12 @@ document.getElementById("snhu-btn").addEventListener("click", function () {
   setActiveProgramButton("snhu-btn");
   updateOverallProgressButton("snhu");
   loadPendingSet("pending_snhu.json");
+});
+
+document.getElementById("coastline-btn").addEventListener("click", function () {
+  setActiveProgramButton("coastline-btn");
+  updateOverallProgressButton("coastline");
+  loadPendingSet("pending_coastline.json");
 });
 
 document.getElementById("overall-progress-btn").addEventListener("click", openOverallProgressView);

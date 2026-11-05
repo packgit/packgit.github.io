@@ -1,0 +1,66 @@
+[
+  {
+    "coursename": "ICS C120 - Introduction to Programming",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C123 - Fundamental Data Structures",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C141 - Concepts of Programming Languages",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "CYBR C101 - Introduction to Cybersecurity",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C165 - Foundations of Data Science and Artificial Intelligence",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C230 - Secure Coding and Design",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C240 - Computer Organization and Assembly Language",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  },
+  {
+    "coursename": "ICS C250 - Object-Oriented Programming",
+    "unitsdone": 3,
+    "college": "Coastline College",
+    "cost": 150,
+    "length": "5 months",
+    "transferoption": "none"
+  }
+]
