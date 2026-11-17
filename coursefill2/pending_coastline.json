@@ -5,7 +5,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": "A good coding refresher class."
   },
   {
     "coursename": "ICS C123 - Fundamental Data Structures",
@@ -13,7 +14,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": ""
   },
   {
     "coursename": "ICS C141 - Concepts of Programming Languages",
@@ -21,7 +23,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": ""
   },
   {
     "coursename": "CYBR C101 - Introduction to Cybersecurity",
@@ -29,7 +32,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": ""
   },
   {
     "coursename": "ICS C165 - Foundations of Data Science and Artificial Intelligence",
@@ -37,7 +41,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": "A good look at ML, Python and LLM's,"
   },
   {
     "coursename": "ICS C230 - Secure Coding and Design",
@@ -45,7 +50,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": "A good add to fortify sites and apps."
   },
   {
     "coursename": "ICS C240 - Computer Organization and Assembly Language",
@@ -53,7 +59,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": "A look at coding fundamentals."
   },
   {
     "coursename": "ICS C250 - Object-Oriented Programming",
@@ -61,7 +68,8 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": ""
   },
   {
     "coursename": "Artificial Intelligence",
@@ -69,6 +77,7 @@
     "college": "Coastline College",
     "cost": 150,
     "length": "5 months",
-    "transferoption": "none"
+    "transferoption": "none",
+    "benefitsofcouse": "A goood look at LLM's in industry."
   }
 ]
