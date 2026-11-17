@@ -167,6 +167,16 @@
       max-height: 3000px;
     }
 
+    .completed-total {
+      display: block;
+      float: none;
+      width: fit-content;
+      margin: 8px 0 12px auto;
+      clear: both;
+    }
+
+
+
     /* Completed course items */
     #completed-list li, #right-completed-list li {
       background-color: #ffe8cc;
@@ -584,8 +594,8 @@
       <button id="completed-toggle-btn" class="completed-toggle-btn" type="button">Courses Completed +</button>
       <div id="completed-expand" class="completed-expand">
         <ul id="right-completed-list"></ul>
-        <div id="total-units-right" class="total-units"></div>
       </div>
+      <div id="total-units-right" class="total-units completed-total"></div>
         <h3>⏳ Pending</h3>
         <div class="options-for-courses">Options for Courses</div>
         <div class="button-row">
@@ -782,7 +792,7 @@
         : document.getElementById("total-units-right");
 
       if (totalEl) {
-        totalEl.textContent = `Total Completed Units: ${totalUnits}`;
+        totalEl.textContent = `Total Completed : ${totalUnits}`;
       }
     }
 
