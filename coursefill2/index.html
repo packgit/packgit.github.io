@@ -130,6 +130,43 @@
       float: right;
     }
 
+
+    .completed-toggle-btn {
+      display: block;
+      width: 100%;
+      margin: 12px 0 8px;
+      padding: 10px 14px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.25);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .completed-toggle-btn:hover {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      transform: translateY(-1px);
+    }
+
+    .completed-toggle-btn.open {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+    }
+
+    .completed-expand {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.55s ease;
+    }
+
+    .completed-expand.open {
+      max-height: 3000px;
+    }
+
     /* Completed course items */
     #completed-list li, #right-completed-list li {
       background-color: #ffe8cc;
@@ -544,9 +581,11 @@
     <!-- Right column (always visible) -->
     <div class="column" id="pending-column">
       <h2>All Courses</h2>
-      <h3>✅ Completed</h3>
-      <ul id="right-completed-list"></ul>
-      <div id="total-units-right" class="total-units"></div>
+      <button id="completed-toggle-btn" class="completed-toggle-btn" type="button">Courses Completed +</button>
+      <div id="completed-expand" class="completed-expand">
+        <ul id="right-completed-list"></ul>
+        <div id="total-units-right" class="total-units"></div>
+      </div>
         <h3>⏳ Pending</h3>
         <div class="options-for-courses">Options for Courses</div>
         <div class="button-row">
@@ -1313,6 +1352,15 @@ document.getElementById("coastline-btn").addEventListener("click", function () {
   setActiveProgramButton("coastline-btn");
   updateOverallProgressButton("coastline");
   loadPendingSet("pending_coastline.json");
+});
+
+
+document.getElementById("completed-toggle-btn").addEventListener("click", function () {
+  const btn = this;
+  const panel = document.getElementById("completed-expand");
+  const isOpen = panel.classList.toggle("open");
+  btn.classList.toggle("open", isOpen);
+  btn.textContent = isOpen ? "Courses Completed -" : "Courses Completed +";
 });
 
 document.getElementById("overall-progress-btn").addEventListener("click", openOverallProgressView);
