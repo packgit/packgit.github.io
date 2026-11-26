@@ -20,7 +20,9 @@ class ChecklistPage extends StatelessWidget {
         builder: (context, constraints) {
           final width = constraints.maxWidth;
           final isTablet = width >= Breakpoints.tablet;
-          final gutter = width >= Breakpoints.desktop ? 32.0 : (isTablet ? 28.0 : 14.0);
+          final gutter = width >= Breakpoints.desktop
+              ? 32.0
+              : (isTablet ? 28.0 : 14.0);
           final gap = isTablet ? 18.0 : 14.0;
 
           return Stack(
@@ -48,10 +50,13 @@ class ChecklistPage extends StatelessWidget {
                                       index: i + 1,
                                       strategy: items[i],
                                       width: width,
-                                      completed:
-                                          controller.isCompleted(items[i].id),
-                                      onChanged: (v) => controller
-                                          .setCompleted(items[i].id, v),
+                                      completed: controller.isCompleted(
+                                        items[i].id,
+                                      ),
+                                      onChanged: (v) => controller.setCompleted(
+                                        items[i].id,
+                                        v,
+                                      ),
                                     ),
                                     if (i != items.length - 1)
                                       SizedBox(height: gap),

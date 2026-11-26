@@ -78,7 +78,15 @@ class StrategyCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _NumberBadge(index: index, completed: completed),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              _NumberBadge(index: index, completed: completed),
+                              _EffortChip(effort: strategy.effort),
+                            ],
+                          ),
                           const SizedBox(height: 10),
                           Text(
                             strategy.title,
@@ -145,7 +153,7 @@ class _NumberBadge extends StatelessWidget {
             const SizedBox(width: 4),
           ],
           Text(
-            completed ? 'Done' : 'Strategy $index',
+            completed ? 'Done' : 'Approach $index',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w700,
@@ -154,6 +162,37 @@ class _NumberBadge extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _EffortChip extends StatelessWidget {
+  const _EffortChip({required this.effort});
+
+  final int effort;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Effort $effort out of 10',
+      excludeSemantics: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        decoration: BoxDecoration(
+          color: AppColors.greenSoft,
+          border: Border.all(color: AppColors.green),
+          borderRadius: BorderRadius.circular(999),
+        ),
+        child: Text(
+          'Effort $effort/10',
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.3,
+            color: AppColors.greenDark,
+          ),
+        ),
       ),
     );
   }

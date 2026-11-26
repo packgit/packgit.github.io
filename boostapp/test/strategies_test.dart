@@ -26,4 +26,12 @@ void main() {
       }
     }
   });
+
+  test('effort is ranked 1-10 and the list runs easiest to hardest', () {
+    for (final s in strategies) {
+      expect(s.effort, inInclusiveRange(1, 10), reason: s.id);
+    }
+    final efforts = strategies.map((s) => s.effort).toList();
+    expect(efforts, orderedEquals(([...efforts]..sort())));
+  });
 }

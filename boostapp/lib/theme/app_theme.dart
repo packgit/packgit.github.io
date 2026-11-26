@@ -23,16 +23,17 @@ abstract final class Breakpoints {
 }
 
 ThemeData buildAppTheme() {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: AppColors.green,
-    brightness: Brightness.light,
-  ).copyWith(
-    primary: AppColors.greenDark,
-    onPrimary: Colors.white,
-    secondary: AppColors.orangeAccent,
-    surface: AppColors.surface,
-    onSurface: AppColors.textPrimary,
-  );
+  final scheme =
+      ColorScheme.fromSeed(
+        seedColor: AppColors.green,
+        brightness: Brightness.light,
+      ).copyWith(
+        primary: AppColors.greenDark,
+        onPrimary: Colors.white,
+        secondary: AppColors.orangeAccent,
+        surface: AppColors.surface,
+        onSurface: AppColors.textPrimary,
+      );
 
   return ThemeData(
     useMaterial3: true,

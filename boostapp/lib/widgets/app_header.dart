@@ -26,7 +26,11 @@ class AppHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.orangeSoft, Color(0xFFFFEBD1), AppColors.greenSoft],
+          colors: [
+            AppColors.orangeSoft,
+            Color(0xFFFFEBD1),
+            AppColors.greenSoft,
+          ],
         ),
         border: Border(
           bottom: BorderSide(color: AppColors.orangeAccent, width: 3),
@@ -54,7 +58,7 @@ class AppHeader extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                '30 practical strategies to win more downloads. '
+                '30 practical approaches to win more downloads. '
                 'Tick them off as you go; your progress saves automatically.',
                 textAlign: TextAlign.center,
                 style: TextStyle(

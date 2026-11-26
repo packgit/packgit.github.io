@@ -8,9 +8,8 @@ class ProgressController extends ChangeNotifier {
   ProgressController({
     required this.strategies,
     required ProgressStorage storage,
-  })  : _storage = storage,
-        _completed = storage.load()
-          ..retainAll(strategies.map((s) => s.id));
+  }) : _storage = storage,
+       _completed = storage.load()..retainAll(strategies.map((s) => s.id));
 
   final List<Strategy> strategies;
   final ProgressStorage _storage;
