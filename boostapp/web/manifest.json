@@ -1,0 +1,35 @@
+{
+    "name": "Boost App Installs, Progress",
+    "short_name": "BoostApp",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#FFF6EB",
+    "theme_color": "#2EA84F",
+    "description": "30 approaches to increase mobile app installs.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
